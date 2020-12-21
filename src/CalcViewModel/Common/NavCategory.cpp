@@ -73,10 +73,14 @@ bool IsGraphingModeEnabled()
     }
 
     User ^ firstUser;
-    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
-        firstUser = users->GetAt(0); }).wait();
-        auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
-        _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+    create_task(User::FindAllAsync(UserType::LocalUser))
+        .then([&firstUser](IVectorView<User ^> ^ users) {
+            firstUser = users->GetAt(0);
+        })
+        .wait();
+
+    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
 
     return _isGraphingModeEnabledCached->Value;
 }

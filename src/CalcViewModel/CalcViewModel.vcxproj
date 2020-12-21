@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{90e9761d-9262-4773-942d-caeae75d7140}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
-    <RootNamespace>CalcViewModel</RootNamespace>
+    <RootNamespace>CalculatorApp</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -63,7 +63,7 @@
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -140,7 +140,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -160,7 +160,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -180,7 +180,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -200,7 +200,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -220,7 +220,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -240,7 +240,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -260,7 +260,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -280,7 +280,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <!--GenerateWindowsMetadata>false</GenerateWindowsMetadata-->
     </Link>
     <Lib>
       <AdditionalOptions>/ignore:4264 %(AdditionalOptions)</AdditionalOptions>
@@ -389,6 +389,7 @@
   <ItemDefinitionGroup Condition="!Exists('DataLoaders\DataLoaderConstants.h')">
     <ClCompile>
       <AdditionalOptions>/DUSE_MOCK_DATA %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
   <Choose>
