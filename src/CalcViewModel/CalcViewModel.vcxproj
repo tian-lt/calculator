@@ -356,6 +356,7 @@
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp" />
     <ClCompile Include="DateCalculatorViewModel.cpp" />
+    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="GraphingCalculator\EquationViewModel.cpp" />
     <ClCompile Include="GraphingCalculator\GraphingCalculatorViewModel.cpp" />
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp" />

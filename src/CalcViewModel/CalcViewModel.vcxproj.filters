@@ -86,6 +86,7 @@
     <ClCompile Include="GraphingCalculator\GraphingSettingsViewModel.cpp">
       <Filter>GraphingCalculator</Filter>
     </ClCompile>
+    <ClCompile Include="dllmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

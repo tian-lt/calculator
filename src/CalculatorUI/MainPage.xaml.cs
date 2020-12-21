@@ -27,13 +27,13 @@ namespace CalculatorUI
         public MainPage()
         {
             this.InitializeComponent();
-            //TestCalcViewModel();
+            TestCalcViewModel();
         }
 
         void TestCalcViewModel()
         {
-            CalculatorApp.ViewModel.ApplicationViewModel mdl0 = null;
-            mdl0 = new CalculatorApp.ViewModel.ApplicationViewModel();
+            //CalculatorApp.ViewModel.ApplicationViewModel mdl0 = null;
+            //mdl0 = new CalculatorApp.ViewModel.ApplicationViewModel();
 
             Thread thrd = new Thread(()=>
             {
