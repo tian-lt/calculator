@@ -27,7 +27,7 @@ namespace CalculatorUI
         public MainPage()
         {
             this.InitializeComponent();
-            TestCalcViewModel();
+            //TestCalcViewModel();
         }
 
         void TestCalcViewModel()
