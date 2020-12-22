@@ -28,6 +28,7 @@ namespace CalculatorUI
         {
             this.InitializeComponent();
             //TestCalcViewModel();
+            TestGraphControl();
         }
 
         void TestCalcViewModel()
@@ -44,5 +45,15 @@ namespace CalculatorUI
             thrd.Join();
         }
 
+        void TestGraphControl()
+        {
+            GraphControl.Grapher grapher = new GraphControl.Grapher();
+            string check = grapher.Name;
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(TestGraphControl));
+        }
     }
 }
