@@ -1,0 +1,3 @@
+#Getting Started:
+#  regex <\t>	<Pattern> <\t>	<Value>
+#  replace <\t>	<Pattern> <\t>	<Value>
