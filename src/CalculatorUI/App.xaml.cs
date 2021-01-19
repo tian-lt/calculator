@@ -390,7 +390,9 @@ namespace CalculatorApp
 
             public SafeFrameWindowCreation(WindowFrameService frameService, App parent)
             {
-
+                m_frameService = frameService;
+                m_frameOpenedInWindow = false;
+                m_parent = parent;
             }
 
             public void SetOperationSuccess(bool success)
