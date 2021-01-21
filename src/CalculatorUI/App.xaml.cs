@@ -44,7 +44,7 @@ namespace CalculatorApp
 {
     namespace ApplicationResourceKeys
     {
-        static public class Globals
+        static public partial class Globals
         {
             public static readonly string AppMinWindowHeight = "AppMinWindowHeight";
             public static readonly string AppMinWindowWidth = "AppMinWindowWidth";

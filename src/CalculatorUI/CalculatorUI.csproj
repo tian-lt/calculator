@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\AlwaysSelectedCollectionView.cs" />
+    <Compile Include="Common\AppLifecycleLogger.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -127,6 +128,7 @@
     <Compile Include="Utils\DispatcherTimerDelayer.cs" />
     <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="WindowFrameService.cs" />
+    <Compile Include="WinMeta.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
