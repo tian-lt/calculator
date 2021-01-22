@@ -76,6 +76,7 @@ namespace CalculatorApp
 
             this.Suspending += OnSuspending;
 
+            // CSHARP_MIGRATION: TODO:
 #if _DEBUG
     this.DebugSettings.IsBindingTracingEnabled = true;
     this.DebugSettings.BindingFailed += new BindingFailedEventHandler((_In_ Object  /*sender*/, _In_ BindingFailedEventArgs  e) => {
@@ -166,7 +167,7 @@ namespace CalculatorApp
 
         private async void OnAppLaunch(IActivatedEventArgs args, String argument)
         {
-
+            // CSHARP_MIGRATION: TODO:
             // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
             //#if _DEBUG
             //    if (IsDebuggerPresent())
@@ -374,6 +375,7 @@ namespace CalculatorApp
         private void RegisterDependencyProperties()
         {
 
+            // CSHARP_MIGRATION: TODO:
             //NarratorNotifier.RegisterDependencyProperties();
 
         }
@@ -381,6 +383,7 @@ namespace CalculatorApp
         private void OnSuspending(Object sender, SuspendingEventArgs args)
         {
 
+            // CSHARP_MIGRATION: TODO:
             //TraceLogger.GetInstance().LogButtonUsage();
 
         }
@@ -428,12 +431,14 @@ namespace CalculatorApp
 
             try
             {
+                // CSHARP_MIGRATION: TODO:
                 //var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
 
                 var jumpList = await JumpList.LoadCurrentAsync();
                 jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
                 jumpList.Items.Clear();
 
+                // CSHARP_MIGRATION: TODO:
                 //foreach (NavCategory option in calculatorOptions.Categories)
                 //{
                 //    if (!option.IsEnabled)
@@ -464,6 +469,8 @@ namespace CalculatorApp
             // Unregister the event handler of the Main Page
             var frame = (Window.Current.Content as Frame);
             var mainPage = (frame.Content as MainPage);
+
+            // CSHARP_MIGRATION: TODO:
             //mainPage.UnregisterEventHandlers();
 
             //return frameService.HandleViewRelease().ContinueWith(() => {
@@ -486,6 +493,7 @@ namespace CalculatorApp
             {
 
                 m_secondaryWindows[frameService.GetViewId()] = frameService;
+                // CSHARP_MIGRATION: TODO:
                 //TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
 
             }
@@ -530,6 +538,7 @@ namespace CalculatorApp
         private int m_mainViewId;
         private bool m_preLaunched;
 
+        // CSHARP_MIGRATION: TODO: check whether or not this field is in use.
         private Windows.UI.Xaml.Controls.Primitives.Popup m_aboutPopup;
     }
 
