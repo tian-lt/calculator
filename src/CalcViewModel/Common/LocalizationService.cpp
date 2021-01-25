@@ -423,7 +423,7 @@ CurrencyFormatter ^ LocalizationService::GetRegionalSettingsAwareCurrencyFormatt
 
     auto currencyFormatter = ref new CurrencyFormatter(userCurrency, languageIdentifiers, GlobalizationPreferences::HomeGeographicRegion);
 
-    int fractionDigits = LocalizationSettings::GetInstance().GetCurrencyTrailingDigits();
+    int fractionDigits = LocalizationSettings::GetInstance()->GetCurrencyTrailingDigits();
     currencyFormatter->FractionDigits = fractionDigits;
 
     return currencyFormatter;

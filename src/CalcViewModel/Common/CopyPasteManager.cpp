@@ -116,7 +116,7 @@ String
     }
 
     // Get english translated expression
-    String ^ englishString = LocalizationSettings::GetInstance().GetEnglishValueFromLocalizedDigits(pastedText);
+    String ^ englishString = LocalizationSettings::GetInstance()->GetEnglishValueFromLocalizedDigits(pastedText);
 
     // Removing the spaces, comma separator from the pasteExpression to allow pasting of expressions like 1  +     2+1,333
     auto pasteExpression = wstring(RemoveUnwantedCharsFromString(englishString)->Data());
@@ -599,22 +599,22 @@ ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, Nu
 }
 
 // return wstring after removing characters like space, comma, double quotes, and monetary prefix currency symbols supported by the Windows keyboard:
-// yen or yuan(¥) - 165
-// unspecified currency sign(¤) - 164
-// Ghanaian cedi(₵) - 8373
+// yen or yuan(Â¥) - 165
+// unspecified currency sign(Â¤) - 164
+// Ghanaian cedi(â‚µ) - 8373
 // dollar or peso($) - 36
-// colón(₡) - 8353
-// won(₩) - 8361
-// shekel(₪) - 8362
-// naira(₦) - 8358
-// Indian rupee(₹) - 8377
-// pound(£) - 163
-// euro(€) - 8364
+// colÃ³n(â‚¡) - 8353
+// won(â‚©) - 8361
+// shekel(â‚ª) - 8362
+// naira(â‚¦) - 8358
+// Indian rupee(â‚¹) - 8377
+// pound(Â£) - 163
+// euro(â‚¬) - 8364
 // non-breaking whitespace - 160
 Platform::String ^ CopyPasteManager::RemoveUnwantedCharsFromString(Platform::String ^ input)
 {
     constexpr wchar_t unWantedChars[] = { L' ', L',', L'"', 165, 164, 8373, 36, 8353, 8361, 8362, 8358, 8377, 163, 8364, 8234, 8235, 8236, 8237, 160 };
-    input = CalculatorApp::Common::LocalizationSettings::GetInstance().RemoveGroupSeparators(input);
+    input = CalculatorApp::Common::LocalizationSettings::GetInstance()->RemoveGroupSeparators(input);
     return ref new String(Utils::RemoveUnwantedCharsFromString(input->Data(), unWantedChars).c_str());
 }
 
