@@ -214,6 +214,43 @@ namespace CalculatorApp
                 return m_currencySymbolPrecedence;
             }
 
+            wchar_t GetDecimalSeparator()
+            {
+                return m_decimalSeparator;
+            }
+
+            wchar_t GetDigitSymbolFromEnUsDigit(wchar_t digitSymbol)
+            {
+                assert(digitSymbol >= L'0' && digitSymbol <= L'9');
+                int digit = digitSymbol - L'0';
+                return m_digitSymbols.at(digit); // throws on out of range
+            }
+
+            wchar_t GetNumberGroupSeparator()
+            {
+                return m_numberGroupSeparator;
+            }
+
+            bool IsEnUsDigit(wchar_t digit)
+            {
+                return (digit >= L'0' && digit <= L'9');
+            }
+
+            bool IsLocalizedDigit(wchar_t digit)
+            {
+                return std::find(m_digitSymbols.begin(), m_digitSymbols.end(), digit) != m_digitSymbols.end();
+            }
+
+            bool IsLocalizedHexDigit(wchar_t digit)
+            {
+                if (IsLocalizedDigit(digit))
+                {
+                    return true;
+                }
+
+                return std::find(s_hexSymbols.begin(), s_hexSymbols.end(), digit) != s_hexSymbols.end();
+            }
+
         internal:
             void LocalizeDisplayValue(_Inout_ std::wstring* stringToLocalize)
             {
@@ -229,43 +266,6 @@ namespace CalculatorApp
                         ch = GetDigitSymbolFromEnUsDigit(ch);
                     }
                 }
-            }
-
-            bool IsEnUsDigit(const wchar_t digit)
-            {
-                return (digit >= L'0' && digit <= L'9');
-            }
-
-            bool IsLocalizedDigit(const wchar_t digit)
-            {
-                return std::find(m_digitSymbols.begin(), m_digitSymbols.end(), digit) != m_digitSymbols.end();
-            }
-
-            bool IsLocalizedHexDigit(const wchar_t digit)
-            {
-                if (IsLocalizedDigit(digit))
-                {
-                    return true;
-                }
-
-                return std::find(s_hexSymbols.begin(), s_hexSymbols.end(), digit) != s_hexSymbols.end();
-            }
-
-            wchar_t GetDigitSymbolFromEnUsDigit(wchar_t digitSymbol)
-            {
-                assert(digitSymbol >= L'0' && digitSymbol <= L'9');
-                int digit = digitSymbol - L'0';
-                return m_digitSymbols.at(digit); // throws on out of range
-            }
-
-            wchar_t GetDecimalSeparator()
-            {
-                return m_decimalSeparator;
-            }
-
-            wchar_t GetNumberGroupSeparator()
-            {
-                return m_numberGroupSeparator;
             }
 
             std::wstring GetDecimalSeparatorStr()
