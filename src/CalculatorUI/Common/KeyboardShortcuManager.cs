@@ -143,7 +143,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for string.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty CharacterProperty =
-            DependencyProperty.Register("Character", typeof(string), typeof(KeyboardShortcutManager), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args)=>
+            DependencyProperty.RegisterAttached("Character", typeof(string), typeof(KeyboardShortcutManager), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args)=>
             {
                 OnCharacterPropertyChanged(sender, args.OldValue as string, args.NewValue as string);
             })));
@@ -157,7 +157,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for VirtualKey.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty VirtualKeyProperty =
-            DependencyProperty.Register("VirtualKey", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
+            DependencyProperty.RegisterAttached("VirtualKey", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
             {
                 OnVirtualKeyPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
             })));
@@ -171,7 +171,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for VirtualKeyControlChord.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty VirtualKeyControlChordProperty =
-            DependencyProperty.Register("VirtualKeyControlChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args) =>
+            DependencyProperty.RegisterAttached("VirtualKeyControlChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args) =>
             {
                 OnVirtualKeyControlChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
             })));
@@ -185,7 +185,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for VirtualKeyControlChord.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty VirtualKeyShiftChordProperty =
-            DependencyProperty.Register("VirtualKeyControlChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
+            DependencyProperty.RegisterAttached("VirtualKeyControlChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
             {
                 OnVirtualKeyShiftChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
             })));
@@ -199,7 +199,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for VirtualKeyAltChord.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty VirtualKeyAltChordProperty =
-            DependencyProperty.Register("VirtualKeyAltChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
+            DependencyProperty.RegisterAttached("VirtualKeyAltChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
             {
                 OnVirtualKeyAltChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
             })));
@@ -213,7 +213,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for VirtualKeyControlShiftChord.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty VirtualKeyControlShiftChordProperty =
-            DependencyProperty.Register("VirtualKeyControlShiftChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
+            DependencyProperty.RegisterAttached("VirtualKeyControlShiftChord", typeof(MyVirtualKey), typeof(KeyboardShortcutManager), new PropertyMetadata(default(MyVirtualKey), new PropertyChangedCallback((sender, args)=>
             {
                 OnVirtualKeyControlShiftChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
             })));
