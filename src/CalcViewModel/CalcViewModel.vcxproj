@@ -316,6 +316,7 @@
     <ClInclude Include="Common\NumberBase.h" />
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
+    <ClInclude Include="Common\ViewModelUtilities.h" />
     <ClInclude Include="DataLoaders\CurrencyDataLoader.h" />
     <ClInclude Include="DataLoaders\CurrencyHttpClient.h" />
     <ClInclude Include="DataLoaders\ICurrencyHttpClient.h" />
@@ -352,6 +353,7 @@
     <ClCompile Include="Common\NetworkManager.cpp" />
     <ClCompile Include="Common\TraceLogger.cpp" />
     <ClCompile Include="Common\Utils.cpp" />
+    <ClCompile Include="Common\ViewModelUtilities.cpp" />
     <ClCompile Include="DataLoaders\CurrencyDataLoader.cpp" />
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
     <ClCompile Include="DataLoaders\UnitConverterDataLoader.cpp" />
