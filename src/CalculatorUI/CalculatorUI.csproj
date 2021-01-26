@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Common\AlwaysSelectedCollectionView.cs" />
     <Compile Include="Common\AppLifecycleLogger.cs" />
+    <Compile Include="Common\KeyboardShortcuManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -161,6 +162,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
+      <Project>{90e9761d-9262-4773-942d-caeae75d7140}</Project>
+      <Name>CalcViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
+      <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
+      <Name>GraphControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TraceLogging\TraceLogging.vcxproj">
       <Project>{fc81ff41-02cd-4cd9-9bc5-45a1e39ac6ed}</Project>
       <Name>TraceLogging</Name>
