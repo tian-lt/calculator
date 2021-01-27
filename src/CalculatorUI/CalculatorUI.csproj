@@ -123,6 +123,7 @@
     <Compile Include="Common\AppLifecycleLogger.cs" />
     <Compile Include="Common\KeyboardShortcuManager.cs" />
     <Compile Include="Common\ValidatingConverters.cs" />
+    <Compile Include="Common\ViewState.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
