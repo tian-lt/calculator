@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 using CalculatorApp;
-//using CalculatorApp.Common;
+using CalculatorApp.Common;
 using TraceLogging;
 
 using Windows.ApplicationModel;
@@ -23,6 +23,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Interop;
 using Windows.UI.Xaml.Navigation;
 using System.Data;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace CalculatorApp
 {
@@ -31,69 +33,60 @@ namespace CalculatorApp
 
         public Page GetCurrentPage()
         {
-
             return (m_frame.Content as Page);
-
         }
 
         public void SetNewFrame(Windows.UI.Xaml.Controls.Frame frame)
         {
-
             Debug.Assert(frame.BackStackDepth == 0);
             m_frame = frame;
-
         }
 
         // createdByUs means any window that we create.
         // !createdByUs means the main window
         internal static WindowFrameService CreateNewWindowFrameService(Frame viewFrame, bool createdByUs, WeakReference parent)
         {
-
             Debug.Assert(CoreWindow.GetForCurrentThread() != null);
             var frameService = new WindowFrameService(viewFrame, parent);
             frameService.InitializeFrameService(createdByUs);
             return frameService;
-
         }
 
         public CoreDispatcher GetCoreDispatcher()
         {
-
             return m_coreDispatcher;
-
         }
 
         public int GetViewId()
         {
-
             return m_viewId;
-
         }
 
         public void RegisterOnWindowClosingHandler(Action onWindowClosingHandler)
         {
-
             m_onWindowClosingHandlers.Add(onWindowClosingHandler);
-
         }
 
-        public async Task HandleViewRelease()
+        public Task HandleViewRelease()
         {
             var that = this;
-            //task_completion_event<void> closingHandlersCompletedEvent;
-            await m_coreDispatcher.RunAsync(CoreDispatcherPriority.Low, new DispatchedHandler(() =>
+
+            TaskCompletionSource<object> tsource = new TaskCompletionSource<object>();
+
+            _ = m_coreDispatcher.RunAsync(CoreDispatcherPriority.Low, new DispatchedHandler(() =>
             {
-                //KeyboardShortcutManager.OnWindowClosed(that.m_viewId);
+                KeyboardShortcutManager.OnWindowClosed(that.m_viewId);
                 Window.Current.Content = null;
                 that.InvokeWindowClosingHandlers();
                 // This is to ensure InvokeWindowClosingHandlers is be done before RemoveWindowFromMap
                 // If InvokeWindowClosingHandlers throws any exception we want it to crash the application
                 // so we are OK not setting closingHandlersCompletedEvent in that case
-                //closingHandlersCompletedEvent.set();
+                tsource.SetResult(new object());
                 that.m_coreDispatcher.StopProcessEvents();
                 Window.Current.Close();
             }));
-            //return create_task(closingHandlersCompletedEvent);
+
+            return tsource.Task;
         }
 
         // Throws InvalidArgumentException if a service is already registered with the specified id

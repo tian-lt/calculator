@@ -153,7 +153,7 @@ namespace CalculatorApp
             Window.Current.Activate();
         }
 
-        private async void OnAppLaunch(IActivatedEventArgs args, String argument)
+        private void OnAppLaunch(IActivatedEventArgs args, String argument)
         {
             // CSHARP_MIGRATION: TODO:
             // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
@@ -234,7 +234,7 @@ namespace CalculatorApp
                     if (!m_preLaunched)
                     {
                         var newCoreAppView = CoreApplication.CreateNewView();
-                        await newCoreAppView.Dispatcher.RunAsync(
+                        _ = newCoreAppView.Dispatcher.RunAsync(
                             CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
                             {
                                 if (weak.IsAlive)
@@ -299,7 +299,7 @@ namespace CalculatorApp
 
                         if (activationViewSwitcher != null)
                         {
-                            await activationViewSwitcher.ShowAsStandaloneAsync(
+                            _ = activationViewSwitcher.ShowAsStandaloneAsync(
                                 ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread()), ViewSizePreference.Default);
                         }
                         else
@@ -342,7 +342,7 @@ namespace CalculatorApp
                                 var viewId = (args as IApplicationViewActivatedEventArgs).CurrentlyShownApplicationViewId;
                                 if (viewId != 0)
                                 {
-                                    await activationViewSwitcher.ShowAsStandaloneAsync(viewId);
+                                    _ = activationViewSwitcher.ShowAsStandaloneAsync(viewId);
                                 }
                             }
                         }
@@ -443,7 +443,6 @@ namespace CalculatorApp
 
         private async Task HandleViewReleaseAndRemoveWindowFromMap(WindowFrameService frameService)
         {
-
             WeakReference weak = new WeakReference(this);
 
             // Unregister the event handler of the Main Page
