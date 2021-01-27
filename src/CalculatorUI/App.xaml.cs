@@ -63,7 +63,6 @@ namespace CalculatorApp
         /// </summary>
         public App()
         {
-
             this.InitializeComponent();
 
             m_preLaunched = false;
@@ -87,7 +86,6 @@ namespace CalculatorApp
         }
     });
 #endif
-
         }
 
         /// <summary>
@@ -98,63 +96,54 @@ namespace CalculatorApp
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-
             if (args.PrelaunchActivated)
             {
                 // If the app got pre-launch activated, then save that state in a flag
                 m_preLaunched = true;
             }
             OnAppLaunch(args, args.Arguments);
-
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
         {
-
             if (args.Kind == ActivationKind.Protocol)
             {
                 // We currently don't pass the uri as an argument,
                 // and handle any protocol launch as a normal app launch.
                 OnAppLaunch(args, null);
             }
-
         }
 
-        internal async void RemoveWindow(WindowFrameService frameService)
+        internal async Task RemoveWindow(WindowFrameService frameService)
         {
-
             // Shell does not allow killing the main window.
             if (m_mainViewId != frameService.GetViewId())
             {
                 await HandleViewReleaseAndRemoveWindowFromMap(frameService);
             }
-
         }
 
         internal void RemoveSecondaryWindow(WindowFrameService frameService)
         {
-
             // Shell does not allow killing the main window.
             if (m_mainViewId != frameService.GetViewId())
             {
                 RemoveWindowFromMap(frameService.GetViewId());
             }
-
         }
 
         private static Frame CreateFrame()
         {
-
             var frame = new Frame();
+
+            // CSHARP_MIGRATION: TODO:
             //frame.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
 
             return frame;
-
         }
 
         private static void SetMinWindowSizeAndActivate(Frame rootFrame, Size minWindowSize)
         {
-
             // SetPreferredMinSize should always be called before Window.Activate
             ApplicationView appView = ApplicationView.GetForCurrentView();
             appView.SetPreferredMinSize(minWindowSize);
@@ -162,7 +151,6 @@ namespace CalculatorApp
             // Place the frame in the current Window
             Window.Current.Content = rootFrame;
             Window.Current.Activate();
-
         }
 
         private async void OnAppLaunch(IActivatedEventArgs args, String argument)
@@ -211,7 +199,7 @@ namespace CalculatorApp
                     {
                         ApplicationViewSwitcher.DisableSystemViewActivationPolicy();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         // Log that DisableSystemViewActionPolicy didn't work
                     }
@@ -316,6 +304,7 @@ namespace CalculatorApp
                         }
                         else
                         {
+                            // CSHARP_MIGRATION: TODO:
                             //TraceLogger.GetInstance().LogError(ViewMode.None, "App.OnAppLaunch", "Null_ActivationViewSwitcher");
                         }
                     }
@@ -362,30 +351,23 @@ namespace CalculatorApp
                     }
                 }
             }
-
         }
 
         private void DismissedEventHandler(SplashScreen sender, Object e)
         {
-
             SetupJumpList();
-
         }
 
         private void RegisterDependencyProperties()
         {
-
             // CSHARP_MIGRATION: TODO:
             //NarratorNotifier.RegisterDependencyProperties();
-
         }
 
         private void OnSuspending(Object sender, SuspendingEventArgs args)
         {
-
             // CSHARP_MIGRATION: TODO:
             //TraceLogger.GetInstance().LogButtonUsage();
-
         }
 
         sealed class SafeFrameWindowCreation
@@ -422,13 +404,12 @@ namespace CalculatorApp
             private App m_parent;
         };
 
-        //private  concurrency.reader_writer_lock m_windowsMapLock ;
-        private readonly object m_windowsMapLock = new object();
-        private Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
 
-        private async void SetupJumpList()
+
+        // CSHARP_MIGRATION: TODO: check what is the pragma used for???
+        //#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
+        private async Task SetupJumpList()
         {
-
             try
             {
                 // CSHARP_MIGRATION: TODO:
@@ -458,7 +439,6 @@ namespace CalculatorApp
             catch
             {
             }
-
         }
 
         private async Task HandleViewReleaseAndRemoveWindowFromMap(WindowFrameService frameService)
@@ -473,37 +453,28 @@ namespace CalculatorApp
             // CSHARP_MIGRATION: TODO:
             //mainPage.UnregisterEventHandlers();
 
-            //return frameService.HandleViewRelease().ContinueWith(() => {
-            //        var that = weak.Resolve<App>();
-            //        that.RemoveWindowFromMap(frameService.GetViewId());
-            //    },
             await frameService.HandleViewRelease();
-            var that = weak.Target as App;
-            that.RemoveWindowFromMap(frameService.GetViewId());
-            //task_continuation_context.use_arbitrary());
-
+            await Task.Run(() =>
+            {
+                var that = weak.Target as App;
+                that.RemoveWindowFromMap(frameService.GetViewId());
+            }).ConfigureAwait(false /* task_continuation_context::use_arbitrary() */);
         }
 
 
         private void AddWindowToMap(WindowFrameService frameService)
         {
-
-            //reader_writer_lock.scoped_lock lock(m_windowsMapLock);
-            lock (m_windowsMapLock)
+            lock (m_windowsMapLockMutex)
             {
-
                 m_secondaryWindows[frameService.GetViewId()] = frameService;
                 // CSHARP_MIGRATION: TODO:
                 //TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
-
             }
         }
 
         private WindowFrameService GetWindowFromMap(int viewId)
         {
-
-            //reader_writer_lock.scoped_lock_read lock(m_windowsMapLock);
-            lock (m_windowsMapLock)
+            lock (m_windowsMapLockMutex)
             {
                 WindowFrameService windowMapEntry;
                 if (m_secondaryWindows.TryGetValue(viewId, out windowMapEntry))
@@ -520,8 +491,7 @@ namespace CalculatorApp
         private void RemoveWindowFromMap(int viewId)
         {
 
-            //reader_writer_lock.scoped_lock lock(m_windowsMapLock);
-            lock (m_windowsMapLock)
+            lock (m_windowsMapLockMutex)
             {
                 WindowFrameService iter;
                 if (m_secondaryWindows.TryGetValue(viewId, out iter))
@@ -535,6 +505,8 @@ namespace CalculatorApp
             }
         }
 
+        private readonly object m_windowsMapLockMutex= new object();
+        private Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
         private int m_mainViewId;
         private bool m_preLaunched;
 
