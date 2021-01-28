@@ -114,12 +114,12 @@ namespace CalculatorApp
             }
         }
 
-        internal async Task RemoveWindow(WindowFrameService frameService)
+        internal void RemoveWindow(WindowFrameService frameService)
         {
             // Shell does not allow killing the main window.
             if (m_mainViewId != frameService.GetViewId())
             {
-                await HandleViewReleaseAndRemoveWindowFromMap(frameService);
+                _ = HandleViewReleaseAndRemoveWindowFromMap(frameService);
             }
         }
 
@@ -355,7 +355,7 @@ namespace CalculatorApp
 
         private void DismissedEventHandler(SplashScreen sender, Object e)
         {
-            SetupJumpList();
+            _ = SetupJumpList();
         }
 
         private void RegisterDependencyProperties()
@@ -372,7 +372,6 @@ namespace CalculatorApp
 
         sealed class SafeFrameWindowCreation
         {
-
             public SafeFrameWindowCreation(WindowFrameService frameService, App parent)
             {
                 m_frameService = frameService;
