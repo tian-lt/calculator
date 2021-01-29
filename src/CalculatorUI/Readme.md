@@ -6,6 +6,13 @@ Legends
  - 🚀: The work that is covered by automation `Sharpify`(the old tool)
  - 🔥: The work that is covered by automation `CSharpifier`(the new tool)
 
+
+## Starting Point:
+
+This C# UI feature branch was forked from below commit of microsoft/master branch
+
+`b7ca0eb - Updateto2101release (#1457) - Cory Volk (master)`
+
 ## Comments
 
 Leave the comment started with `// CSHARP_MIGRATION: TODO:` whenever there's future works required for C# migration such as double-check, unresolved requirments etc.
