@@ -4,7 +4,7 @@
 
 Legends
  - 🚀: The work that is covered by automation `Sharpify`(the old tool)
- - 🔥: The works that is covered by automation `CSharpifier`(the new tool)
+ - 🔥: The work that is covered by automation `CSharpifier`(the new tool)
 
 ## Keywords
 Reinterpret C++/CX keywords to C# types
@@ -79,7 +79,6 @@ C#
 
 C++/CX 
 ```
-
 // header file
 namespace CalculatorNS
 {
@@ -103,7 +102,6 @@ namespace CalculatorNS
         int Add
     }
 }
-
 ```
 
 C#
@@ -141,6 +139,131 @@ void foo()
 }
 ```
 
+### create_task().then().then()...
+
+C++/CX
+```
+[...]()
+{
+    create_task(ReturnBoolAsync())
+        .then([...](bool flag)
+        {
+            bar(flag);
+        });
+}
+```
+
+C#
+```
+async ()=>
+{
+    flag = await ReturnBoolAsync();
+    bar(flag);
+}
+```
+
+### async methods
+C++/CX
+```
+task<void> foo()
+{
+    auto bar = co_await DoSthAsync();
+    // do sth with bar
+    co_await bar->AsyncCall();
+}
+```
+
+C#
+```
+async Task foo()
+{
+    var bar = await DoSthAsync();
+    // do sth with bar
+    await bar->AsyncCall();
+}
+```
+
+### use_current & use_arbitrary
+C++/CX
+```
+{
+    DoSthAsync()
+        .then([]()
+        {
+            // do sth else
+        },
+        task_continuation_context::use_arbitrary())
+        .then([]()
+        {
+            // do sth else else
+        },
+        task_continuation_context::use_current())
+}
+```
+
+C#
+```
+{
+    await DoSthAsync();
+    await Task.Run(()=>
+    {
+        // do sth else
+    }).ConfigureAwait(false /* task_continuation_context::use_arbitrary() */);
+    await Task.Run(()=>
+    {
+        // do sth else else
+    }) /* task_continuation_context::use_arbitrary() */;
+}
+```
+
+## Dependency Property
+
+### DEPENDENCY_PROPERTY_OWNER(owner)
+C++/CX
+```
+DEPENDENCY_PROPERTY_OWNER(KeyboardShortcutManager);
+```
+
+C#: Remove such code lines since there's no need for C# code to persist such DP context.
+
+
+### DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(type, name)
+
+C++/CX
+```
+public:
+DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(Platform::String ^, Character);
+
+...
+
+private:
+static void OnCharacterPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, Platform::String ^ oldValue, Platform::String ^ newValue);
+```
+
+C#
+```
+public string Character
+{
+    get { return (string)GetValue(CharacterProperty); }
+    set { SetValue(CharacterProperty, value); }
+}
+
+// Using a DependencyProperty as the backing store for string.  This enables animation, styling, binding, etc...
+public static readonly DependencyProperty CharacterProperty =
+DependencyProperty.RegisterAttached("Character", typeof(string), typeof(KeyboardShortcutManager), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args)=>
+{
+    OnCharacterPropertyChanged(sender, args.OldValue as string, args.NewValue as string);
+})));
+
+...
+
+private static void OnCharacterPropertyChanged(DependencyObject target, String oldValue, String newValue)
+{...}
+
+```
+
+
+## Exceptions Handling (TBD)
 
 
 ## Miscellaneous 
