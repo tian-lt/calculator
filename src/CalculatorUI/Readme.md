@@ -14,6 +14,7 @@ Reinterpret C++/CX keywords to C# types
 | 🚀auto                                        | var                                             |
 | 🚀enum class                                  | enum                                            |
 | 🚀static_cast&lt;TargetT&gt;(bar)             | (TargetT)bar                                    |
+| 🚀[safe_cast](https://docs.microsoft.com/en-us/cpp/extensions/safe-cast-cpp-component-extensions?view=msvc-160)&lt;TargetT&gt;(bar)               | (bar as TargetT)                                |
 | 🚀dynamic_cast&lt;TargetT&gt;(bar)            | (bar as TargetT)                                |
 | 🚀reinterpret_cast&lt;TargetT&gt;(bar)        | (bar as TargetT)                                |
 | 🚀const_cast&lt;TargetT&gt;(bar)              | (bar as TargetT) ???                            |
