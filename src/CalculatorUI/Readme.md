@@ -6,6 +6,24 @@ Legends
  - 🚀: The work that is covered by automation `Sharpify`(the old tool)
  - 🔥: The work that is covered by automation `CSharpifier`(the new tool)
 
+## Comments
+
+Leave the comment started with `// CSHARP_MIGRATION: TODO:` whenever there's future works required for C# migration such as double-check, unresolved requirments etc.
+
+For example:
+```
+private void OnConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs e)
+{
+    // CSHARP_MIGRATION: TODO:
+    //TraceLogger.GetInstance().DecreaseWindowCount();
+    if (m_parent.IsAlive)
+    {
+        var parent = m_parent.Target as App;
+        parent.RemoveWindow(this);
+    }
+}
+```
+
 ## Keywords
 Reinterpret C++/CX keywords to C# types
 | C++/CX Type                                    | C# Type                                         |
