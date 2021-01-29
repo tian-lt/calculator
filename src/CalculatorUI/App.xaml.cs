@@ -38,6 +38,7 @@ using Windows.UI.Xaml.Interop;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using System.Threading;
 
 namespace CalculatorApp
 {
@@ -476,20 +477,27 @@ namespace CalculatorApp
 
         private void AddWindowToMap(WindowFrameService frameService)
         {
-            lock (m_windowsMapLockMutex)
+            try
             {
+                m_windowsMapLock.EnterWriteLock();
+
                 m_secondaryWindows[frameService.GetViewId()] = frameService;
                 // CSHARP_MIGRATION: TODO:
                 //TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
+            }
+            finally
+            {
+                m_windowsMapLock.ExitWriteLock();
             }
         }
 
         private WindowFrameService GetWindowFromMap(int viewId)
         {
-            lock (m_windowsMapLockMutex)
+            try
             {
-                WindowFrameService windowMapEntry;
-                if (m_secondaryWindows.TryGetValue(viewId, out windowMapEntry))
+                m_windowsMapLock.EnterReadLock();
+
+                if (m_secondaryWindows.TryGetValue(viewId, out var windowMapEntry))
                 {
                     return windowMapEntry;
                 }
@@ -498,26 +506,28 @@ namespace CalculatorApp
                     return null;
                 }
             }
+            finally
+            {
+                m_windowsMapLock.ExitReadLock();
+            }
         }
 
         private void RemoveWindowFromMap(int viewId)
         {
-
-            lock (m_windowsMapLockMutex)
+            try
             {
-                WindowFrameService iter;
-                if (m_secondaryWindows.TryGetValue(viewId, out iter))
-                {
-                    m_secondaryWindows.Remove(viewId);
-                }
-                else
-                {
-                    Debug.Assert(iter != null, "Window does not exist in the list");
-                }
+                m_windowsMapLock.EnterWriteLock();
+
+                Debug.Assert(m_secondaryWindows.ContainsKey(viewId), "Window does not exist in the list");
+                m_secondaryWindows.Remove(viewId);
+            }
+            finally
+            {
+                m_windowsMapLock.ExitWriteLock();
             }
         }
 
-        private readonly object m_windowsMapLockMutex= new object();
+        private readonly ReaderWriterLockSlim m_windowsMapLock = new ReaderWriterLockSlim();
         private Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
         private int m_mainViewId;
         private bool m_preLaunched;
