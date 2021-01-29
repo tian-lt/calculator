@@ -30,7 +30,6 @@ namespace CalculatorApp
 {
     public sealed class WindowFrameService
     {
-
         public Page GetCurrentPage()
         {
             return (m_frame.Content as Page);
@@ -92,22 +91,18 @@ namespace CalculatorApp
         // Throws InvalidArgumentException if a service is already registered with the specified id
         public void RegisterRuntimeWindowService(Type serviceId, Object service)
         {
-
             if (TryResolveRuntimeWindowService(serviceId) != null)
             {
                 throw new DuplicateNameException(serviceId + " already registered");
             }
 
             m_runtimeServicesMap[serviceId.Name] = service;
-
         }
 
         // Returns false if no service was registered with the specified id
         public bool RemoveRuntimeWindowService(Type serviceId)
         {
-
             return m_runtimeServicesMap.Remove(serviceId.Name);
-
         }
 
         // Throws InvalidArgumentException if no service is registered with the specified id
@@ -128,21 +123,17 @@ namespace CalculatorApp
 
         public Frame GetFrame()
         {
-
             return m_frame;
-
         }
 
         public void InvokeWindowClosingHandlers()
         {
-
             // Should be called only once just before we kill the window.
             foreach (var handler in m_onWindowClosingHandlers)
             {
                 handler();
             }
             m_onWindowClosingHandlers.Clear();
-
         }
 
         private WindowFrameService(Frame frame, WeakReference parent)
@@ -152,12 +143,10 @@ namespace CalculatorApp
             m_frame = frame;
             m_parent = parent;
             m_viewId = ApplicationView.GetApplicationViewIdForWindow(m_currentWindow);
-
         }
 
         private void InitializeFrameService(bool createdByUs)
         {
-
             Debug.Assert(createdByUs == (!CoreApplication.GetCurrentView().IsHosted && !CoreApplication.GetCurrentView().IsMain));
             if (createdByUs)
             {
@@ -167,11 +156,11 @@ namespace CalculatorApp
             {
                 CoreWindow.GetForCurrentThread().Closed += OnClosed;
             }
-
         }
 
         private void OnConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs e)
         {
+            // CSHARP_MIGRATION: TODO:
             //TraceLogger.GetInstance().DecreaseWindowCount();
             if (m_parent.IsAlive)
             {
@@ -182,7 +171,6 @@ namespace CalculatorApp
 
         private void OnClosed(CoreWindow sender, CoreWindowEventArgs args)
         {
-
             if (m_parent.IsAlive)
             {
                 var parent = m_parent.Target as App;
