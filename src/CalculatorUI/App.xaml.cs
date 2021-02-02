@@ -213,7 +213,7 @@ namespace CalculatorApp
                 {
                     // We couldn't navigate to the main page, kill the app so we have a good
                     // stack to debug
-                    throw new Exception();
+                    throw new SystemException();
                 }
 
                 SetMinWindowSizeAndActivate(rootFrame, minWindowSize);
@@ -246,7 +246,7 @@ namespace CalculatorApp
                                     {
                                         // We couldn't navigate to the main page, kill the app so we have a good
                                         // stack to debug
-                                        throw new Exception();
+                                        throw new SystemException();
                                     }
 
                                     var frameService = WindowFrameService.CreateNewWindowFrameService(newRootFrame, true, weak);
@@ -334,7 +334,7 @@ namespace CalculatorApp
                         {
                             // We couldn't navigate to the main page,
                             // kill the app so we have a good stack to debug
-                            throw new Exception();
+                            throw new SystemException();
                         }
                     }
                     if (ApplicationView.GetForCurrentView().ViewMode != ApplicationViewMode.CompactOverlay)
