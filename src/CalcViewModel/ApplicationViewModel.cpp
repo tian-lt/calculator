@@ -21,6 +21,7 @@ using namespace Platform::Collections;
 using namespace std;
 using namespace Windows::System;
 using namespace Windows::Storage;
+using namespace Utils;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Globalization;
 using namespace Windows::UI::ViewManagement;

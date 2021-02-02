@@ -599,17 +599,17 @@ ULONG32 CopyPasteManager::ProgrammerOperandLength(Platform::String ^ operand, Nu
 }
 
 // return wstring after removing characters like space, comma, double quotes, and monetary prefix currency symbols supported by the Windows keyboard:
-// yen or yuan(Â¥) - 165
-// unspecified currency sign(Â¤) - 164
-// Ghanaian cedi(â‚µ) - 8373
+// yen or yuan(¥) - 165
+// unspecified currency sign(¤) - 164
+// Ghanaian cedi(₵) - 8373
 // dollar or peso($) - 36
-// colÃ³n(â‚¡) - 8353
-// won(â‚©) - 8361
-// shekel(â‚ª) - 8362
-// naira(â‚¦) - 8358
-// Indian rupee(â‚¹) - 8377
-// pound(Â£) - 163
-// euro(â‚¬) - 8364
+// colón(₡) - 8353
+// won(₩) - 8361
+// shekel(₪) - 8362
+// naira(₦) - 8358
+// Indian rupee(₹) - 8377
+// pound(£) - 163
+// euro(€) - 8364
 // non-breaking whitespace - 160
 Platform::String ^ CopyPasteManager::RemoveUnwantedCharsFromString(Platform::String ^ input)
 {
