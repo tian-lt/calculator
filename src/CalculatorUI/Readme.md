@@ -39,7 +39,7 @@ Reinterpret C++/CX keywords to C# types
 | 🚀auto                                        | var                                             |
 | 🚀enum class                                  | enum                                            |
 | 🚀static_cast&lt;TargetT&gt;(bar)             | (TargetT)bar                                    |
-| 🚀[safe_cast](https://docs.microsoft.com/en-us/cpp/extensions/safe-cast-cpp-component-extensions?view=msvc-160)&lt;TargetT&gt;(bar)               | (bar as TargetT)                                |
+| 🚀[safe_cast](https://docs.microsoft.com/en-us/cpp/extensions/safe-cast-cpp-component-extensions?view=msvc-160)&lt;TargetT&gt;(bar)               | (bar as TargetT) (wrong)  ---  (TargetT)bar (correct)                               |
 | 🚀dynamic_cast&lt;TargetT&gt;(bar)            | (bar as TargetT)                                |
 | 🚀reinterpret_cast&lt;TargetT&gt;(bar)        | (bar as TargetT)                                |
 | 🚀const_cast&lt;TargetT&gt;(bar)              | (bar as TargetT) ???                            |
@@ -79,6 +79,8 @@ Reinterpret C++/CX types to C# types
 
 ### concurrency::reader_writer_lock
 
+1. If `concurrency::reader_writer_lock` was being used in a way as same as what mutex does, then reinterpret it to lock statement.
+
 C++/CX
 ```
 // definition
@@ -99,6 +101,63 @@ C#
     ...
     lock(m_lockNameMutex)
     { // do something... }
+```
+2. However, if the code was really using `concurrency::reader_writer_lock` to distinguish reading and writing scenarios, then we need to consider `System.Threading.ReaderWriterLockSlim` in C#. 
+
+C++/CX
+```
+// definition
+    concurrency::reader_writer_lock m_lockName;
+
+// usage
+void bar::foo1()
+{
+    reader_writer_lock::scoped_lock_read lock(m_lockName);
+    // read some data from container
+}
+
+void bar::foo2()
+{
+    reader_writer_lock::scoped_lock lock(m_lockName);
+    // write some data into container
+}
+```
+
+C#
+```
+class bar
+{
+    ...
+// definition
+    private ReaderWriterLockSlim m_lockName = new ReaderWriterLockSlim();
+
+// usage
+    public foo1()
+    {
+        m_lockName.EnterReadLock();
+        try
+        {
+            // read some data from container
+        }
+        finally
+        {
+            m_lockName.ExitReadLock();
+        }
+    }
+
+    public foo2()
+    {
+        m_lockName.EnterWriteLock();
+        try
+        {
+            // write some data into container
+        }
+        finally
+        {
+            m_lockName.ExitWriteLock();
+        }
+    }
+}
 ```
 
 ## Global Functions and Variables
