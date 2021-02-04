@@ -477,10 +477,9 @@ namespace CalculatorApp
 
         private void AddWindowToMap(WindowFrameService frameService)
         {
+            m_windowsMapLock.EnterWriteLock();
             try
             {
-                m_windowsMapLock.EnterWriteLock();
-
                 m_secondaryWindows[frameService.GetViewId()] = frameService;
                 // CSHARP_MIGRATION: TODO:
                 //TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
@@ -493,10 +492,9 @@ namespace CalculatorApp
 
         private WindowFrameService GetWindowFromMap(int viewId)
         {
+            m_windowsMapLock.EnterReadLock();
             try
             {
-                m_windowsMapLock.EnterReadLock();
-
                 if (m_secondaryWindows.TryGetValue(viewId, out var windowMapEntry))
                 {
                     return windowMapEntry;
@@ -514,10 +512,9 @@ namespace CalculatorApp
 
         private void RemoveWindowFromMap(int viewId)
         {
+            m_windowsMapLock.EnterWriteLock();
             try
             {
-                m_windowsMapLock.EnterWriteLock();
-
                 Debug.Assert(m_secondaryWindows.ContainsKey(viewId), "Window does not exist in the list");
                 m_secondaryWindows.Remove(viewId);
             }
