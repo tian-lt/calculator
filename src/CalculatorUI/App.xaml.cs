@@ -382,7 +382,7 @@ namespace CalculatorApp
             //TraceLogger.GetInstance().LogButtonUsage();
         }
 
-        sealed class SafeFrameWindowCreation : IDisposable
+        private sealed class SafeFrameWindowCreation : IDisposable
         {
             public SafeFrameWindowCreation(WindowFrameService frameService, App parent)
             {
