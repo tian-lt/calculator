@@ -515,8 +515,8 @@ namespace CalculatorApp
             m_windowsMapLock.EnterWriteLock();
             try
             {
-                Debug.Assert(m_secondaryWindows.ContainsKey(viewId), "Window does not exist in the list");
-                m_secondaryWindows.Remove(viewId);
+                bool removed = m_secondaryWindows.Remove(viewId);
+                Debug.Assert(removed != false, "Window does not exist in the list");
             }
             finally
             {
