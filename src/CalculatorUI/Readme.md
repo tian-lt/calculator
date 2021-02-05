@@ -132,7 +132,7 @@ class bar
     private ReaderWriterLockSlim m_lockName = new ReaderWriterLockSlim();
 
 // usage
-    public foo1()
+    public void foo1()
     {
         m_lockName.EnterReadLock();
         try
@@ -145,7 +145,7 @@ class bar
         }
     }
 
-    public foo2()
+    public void foo2()
     {
         m_lockName.EnterWriteLock();
         try
@@ -184,7 +184,7 @@ namespace CalculatorNS
         StringReference TextA(L"Hello C#");
         StringReference TextB(L"Goodbye C++/CX");
 
-        int Add
+        int AddNumber(int a, int b) { return a + b; }
     }
 }
 ```
@@ -199,6 +199,8 @@ namespace CalculatorNS
         {
             public static readonly string TextA("Hello C#");
             public static readonly string TextB("Goodbye C++/CX");
+
+            public static int AddNumber(int a, int b) { return a + b; }
         }
     }
 }
@@ -212,7 +214,7 @@ C++/CX
 ```
 void foo()
 {
-    create_task(some_async_call);
+    create_task(<some_async_call>);
 }
 ```
 
@@ -220,7 +222,7 @@ C#
 ```
 void foo()
 {
-    _ = some_async_call;
+    _ = <some_async_call>;
 }
 ```
 
@@ -240,7 +242,7 @@ C++/CX
 
 C#
 ```
-async ()=>
+async () =>
 {
     flag = await ReturnBoolAsync();
     bar(flag);
@@ -297,7 +299,7 @@ C#
     await Task.Run(()=>
     {
         // do sth else else
-    }) /* task_continuation_context::use_arbitrary() */;
+    }) /* task_continuation_context::use_current() */;
 }
 ```
 
