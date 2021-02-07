@@ -43,8 +43,8 @@ namespace CalculatorApp.Views.StateTriggers
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(AspectRatioTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args)=>
             {
-                var self = sender as AspectRatioTrigger;
-                self.OnSourcePropertyChanged(args.OldValue as FrameworkElement, args.NewValue as FrameworkElement);
+                var self = (AspectRatioTrigger)sender;
+                self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
             }));
 
 

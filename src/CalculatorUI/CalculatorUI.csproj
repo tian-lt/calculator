@@ -131,6 +131,7 @@
     <Compile Include="Utils\DispatcherTimerDelayer.cs" />
     <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="View\StateTriggers\AspectRatioTrigger.cs" />
+    <Compile Include="View\StateTriggers\ControlSizeTrigger.cs" />
     <Compile Include="WindowFrameService.cs" />
     <Compile Include="WinMeta.cs" />
   </ItemGroup>
