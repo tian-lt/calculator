@@ -33,7 +33,6 @@ public
         OBSERVABLE_PROPERTY_RW(int, TokenPosition);
         OBSERVABLE_PROPERTY_RW(bool, IsTokenEditable);
         OBSERVABLE_PROPERTY_RW(int, CommandIndex);
-        OBSERVABLE_PROPERTY_RW(TokenType, Type);
         OBSERVABLE_PROPERTY_R(Platform::String ^, OriginalToken);
 
         property bool IsTokenInEditMode
@@ -51,6 +50,10 @@ public
                 m_InEditMode = val;
             }
         }
+
+        // CSHARP_MIGRATION: TODO: this property has been changed from Internal to Public
+        // double check if this change is reasonable
+        OBSERVABLE_PROPERTY_RW(TokenType, Type);
 
     private:
         bool m_InEditMode;
