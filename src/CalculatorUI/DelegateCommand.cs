@@ -38,3 +38,4 @@ namespace CalculatorApp.Common
         private WeakReference m_weakTarget;
     }
 }
+
