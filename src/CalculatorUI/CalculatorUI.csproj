@@ -126,6 +126,7 @@
     <Compile Include="Common\ViewState.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ExpressionItemTemplateSelector.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
