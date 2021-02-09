@@ -345,12 +345,7 @@ public static readonly DependencyProperty SourceProperty =
 ...
 
 private void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
-{
-
-    UnregisterSizeChanged(oldValue);
-    RegisterSizeChanged(newValue);
-
-}
+{...}
 
 ```
 
