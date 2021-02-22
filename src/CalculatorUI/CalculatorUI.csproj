@@ -11,13 +11,15 @@
     <AssemblyName>CalculatorUI</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>B06D4942DD6AAC6D5659E3AF866A11D0081C12C1</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>WindowsDev_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -124,6 +126,8 @@
     <Compile Include="Common\KeyboardShortcuManager.cs" />
     <Compile Include="Common\ValidatingConverters.cs" />
     <Compile Include="Common\ViewState.cs" />
+    <Compile Include="Controls\EquationTextBox.cs" />
+    <Compile Include="Controls\MathRichEditBox.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ExpressionItemTemplateSelector.cs" />
@@ -131,17 +135,17 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
-    <Compile Include="View\MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DispatcherTimerDelayer.cs" />
     <Compile Include="Utils\VisualTree.cs" />
-    <Compile Include="View\StateTriggers\AspectRatioTrigger.cs" />
-    <Compile Include="View\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
+    <Compile Include="Views\StateTriggers\AspectRatioTrigger.cs" />
+    <Compile Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
       <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StateTriggers\ControlSizeTrigger.cs" />
+    <Compile Include="Views\StateTriggers\ControlSizeTrigger.cs" />
     <Compile Include="WindowFrameService.cs" />
     <Compile Include="WinMeta.cs" />
   </ItemGroup>
@@ -165,11 +169,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
+    <Page Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,7 +203,9 @@
       <HintPath>..\..\packages\Microsoft.UI.Xaml.2.4.3\lib\uap10.0\Microsoft.UI.Xaml.winmd</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="WindowsDev_TemporaryKey.pfx" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
