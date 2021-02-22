@@ -116,14 +116,14 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MathText.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MathTextProperty =
-                DependencyProperty.Register("MathText", typeof(string), typeof(MathRichEditBox), new PropertyMetadata(string.Empty, (sender, args)=> {
+                DependencyProperty.Register(nameof(MathText), typeof(string), typeof(MathRichEditBox), new PropertyMetadata(default(string), (sender, args)=> {
                     var self = (MathRichEditBox)sender;
                     self.OnMathTextPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
 
 
-            event EventHandler<MathRichEditBoxFormatRequest> FormatRequest;
-            event EventHandler<MathRichEditBoxSubmission>  EquationSubmitted;
+            public event EventHandler<MathRichEditBoxFormatRequest> FormatRequest;
+            public event EventHandler<MathRichEditBoxSubmission>  EquationSubmitted;
 
             public void OnMathTextPropertyChanged(string oldValue, string newValue)
             {
