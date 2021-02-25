@@ -131,6 +131,7 @@
     <Compile Include="Controls\HorizontalNoOverflowStackPanel.cs" />
     <Compile Include="Controls\MathRichEditBox.cs" />
     <Compile Include="Controls\RadixButton.cs" />
+    <Compile Include="Controls\SupplementaryItemsControl.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ExpressionItemTemplateSelector.cs" />

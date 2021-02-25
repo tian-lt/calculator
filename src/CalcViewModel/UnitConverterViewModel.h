@@ -92,6 +92,7 @@ namespace CalculatorApp
                 return m_Unit->GetModelUnit().isWhimsical;
             }
 
+        public:
             Platform::String ^ GetLocalizedAutomationName();
 
         public:
