@@ -129,6 +129,7 @@
     <Compile Include="Controls\EquationTextBox.cs" />
     <Compile Include="Controls\FlipButtons.cs" />
     <Compile Include="Controls\MathRichEditBox.cs" />
+    <Compile Include="Controls\RadixButton.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ExpressionItemTemplateSelector.cs" />
