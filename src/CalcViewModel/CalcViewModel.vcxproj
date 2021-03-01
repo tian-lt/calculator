@@ -314,6 +314,7 @@
     <ClInclude Include="Common\NavCategory.h" />
     <ClInclude Include="Common\NetworkManager.h" />
     <ClInclude Include="Common\NumberBase.h" />
+    <ClInclude Include="Common\RadixType.h" />
     <ClInclude Include="Common\TraceLogger.h" />
     <ClInclude Include="Common\Utils.h" />
     <ClInclude Include="Common\ViewModelUtilities.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="Common\LocalizationService.cpp" />
     <ClCompile Include="Common\NavCategory.cpp" />
     <ClCompile Include="Common\NetworkManager.cpp" />
+    <ClCompile Include="Common\RadixType.cpp" />
     <ClCompile Include="Common\TraceLogger.cpp" />
     <ClCompile Include="Common\Utils.cpp" />
     <ClCompile Include="Common\ViewModelUtilities.cpp" />

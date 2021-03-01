@@ -39,7 +39,7 @@ Reinterpret C++/CX keywords to C# types
 | 🚀auto                                        | var                                             |
 | 🚀enum class                                  | enum                                            |
 | 🚀static_cast&lt;TargetT&gt;(bar)             | (TargetT)bar                                    |
-| 🚀[safe_cast](https://docs.microsoft.com/en-us/cpp/extensions/safe-cast-cpp-component-extensions?view=msvc-160)&lt;TargetT&gt;(bar)               | (bar as TargetT) (wrong)  ---  (TargetT)bar (correct)                               |
+| [safe_cast](https://docs.microsoft.com/en-us/cpp/extensions/safe-cast-cpp-component-extensions?view=msvc-160)&lt;TargetT&gt;(bar)               | (TargetT)bar                               |
 | 🚀dynamic_cast&lt;TargetT&gt;(bar)            | (bar as TargetT)                                |
 | 🚀reinterpret_cast&lt;TargetT&gt;(bar)        | (bar as TargetT)                                |
 | 🚀const_cast&lt;TargetT&gt;(bar)              | (bar as TargetT) ???                            |
@@ -313,18 +313,53 @@ DEPENDENCY_PROPERTY_OWNER(KeyboardShortcutManager);
 
 C#: Remove such code lines since there's no need for C# code to persist such DP context.
 
+### DEPENDENCY_PROPERTY_WITH_CALLBACK(type, name)
+
+C++/CX
+```
+public:
+    DEPENDENCY_PROPERTY_WITH_CALLBACK(Windows::UI::Xaml::FrameworkElement^, Source);
+
+...
+
+private:
+    void OnSourcePropertyChanged(Windows::UI::Xaml::FrameworkElement^ oldValue, Windows::UI::Xaml::FrameworkElement^ newValue);
+```
+
+C#
+```
+public FrameworkElement Source
+{
+    get { return (FrameworkElement)GetValue(SourceProperty); }
+    set { SetValue(SourceProperty, value); }
+}
+
+// Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
+public static readonly DependencyProperty SourceProperty =
+    DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args)=>
+    {
+        var self = (ControlSizeTrigger)sender;
+        self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
+    }));
+
+...
+
+private void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
+{...}
+
+```
 
 ### DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(type, name)
 
 C++/CX
 ```
 public:
-DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(Platform::String ^, Character);
+    DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(Platform::String ^, Character);
 
 ...
 
 private:
-static void OnCharacterPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, Platform::String ^ oldValue, Platform::String ^ newValue);
+    static void OnCharacterPropertyChanged(Windows::UI::Xaml::DependencyObject ^ target, Platform::String ^ oldValue, Platform::String ^ newValue);
 ```
 
 C#
@@ -337,10 +372,10 @@ public string Character
 
 // Using a DependencyProperty as the backing store for string.  This enables animation, styling, binding, etc...
 public static readonly DependencyProperty CharacterProperty =
-DependencyProperty.RegisterAttached("Character", typeof(string), typeof(KeyboardShortcutManager), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args)=>
-{
-    OnCharacterPropertyChanged(sender, args.OldValue as string, args.NewValue as string);
-})));
+    DependencyProperty.RegisterAttached("Character", typeof(string), typeof(KeyboardShortcutManager), new PropertyMetadata(default(string), (sender, args)=>
+    {
+        OnCharacterPropertyChanged(sender, args.OldValue as string, args.NewValue as string);
+    }));
 
 ...
 

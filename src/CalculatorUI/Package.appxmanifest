@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="39ffba9b-5273-46c4-8ca2-49dbb7c1dc05"
-    Publisher="CN=tilia"
-    Version="1.0.0.0" />
+    Name="Microsoft.WindowsCalculator.Dev"
+    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+    Version="0.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="39ffba9b-5273-46c4-8ca2-49dbb7c1dc05" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>CalculatorUI</DisplayName>
-    <PublisherDisplayName>tilia</PublisherDisplayName>
+    <DisplayName>CSHARP_MIGRATION: TODO: DevAppStoreName</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,10 +32,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="CalculatorUI.App">
       <uap:VisualElements
-        DisplayName="CalculatorUI"
+        DisplayName="CSHARP_MIGRATION: TODO: DevAppName"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="CalculatorUI"
+        Description="CSHARP_MIGRATION: TODO: DevAppDescription"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
