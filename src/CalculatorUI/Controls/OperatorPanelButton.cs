@@ -89,16 +89,12 @@ namespace CalculatorApp
             {
                 base.OnToggle();
 
-                // CSHARP_MIGRATION: TODO:
-                // Check when IsChecked is null
-                if (IsChecked.Value)
+                if (IsChecked == true)
                 {
                     FlyoutMenu.ShowAt(this);
                 }
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // Convert Object to object. Optimize Sharpify for case change of Object, String...
             private void FlyoutClosed(object sender, object args)
             {
                 IsChecked = false;
