@@ -133,7 +133,7 @@
     <Compile Include="Controls\OperatorPanelListView.cs" />
     <Compile Include="Controls\OverflowTextBlock.cs" />
     <Compile Include="Controls\OverflowTextBlockAutomationPeer.cs" />
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="MainPage.xaml.cs" />
     <Compile Include="Controls\EquationTextBox.cs" />
     <Compile Include="Controls\FlipButtons.cs" />
     <Compile Include="Controls\HorizontalNoOverflowStackPanel.cs" />
@@ -147,6 +147,12 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Views\GraphingCalculator\GraphingSettings.xaml.cs">
+      <DependentUpon>GraphingSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cs">
+      <DependentUpon>KeyGraphFeaturesPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -181,6 +187,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
