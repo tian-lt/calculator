@@ -139,7 +139,6 @@
     <Compile Include="Controls\OperatorPanelListView.cs" />
     <Compile Include="Controls\OverflowTextBlock.cs" />
     <Compile Include="Controls\OverflowTextBlockAutomationPeer.cs" />
-    <Compile Include="MainPage.xaml.cs"/>
     <Compile Include="Controls\EquationTextBox.cs" />
     <Compile Include="Controls\FlipButtons.cs" />
     <Compile Include="Controls\HorizontalNoOverflowStackPanel.cs" />

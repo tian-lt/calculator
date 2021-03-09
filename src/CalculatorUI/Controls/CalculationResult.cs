@@ -339,7 +339,7 @@ namespace CalculatorApp
 
                     // CSHARP_MIGRATION: TODO:
                     // LocalizationService.GetInstance() not defined
-                    m_textBlock.FontFamily = LocalizationService.GetInstance().GetLanguageFontFamilyForType(LanguageFontType.UIText);
+                    //m_textBlock.FontFamily = LocalizationService.GetInstance().GetLanguageFontFamilyForType(LanguageFontType.UIText);
                 }
                 else
                 {
