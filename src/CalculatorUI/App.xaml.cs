@@ -39,6 +39,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.Threading;
+using System.Reflection;
 
 namespace CalculatorApp
 {
