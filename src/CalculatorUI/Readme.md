@@ -336,7 +336,7 @@ public FrameworkElement Source
 
 // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
 public static readonly DependencyProperty SourceProperty =
-    DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args)=>
+    DependencyProperty.Register(nameof(Source), typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args)=>
     {
         var self = (ControlSizeTrigger)sender;
         self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
