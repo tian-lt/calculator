@@ -364,19 +364,24 @@ private:
 
 C#
 ```
-public string Character
+public static readonly DependencyProperty CharacterProperty =
+    DependencyProperty.RegisterAttached(
+        "Character",
+        typeof(string),
+        typeof(KeyboardShortcutManager),
+        new PropertyMetadata(default(string), (sender, args)=> {
+            OnCharacterPropertyChanged(sender, (string)args.OldValue, (string)args.NewValue);
+        }));
+
+public static string GetCharacter(DependencyObject target)
 {
-    get { return (string)GetValue(CharacterProperty); }
-    set { SetValue(CharacterProperty, value); }
+    return (string)target.GetValue(CharacterProperty);
 }
 
-// Using a DependencyProperty as the backing store for string.  This enables animation, styling, binding, etc...
-public static readonly DependencyProperty CharacterProperty =
-    DependencyProperty.RegisterAttached("Character", typeof(string), typeof(KeyboardShortcutManager), new PropertyMetadata(default(string), (sender, args)=>
-    {
-        OnCharacterPropertyChanged(sender, args.OldValue as string, args.NewValue as string);
-    }));
-
+public static void SetCharacter(DependencyObject target, string value)
+{
+    target.SetValue(CharacterProperty, value);
+}
 ...
 
 private static void OnCharacterPropertyChanged(DependencyObject target, String oldValue, String newValue)
