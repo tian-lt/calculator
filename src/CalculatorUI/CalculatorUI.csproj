@@ -152,6 +152,9 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Views\HistoryList.xaml.cs">
+      <DependentUpon>HistoryList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\HistoryList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

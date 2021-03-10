@@ -30,10 +30,7 @@ namespace CalculatorApp
             DEPENDENCY_PROPERTY_ATTACHED_WITH_DEFAULT_AND_CALLBACK(LanguageFontType, FontType, LanguageFontType::UIText);
             DEPENDENCY_PROPERTY_ATTACHED_WITH_CALLBACK(double, FontSize);
 
-        internal:
             static LocalizationService ^ GetInstance();
-            static void OverrideWithLanguage(_In_ const wchar_t* const language);
-
             Windows::UI::Xaml::FlowDirection GetFlowDirection();
             bool IsRtlLayout();
             bool GetOverrideFontApiValues();
@@ -43,6 +40,8 @@ namespace CalculatorApp
             Windows::UI::Text::FontWeight GetFontWeightOverride();
             double GetFontScaleFactorOverride(LanguageFontType fontType);
 
+        internal:
+            static void OverrideWithLanguage(_In_ const wchar_t* const language);
             void Sort(std::vector<Platform::String ^>& source);
 
             template <typename T>
