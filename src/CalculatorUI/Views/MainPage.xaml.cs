@@ -30,14 +30,7 @@ namespace CalculatorApp
     {
         public MainPage()
         {
-            Stopwatch sw = new Stopwatch();
-            Debug.WriteLine("  -- MainPage()");
-
-            sw.Start();
             this.m_model = new ViewModel.ApplicationViewModel();
-            sw.Stop();
-            Debug.WriteLine($"  -- Model Loaded, duration: {sw.Elapsed}");
-
             this.InitializeComponent();
         }
 

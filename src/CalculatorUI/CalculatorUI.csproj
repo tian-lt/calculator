@@ -170,6 +170,9 @@
     <Compile Include="Views\NumberPad.xaml.cs">
       <DependentUpon>NumberPad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\OperatorsPanel.xaml.cs">
+      <DependentUpon>OperatorsPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StateTriggers\AspectRatioTrigger.cs" />
     <Compile Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml.cs">
       <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
@@ -339,6 +342,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NumberPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OperatorsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

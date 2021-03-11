@@ -57,6 +57,22 @@ namespace CalculatorApp
     /// </summary>
     sealed partial class App
     {
+        static App()
+        {
+            //Task.Run(() =>
+            //{
+            //    Common.NavCategory.Dummy();
+            //}).Wait();
+
+            //Thread thrd = new Thread(() =>
+            //{
+            //    Common.NavCategory.Dummy();
+            //});
+            //thrd.Start();
+            //thrd.Join();
+        }
+
+
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
