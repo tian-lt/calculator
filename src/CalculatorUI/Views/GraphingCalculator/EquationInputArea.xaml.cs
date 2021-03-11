@@ -163,7 +163,7 @@ namespace CalculatorApp
                 {
                     return;
                 }
-                var equationTextBox = (equationInput as EquationTextBox);
+                var equationTextBox = equationInput as EquationTextBox;
                 if (equationTextBox != null)
                 {
                     equationTextBox.FocusTextBox();

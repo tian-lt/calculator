@@ -26,10 +26,10 @@ namespace CalculatorApp
 
             protected override void OnApplyTemplate()
             {
-                m_scrollViewer = (GetTemplateChild("ScrollViewer") as ScrollViewer);
-                m_scrollLeft = (GetTemplateChild("ScrollLeft") as Button);
-                m_scrollRight = (GetTemplateChild("ScrollRight") as Button);
-                m_content = (GetTemplateChild("Content") as ItemsPresenter);
+                m_scrollViewer = GetTemplateChild("ScrollViewer") as ScrollViewer;
+                m_scrollLeft = GetTemplateChild("ScrollLeft") as Button;
+                m_scrollRight = GetTemplateChild("ScrollRight") as Button;
+                m_content = GetTemplateChild("Content") as ItemsPresenter;
 
                 if (m_scrollLeft != null)
                 {

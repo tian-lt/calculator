@@ -131,7 +131,7 @@ namespace CalculatorApp
         private void Button_Clicked(in object sender, in DependencyPropertyChangedEventArgs e)
         {
             var mathRichEdit = GetActiveRichEdit();
-            var button = (sender as CalculatorApp.Controls.CalculatorButton);
+            var button = sender as CalculatorApp.Controls.CalculatorButton;
             if (mathRichEdit != null && sender != null)
             {
                 var id = button.ButtonId;
@@ -187,13 +187,13 @@ namespace CalculatorApp
 
         private CalculatorApp.Controls.MathRichEditBox GetActiveRichEdit()
         {
-            return (FocusManager.GetFocusedElement() as Controls.MathRichEditBox);
+            return FocusManager.GetFocusedElement() as Controls.MathRichEditBox;
         }
 
         // Adding event because the ShowMode property is ignored in xaml.
         private void Flyout_Opening(object sender, object e)
         {
-            var flyout = (sender as Flyout);
+            var flyout = sender as Flyout;
             if (flyout != null)
             {
                 flyout.ShowMode = FlyoutShowMode.Transient;

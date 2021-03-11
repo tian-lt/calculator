@@ -263,7 +263,7 @@ namespace CalculatorApp
                 ViewModel.VariableUpdated -= OnVariableChanged;
             }
 
-            ViewModel = (args.NewValue as GraphingCalculatorViewModel);
+            ViewModel = args.NewValue as GraphingCalculatorViewModel;
             ViewModel.Equations.VectorChanged += OnEquationsVectorChanged;
             ViewModel.VariableUpdated += OnVariableChanged;
 
@@ -524,7 +524,7 @@ namespace CalculatorApp
 
         private void GraphingControl_LosingFocus(UIElement sender, LosingFocusEventArgs args)
         {
-            var newFocusElement = (args.NewFocusedElement as FrameworkElement);
+            var newFocusElement = args.NewFocusedElement as FrameworkElement;
             if (newFocusElement == null || newFocusElement.Name == null)
             {
                 // Because clicking on the swap chain panel will try to move focus to a control that can't actually take focus
@@ -795,7 +795,7 @@ namespace CalculatorApp
             IsMatchAppTheme = isMatchAppTheme;
             WeakReference weakThis = new WeakReference(this);
             _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                                            GraphingCalculator refThis = weakThis.Target as GraphingCalculator;
+                GraphingCGraphingCalculator_DataContextChangedalculator refThis = weakThis.Target as GraphingCalculator;
                                             if (refThis != null)
                                             {
                                                 refThis.UpdateGraphTheme();
