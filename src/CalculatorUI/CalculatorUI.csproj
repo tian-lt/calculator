@@ -178,6 +178,9 @@
       <DependentUpon>CalculatorProgrammerDisplayPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StateTriggers\ControlSizeTrigger.cs" />
+    <Compile Include="Views\SupplementaryResults.xaml.cs">
+      <DependentUpon>SupplementaryResults.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFrameService.cs" />
     <Compile Include="WinMeta.cs" />
   </ItemGroup>
@@ -350,6 +353,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StateTriggers\CalculatorProgrammerDisplayPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SupplementaryResults.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
