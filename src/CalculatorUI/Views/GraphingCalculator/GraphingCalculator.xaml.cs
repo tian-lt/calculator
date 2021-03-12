@@ -36,7 +36,7 @@ using Windows.UI.Popups;
 
 namespace CalculatorApp
 {
-    public sealed class GraphingCalculator : System.ComponentModel.INotifyPropertyChanged
+    public sealed partial class GraphingCalculator : System.ComponentModel.INotifyPropertyChanged
     {
         public static readonly double zoomInScale = 1 / 1.0625;
         public static readonly double zoomOutScale = 1.0625;

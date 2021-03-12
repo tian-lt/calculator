@@ -147,6 +147,12 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Views\Calculator.xaml.cs">
+      <DependentUpon>Calculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerBitFlipPanel.xaml.cs">
+      <DependentUpon>CalculatorProgrammerBitFlipPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GraphingCalculator\EquationInputArea.xaml.cs">
       <DependentUpon>EquationInputArea.xaml</DependentUpon>
     </Compile>
@@ -196,6 +202,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GraphingCalculator\EquationInputArea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

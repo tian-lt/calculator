@@ -28,7 +28,7 @@ using Windows.UI.Xaml.Navigation;
 namespace CalculatorApp
 {
     [Windows.Foundation.Metadata.WebHostHidden]
-    public sealed class GraphingSettings
+    public sealed partial class GraphingSettings
     {
         public GraphingSettings()
         {
@@ -37,8 +37,6 @@ namespace CalculatorApp
             m_IsMatchAppTheme = false;
         }
 
-        // CSHARP_MIGRATION: TODO:
-        // m_ViewModel doesn't exist
         public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel
         {
             get { return m_ViewModel; }

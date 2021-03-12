@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 namespace CalculatorApp
 {
     [Windows.Foundation.Metadata.WebHostHidden]
-    public sealed class GraphingNumPad
+    public sealed partial class GraphingNumPad
     {
         // CSHARP_MIGRATION: TODO:
         // convert const to static readonly

@@ -25,7 +25,7 @@ using Calculator.Utils;
 
 namespace CalculatorApp
 {
-    public sealed class EquationInputArea : System.ComponentModel.INotifyPropertyChanged
+    public sealed partial class EquationInputArea : System.ComponentModel.INotifyPropertyChanged
     {
         public static readonly int maxEquationSize = 14;
         public static readonly int colorCount = 14;

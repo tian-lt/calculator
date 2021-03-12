@@ -15,7 +15,7 @@ using System.ComponentModel;
 
 namespace CalculatorApp
 {
-    public sealed class KeyGraphFeaturesPanel : System.ComponentModel.INotifyPropertyChanged
+    public sealed partial class KeyGraphFeaturesPanel : System.ComponentModel.INotifyPropertyChanged
     {
         public KeyGraphFeaturesPanel()
         {
