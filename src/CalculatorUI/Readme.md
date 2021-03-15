@@ -390,6 +390,8 @@ private static void OnCharacterPropertyChanged(DependencyObject target, String o
 ```
 
 
+
+
 ## Exceptions Handling (TBD)
 
 
@@ -408,6 +410,91 @@ C#
 ```
 
 
+
+### COMMAND_FOR_METHOD
+
+C++/CX
+```
+ref class GraphingCalculator 
+{
+    ...
+
+public:
+    COMMAND_FOR_METHOD(ZoomOutButtonPressed, GraphingCalculator::OnZoomOutCommand);
+
+private:
+    void OnZoomInCommand(Object ^ parameter);
+
+    ...
+};
+
+```
+
+C#
+There's an utility generic class - `DelegateCommand<>` - to manage delegate for commands:
+```
+namespace CalculatorApp.Common
+{
+    internal class DelegateCommand<TTarget> : System.Windows.Input.ICommand
+    {
+        public delegate void CommandHandlerFunc(object obj);
+
+        public DelegateCommand(TTarget target, CommandHandlerFunc func)
+        {
+            m_weakTarget = new WeakReference(target);
+            m_function = func;
+        }
+
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            object target = m_weakTarget.Target;
+            if(target != null && target is TTarget)
+            {
+                m_function(parameter);
+            }
+        }
+
+        private CommandHandlerFunc m_function;
+        private WeakReference m_weakTarget;
+    }
+}
+```
+
+So, for the above C++/CX example, we can reinterpret it in this way:
+```
+class GraphingCalculator
+{
+    ...
+
+    public System.Windows.Input.ICommand ZoomOutButtonPressed
+    {
+        get
+        {
+            if (donotuse_ZoomOutButtonPressed == null)
+            {
+                donotuse_ZoomOutButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomOutCommand);
+            }
+            return donotuse_ZoomOutButtonPressed;
+        }
+    }
+    private System.Windows.Input.ICommand donotuse_ZoomOutButtonPressed;
+
+
+    private void OnZoomOutCommand(object parameter)
+    {
+        ...
+    }
+
+    ...
+}
+```
 
 
 
