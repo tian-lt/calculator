@@ -191,6 +191,7 @@
     </Compile>
     <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cs">
       <DependentUpon>KeyGraphFeaturesPanel.xaml</DependentUpon>
+	</Compile>
     <Compile Include="Views\HistoryList.xaml.cs">
       <DependentUpon>HistoryList.xaml</DependentUpon>
     </Compile>
@@ -419,6 +420,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
+	  <SubType>Designer</SubType>
+	  <Generator>MSBuild:Compile</Generator>
+	</Page>
     <Page Include="Views\HistoryList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
