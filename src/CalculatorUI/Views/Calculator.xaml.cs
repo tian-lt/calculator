@@ -450,7 +450,7 @@ namespace CalculatorApp
             }
 
             OpsPanel.IsErrorVisualState = isError;
-            if (IsScientific && ScientificAngleButtons)
+            if (IsScientific && ScientificAngleButtons != null)
             {
                 ScientificAngleButtons.IsErrorVisualState = isError;
             }
@@ -521,7 +521,7 @@ namespace CalculatorApp
         {
             OpsPanel.EnsureScientificOps();
 
-            if (!ScientificAngleButtons)
+            if (ScientificAngleButtons == null)
             {
                 this.FindName("ScientificAngleButtons");
             }
@@ -529,14 +529,13 @@ namespace CalculatorApp
 
         private void EnsureProgrammer()
         {
-            if (!ProgrammerOperators)
+            if (ProgrammerOperators == null)
             {
                 this.FindName("ProgrammerOperators");
             }
 
             // CSHARP_MIGRATION: TODO:
-            // ProgrammerOperators works but ProgrammerDisplayPanel doesn't
-            // Also, what should we do with FindName?
+            // what should we do with FindName?
             if (ProgrammerDisplayPanel == null)
             {
                 this.FindName("ProgrammerDisplayPanel");
@@ -788,7 +787,16 @@ namespace CalculatorApp
             DockHistoryHolder.Child = m_historyList;
         }
 
-        private Memory GetMemory();
+        private Memory GetMemory()
+        {
+            if (m_memory == null)
+            {
+                m_memory = new Memory();
+                VisualStateManager.GoToState(m_memory, GetCurrentLayoutState(), true);
+            }
+
+            return m_memory;
+        }
 
         private void EnableControls(bool enable)
         {

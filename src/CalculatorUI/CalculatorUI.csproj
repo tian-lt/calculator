@@ -153,6 +153,24 @@
     <Compile Include="Views\CalculatorProgrammerBitFlipPanel.xaml.cs">
       <DependentUpon>CalculatorProgrammerBitFlipPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CalculatorProgrammerOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerRadixOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerRadixOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorScientificAngleButtons.xaml.cs">
+      <DependentUpon>CalculatorScientificAngleButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorScientificOperators.xaml.cs">
+      <DependentUpon>CalculatorScientificOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorStandardOperators.xaml.cs">
+      <DependentUpon>CalculatorStandardOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DateCalculator.xaml.cs">
+      <DependentUpon>DateCalculator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GraphingCalculator\EquationInputArea.xaml.cs">
       <DependentUpon>EquationInputArea.xaml</DependentUpon>
     </Compile>
@@ -207,6 +225,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerRadixOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorScientificAngleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorScientificOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorStandardOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DateCalculator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
