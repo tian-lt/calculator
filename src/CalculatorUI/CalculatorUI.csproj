@@ -181,6 +181,9 @@
     <Compile Include="Views\SupplementaryResults.xaml.cs">
       <DependentUpon>SupplementaryResults.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TitleBar.xaml.cs">
+      <DependentUpon>TitleBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFrameService.cs" />
     <Compile Include="WinMeta.cs" />
   </ItemGroup>
@@ -357,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SupplementaryResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
