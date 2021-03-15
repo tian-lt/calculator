@@ -33,21 +33,21 @@ namespace CalculatorApp
         {
             // CSHARP_MIGRATION: TODO:
             // macros
-            public static double SCALEFACTOR = 0.357143;
-            public static double SMALLHEIGHTSCALEFACTOR = 0;
-            public static double HEIGHTCUTOFF = 100;
-            public static double INCREMENTOFFSET = 1;
-            public static double MAXFONTINCREMENT = 5;
-            public static double WIDTHTOFONTSCALAR = 0.0556513;
-            public static double WIDTHTOFONTOFFSET = 3;
-            public static double WIDTHCUTOFF = 50;
-            public static double FONTTOLERANCE = 0.001;
-            public static double SCROLL_RATIO = 0.7;
+            public static readonly double SCALEFACTOR = 0.357143;
+            public static readonly double SMALLHEIGHTSCALEFACTOR = 0;
+            public static readonly double HEIGHTCUTOFF = 100;
+            public static readonly double INCREMENTOFFSET = 1;
+            public static readonly double MAXFONTINCREMENT = 5;
+            public static readonly double WIDTHTOFONTSCALAR = 0.0556513;
+            public static readonly double WIDTHTOFONTOFFSET = 3;
+            public static readonly double WIDTHCUTOFF = 50;
+            public static readonly double FONTTOLERANCE = 0.001;
+            public static readonly double SCROLL_RATIO = 0.7;
 
             // We need a safety margin to guarantee we correctly always show/hide ScrollLeft and ScrollRight buttons when necessary.
             // In rare cases, ScrollViewer::HorizontalOffset is a little low by a few (sub)pixels when users scroll to one of the extremity
             // and no events are launched when they scroll again in the same direction
-            public static double SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
+            public static readonly double SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
 
             public CalculationResult()
             {
@@ -63,7 +63,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MinFontSize.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MinFontSizeProperty =
-                DependencyProperty.RegisterAttached(nameof(MinFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(0.0, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(MinFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(0.0, new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnMinFontSizePropertyChanged((double)args.OldValue, (double)args.NewValue);
@@ -77,7 +77,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MaxFontSize.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MaxFontSizeProperty =
-                DependencyProperty.RegisterAttached(nameof(MaxFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(30.0, new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(MaxFontSize), typeof(double), typeof(CalculationResult), new PropertyMetadata(30.0, new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnMaxFontSizePropertyChanged((double)args.OldValue, (double)args.NewValue);
@@ -101,7 +101,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for IsActive.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsActiveProperty =
-                DependencyProperty.RegisterAttached(nameof(IsActive), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnIsActivePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
@@ -115,7 +115,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for DisplayValue.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty DisplayValueProperty =
-                DependencyProperty.RegisterAttached(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnDisplayValuePropertyChanged((string)args.OldValue, (string)args.NewValue);
@@ -129,7 +129,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for IsInError.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsInErrorProperty =
-                DependencyProperty.RegisterAttached(nameof(IsInError), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(IsInError), typeof(bool), typeof(CalculationResult), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnIsInErrorPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
@@ -296,7 +296,7 @@ namespace CalculatorApp
             {
                 var requestedElement = e.OriginalSource;
 
-                if (requestedElement.Equals((m_textBlock as Object)))
+                if (requestedElement.Equals((m_textBlock as object)))
                 {
                     m_textBlock.Focus(FocusState.Programmatic);
                 }
@@ -396,12 +396,12 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnScrollLeftClick(Object sender, RoutedEventArgs e)
+            private void OnScrollLeftClick(object sender, RoutedEventArgs e)
             {
                 ScrollLeft();
             }
 
-            private void OnScrollRightClick(Object sender, RoutedEventArgs e)
+            private void OnScrollRightClick(object sender, RoutedEventArgs e)
             {
                 ScrollRight();
             }
