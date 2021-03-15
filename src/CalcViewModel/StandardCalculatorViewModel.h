@@ -244,19 +244,21 @@ namespace CalculatorApp
             void ResetCalcManager(bool clearMemory);
             void SendCommandToCalcManager(int command);
 
-        internal:
-            void OnPaste(Platform::String ^ pastedString);
-            void OnCopyCommand(Platform::Object ^ parameter);
-            void OnPasteCommand(Platform::Object ^ parameter);
-
-            ButtonInfo MapCharacterToButtonId(char16 ch);
-
+        public:
+            // CSHARP_MIGRATION: TODO: check if these still need to be internal
             // Memory feature related methods. They are internal because they need to called from the MainPage code-behind
             void OnMemoryButtonPressed();
             void OnMemoryItemPressed(Platform::Object ^ memoryItemPosition);
             void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
+
+        internal:
+            void OnPaste(Platform::String ^ pastedString);
+            void OnCopyCommand(Platform::Object ^ parameter);
+            void OnPasteCommand(Platform::Object ^ parameter);
+
+            ButtonInfo MapCharacterToButtonId(char16 ch);
 
             void OnInputChanged();
             void DisplayPasteError();

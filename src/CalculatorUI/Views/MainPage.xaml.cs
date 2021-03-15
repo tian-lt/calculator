@@ -13,7 +13,13 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using WUC = Windows.UI.Core;
+using WUXI = Windows.UI.Xaml.Input;
+using WUXD = Windows.UI.Xaml.Data;
+using WUXC = Windows.UI.Xaml.Controls;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CalculatorApp
 {
@@ -24,7 +30,15 @@ namespace CalculatorApp
     {
         public MainPage()
         {
+            this.m_model = new ViewModel.ApplicationViewModel();
             this.InitializeComponent();
         }
+
+        public CalculatorApp.ViewModel.ApplicationViewModel Model
+        {
+            get => this.m_model;
+        }
+
+        private CalculatorApp.ViewModel.ApplicationViewModel m_model;
     }
 }

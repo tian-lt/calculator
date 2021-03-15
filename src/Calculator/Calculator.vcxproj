@@ -935,9 +935,6 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CalcViewModel\CalcViewModel.vcxproj">
-      <Project>{90e9761d-9262-4773-942d-caeae75d7140}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\GraphControl\GraphControl.vcxproj">
       <Project>{e727a92b-f149-492c-8117-c039a298719b}</Project>
     </ProjectReference>

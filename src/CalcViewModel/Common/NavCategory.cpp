@@ -73,13 +73,67 @@ bool IsGraphingModeEnabled()
     }
 
     User ^ firstUser;
-    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
-        firstUser = users->GetAt(0); }).wait();
-        auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
-        _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+    std::atomic_flag finished = ATOMIC_FLAG_INIT;
+
+    finished.test_and_set(std::memory_order_acquire); // acquire
+
+    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser, &finished](IVectorView<User ^> ^ users) {
+        firstUser = users->GetAt(0);
+        finished.clear(std::memory_order_release);  // release
+    }, task_continuation_context::use_arbitrary());
+
+    while (finished.test_and_set(std::memory_order_acquire)) // aquire
+        ; // spin
+
+    finished.clear(std::memory_order_release); // release
+
+    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
 
     return _isGraphingModeEnabledCached->Value;
 }
+
+//unsigned __stdcall GetUser(void* param)
+//{
+//    ::_endthreadex(0);
+//    return 0;
+//}
+//
+//bool IsGraphingModeEnabled()
+//{
+//    if (!IsGraphingModeAvailable())
+//    {
+//        return false;
+//    }
+//
+//    if (_isGraphingModeEnabledCached != nullptr)
+//    {
+//        return _isGraphingModeEnabledCached->Value;
+//    }
+//
+//    User ^ firstUser;
+//
+//    //create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
+//    //    firstUser = users->GetAt(0);
+//    //}).wait();
+//
+//    //std::thread thrd([&firstUser]() {
+//    //    create_task(User::FindAllAsync(UserType::LocalUser)).then([&firstUser](IVectorView<User ^> ^ users) {
+//    //        firstUser = users->GetAt(0);
+//    //    }).wait();
+//    //});
+//    //thrd.join();
+//
+//    HANDLE handle = (HANDLE)::_beginthreadex(NULL, 0, &GetUser, NULL, 0, nullptr);
+//    ::WaitForSingleObject(handle, INFINITE);
+//
+//
+//    auto namedPolicyData = NamedPolicy::GetPolicyFromPathForUser(firstUser, L"Education", L"AllowGraphingCalculator");
+//    _isGraphingModeEnabledCached = namedPolicyData->GetBoolean() == true;
+//
+//    return _isGraphingModeEnabledCached->Value;
+//}
+//
 
 // The order of items in this list determines the order of items in the menu.
 static const list<NavCategoryInitializer> s_categoryManifest = [] {
@@ -527,4 +581,10 @@ NavCategoryGroup ^ NavCategoryGroup::CreateConverterCategory()
 {
     return ref new NavCategoryGroup(
         NavCategoryGroupInitializer{ CategoryGroupType::Converter, L"ConverterModeTextCaps", L"ConverterModeText", L"ConverterModePluralText" });
+}
+
+void NavCategory::Dummy()
+{
+
+
 }
