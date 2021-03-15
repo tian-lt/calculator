@@ -139,6 +139,7 @@
     <Compile Include="Controls\OperatorPanelListView.cs" />
     <Compile Include="Controls\OverflowTextBlock.cs" />
     <Compile Include="Controls\OverflowTextBlockAutomationPeer.cs" />
+    <Compile Include="MainPage.xaml.cs" />
     <Compile Include="Controls\EquationTextBox.cs" />
     <Compile Include="Controls\FlipButtons.cs" />
     <Compile Include="Controls\HorizontalNoOverflowStackPanel.cs" />
@@ -152,6 +153,44 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Views\Calculator.xaml.cs">
+      <DependentUpon>Calculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerBitFlipPanel.xaml.cs">
+      <DependentUpon>CalculatorProgrammerBitFlipPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorProgrammerRadixOperators.xaml.cs">
+      <DependentUpon>CalculatorProgrammerRadixOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorScientificAngleButtons.xaml.cs">
+      <DependentUpon>CalculatorScientificAngleButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorScientificOperators.xaml.cs">
+      <DependentUpon>CalculatorScientificOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalculatorStandardOperators.xaml.cs">
+      <DependentUpon>CalculatorStandardOperators.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DateCalculator.xaml.cs">
+      <DependentUpon>DateCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\EquationInputArea.xaml.cs">
+      <DependentUpon>EquationInputArea.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\GraphingCalculator.xaml.cs">
+      <DependentUpon>GraphingCalculator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\GraphingNumPad.xaml.cs">
+      <DependentUpon>GraphingNumPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\GraphingSettings.xaml.cs">
+      <DependentUpon>GraphingSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml.cs">
+      <DependentUpon>KeyGraphFeaturesPanel.xaml</DependentUpon>
     <Compile Include="Views\HistoryList.xaml.cs">
       <DependentUpon>HistoryList.xaml</DependentUpon>
     </Compile>
@@ -331,6 +370,55 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\Calculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerBitFlipPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorProgrammerRadixOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorScientificAngleButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorScientificOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalculatorStandardOperators.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DateCalculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\EquationInputArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingCalculator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingNumPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\GraphingSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphingCalculator\KeyGraphFeaturesPanel.xaml">
     <Page Include="Views\HistoryList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -38,7 +38,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for ButtonId.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ButtonIdProperty =
-                DependencyProperty.RegisterAttached("ButtonId", typeof(NumbersAndOperatorsEnum), typeof(CalculatorButton), new PropertyMetadata(default(NumbersAndOperatorsEnum), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register("ButtonId", typeof(NumbersAndOperatorsEnum), typeof(CalculatorButton), new PropertyMetadata(default(NumbersAndOperatorsEnum), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnButtonIdPropertyChanged((NumbersAndOperatorsEnum)args.OldValue, (NumbersAndOperatorsEnum)args.NewValue);
@@ -52,7 +52,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for AuditoryFeedback.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty AuditoryFeedbackProperty =
-                DependencyProperty.RegisterAttached("AuditoryFeedback", typeof(string), typeof(CalculatorButton), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register("AuditoryFeedback", typeof(string), typeof(CalculatorButton), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnAuditoryFeedbackPropertyChanged((string)args.OldValue, (string)args.NewValue);

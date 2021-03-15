@@ -32,8 +32,6 @@ namespace CalculatorApp
             }
 
             // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
-            // CSHARP_MIGRATION: TODO:
-            // Check PropertyMetadata arg: default, or DependencyProperty.UnsetValue
             public static readonly DependencyProperty TextProperty =
                 DependencyProperty.Register(nameof(Text), typeof(string), typeof(OperatorPanelButton), new PropertyMetadata(default(string)));
 

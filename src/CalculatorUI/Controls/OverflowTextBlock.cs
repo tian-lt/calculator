@@ -35,11 +35,8 @@ namespace CalculatorApp
 
         public sealed class OverflowTextBlock : Windows.UI.Xaml.Controls.Control
         {
-            // CSHARP_MIGRATION: TODO:
-            // static constexpr unsigned int SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
-            // static constexpr double SCROLL_RATIO = 0.7;
-            public static uint SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
-            public static double SCROLL_RATIO = 0.7;
+            public static readonly uint SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
+            public static readonly double SCROLL_RATIO = 0.7;
 
             public OverflowTextBlock()
             {
@@ -60,7 +57,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for TokensUpdated.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty TokensUpdatedProperty =
-                DependencyProperty.RegisterAttached(nameof(TokensUpdated), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(TokensUpdated), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (OverflowTextBlock)sender;
                     self.OnTokensUpdatedPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
@@ -74,7 +71,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for ScrollButtonsPlacement.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ScrollButtonsPlacementProperty =
-                DependencyProperty.RegisterAttached(nameof(ScrollButtonsPlacement), typeof(OverflowButtonPlacement), typeof(OverflowTextBlock), new PropertyMetadata(default(OverflowButtonPlacement), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(ScrollButtonsPlacement), typeof(OverflowButtonPlacement), typeof(OverflowTextBlock), new PropertyMetadata(default(OverflowButtonPlacement), new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (OverflowTextBlock)sender;
                     self.OnScrollButtonsPlacementPropertyChanged((OverflowButtonPlacement)args.OldValue, (OverflowButtonPlacement)args.NewValue);
@@ -90,7 +87,7 @@ namespace CalculatorApp
             public static readonly DependencyProperty IsActiveProperty =
                 DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(OverflowTextBlock), new PropertyMetadata(default(bool)));
 
-            public Style TextStyle
+            public Windows.UI.Xaml.Style TextStyle
             {
                 get { return (Style)GetValue(TextStyleProperty); }
                 set { SetValue(TextStyleProperty, value); }
