@@ -252,6 +252,7 @@ namespace CalculatorApp
             void OnMemoryAdd(Platform::Object ^ memoryItemPosition);
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
+            void SelectHistoryItem(HistoryItemViewModel ^ item);
 
         internal:
             void OnPaste(Platform::String ^ pastedString);
@@ -293,7 +294,7 @@ namespace CalculatorApp
             {
                 return m_CurrentAngleType;
             }
-            void SelectHistoryItem(HistoryItemViewModel ^ item);
+            
         private:
             void SetMemorizedNumbers(const std::vector<std::wstring>& memorizedNumbers);
             void UpdateProgrammerPanelDisplay();

@@ -119,7 +119,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomOutButtonPressed == null)
                 {
-                    donotuse_ZoomOutButtonPressed = CalculatorApp.Common.MakeDelete(this, GraphingCalculator.OnZoomOutCommand);
+                    donotuse_ZoomOutButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomOutCommand);
                 }
                 return donotuse_ZoomOutButtonPressed;
             }
@@ -132,7 +132,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomInButtonPressed == null)
                 {
-                    donotuse_ZoomInButtonPressed = CalculatorApp.Common.MakeDelete(this, GraphingCalculator.OnZoomInCommand);
+                    donotuse_ZoomInButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomInCommand);
                 }
                 return donotuse_ZoomInButtonPressed;
             }

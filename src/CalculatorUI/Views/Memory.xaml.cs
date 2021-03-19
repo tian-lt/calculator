@@ -40,6 +40,15 @@ namespace CalculatorApp
         public static readonly DependencyProperty ModelProperty =
             DependencyProperty.Register(nameof(Model), typeof(CalculatorApp.ViewModel.StandardCalculatorViewModel), typeof(Memory), new PropertyMetadata(default(CalculatorApp.ViewModel.StandardCalculatorViewModel)));
 
+        public GridLength RowHeight
+        {
+            get { return (GridLength)GetValue(RowHeightProperty); }
+            set { SetValue(RowHeightProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for RowHeight.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RowHeightProperty =
+            DependencyProperty.Register(nameof(RowHeight), typeof(GridLength), typeof(Memory), new PropertyMetadata(default(GridLength)));
 
         public bool IsErrorVisualState
         {

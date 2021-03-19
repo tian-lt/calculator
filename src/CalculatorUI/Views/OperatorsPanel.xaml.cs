@@ -97,26 +97,22 @@ namespace CalculatorApp
 
         }
 
-        private void EnsureScientificOps()
+        public void EnsureScientificOps()
         {
-
-            //if (!ScientificOperators)
-            //{
-            //    this.FindName("ScientificOperators");
-            //}
-
+            if (ScientificOperators == null)
+            {
+                this.FindName("ScientificOperators");
+            }
         }
 
-        private void EnsureProgrammerRadixOps()
+        public void EnsureProgrammerRadixOps()
         {
+            if (ProgrammerRadixOperators == null)
+            {
+                this.FindName("ProgrammerRadixOperators");
+            }
 
-            //if (!ProgrammerRadixOperators)
-            //{
-            //    this.FindName("ProgrammerRadixOperators");
-            //}
-
-            //ProgrammerRadixOperators.checkDefaultBitShift();
-
+            ProgrammerRadixOperators.checkDefaultBitShift();
         }
 
         private void EnsureProgrammerBitFlipPanel()

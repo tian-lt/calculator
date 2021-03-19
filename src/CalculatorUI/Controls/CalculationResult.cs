@@ -31,23 +31,21 @@ namespace CalculatorApp
 
         public sealed class CalculationResult : Windows.UI.Xaml.Controls.Control
         {
-            // CSHARP_MIGRATION: TODO:
-            // macros
-            public static readonly double SCALEFACTOR = 0.357143;
-            public static readonly double SMALLHEIGHTSCALEFACTOR = 0;
-            public static readonly double HEIGHTCUTOFF = 100;
-            public static readonly double INCREMENTOFFSET = 1;
-            public static readonly double MAXFONTINCREMENT = 5;
-            public static readonly double WIDTHTOFONTSCALAR = 0.0556513;
-            public static readonly double WIDTHTOFONTOFFSET = 3;
-            public static readonly double WIDTHCUTOFF = 50;
-            public static readonly double FONTTOLERANCE = 0.001;
-            public static readonly double SCROLL_RATIO = 0.7;
+            private const double SCALEFACTOR = 0.357143;
+            private const double SMALLHEIGHTSCALEFACTOR = 0;
+            private const double HEIGHTCUTOFF = 100;
+            private const double INCREMENTOFFSET = 1;
+            private const double MAXFONTINCREMENT = 5;
+            private const double WIDTHTOFONTSCALAR = 0.0556513;
+            private const double WIDTHTOFONTOFFSET = 3;
+            private const double WIDTHCUTOFF = 50;
+            private const double FONTTOLERANCE = 0.001;
+            private const double SCROLL_RATIO = 0.7;
 
             // We need a safety margin to guarantee we correctly always show/hide ScrollLeft and ScrollRight buttons when necessary.
             // In rare cases, ScrollViewer::HorizontalOffset is a little low by a few (sub)pixels when users scroll to one of the extremity
             // and no events are launched when they scroll again in the same direction
-            public static readonly double SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
+            private const double SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
 
             public CalculationResult()
             {

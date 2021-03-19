@@ -9,7 +9,7 @@
              UseLayoutRounding="False"
              mc:Ignorable="d">
     <Grid>
-        <!--<local:CalculatorStandardOperators x:Name="StandardOperators"
+        <local:CalculatorStandardOperators x:Name="StandardOperators"
                                            TabIndex="17"
                                            IsEnabled="{x:Bind Model.IsStandard, Mode=OneWay}"
                                            x:Load="{x:Bind Model.IsStandard, Mode=OneWay}"/>
@@ -29,7 +29,7 @@
                                                   TabIndex="16"
                                                   Visibility="{x:Bind Model.AreProgrammerRadixOperatorsVisible, Mode=OneWay}"
                                                   IsEnabled="{x:Bind Model.IsProgrammer, Mode=OneWay}"
-                                                  x:Load="False"/>-->
+                                                  x:Load="False"/>
 
     </Grid>
 </UserControl>

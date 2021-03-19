@@ -139,7 +139,7 @@ namespace CalculatorApp
             {
                 if (donotuse_HistoryButtonPressed == null)
                 {
-                    donotuse_HistoryButtonPressed = Calculator.Common.MakeDelegate(this, Calculator.ToggleHistoryFlyout);
+                    donotuse_HistoryButtonPressed = new DelegateCommand<Calculator>(this, ToggleHistoryFlyout);
                 }
                 return donotuse_HistoryButtonPressed;
             }
@@ -714,7 +714,7 @@ namespace CalculatorApp
             else
             {
                 HistoryFlyout.Content = m_historyList;
-                m_historyList.RowHeight = NumpadPanel.ActualHeight;
+                m_historyList.RowHeight = new GridLength(NumpadPanel.ActualHeight);
                 FlyoutBase.ShowAttachedFlyout(HistoryButton);
             }
         }
@@ -733,7 +733,7 @@ namespace CalculatorApp
             else
             {
                 MemoryFlyout.Content = GetMemory();
-                m_memory.RowHeight = NumpadPanel.ActualHeight;
+                m_memory.RowHeight = new GridLength(NumpadPanel.ActualHeight);
                 FlyoutBase.ShowAttachedFlyout(MemoryButton);
             }
         }
