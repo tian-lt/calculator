@@ -39,7 +39,7 @@ namespace CalculatorApp
             }
 
 
-            Windows.UI.Xaml.DataTemplate OperatorTemplate
+            public Windows.UI.Xaml.DataTemplate OperatorTemplate
             {
                 get
                 {
@@ -52,7 +52,7 @@ namespace CalculatorApp
                 }
             }
 
-            Windows.UI.Xaml.DataTemplate OperandTemplate
+            public Windows.UI.Xaml.DataTemplate OperandTemplate
             {
                 get
                 {
@@ -65,7 +65,7 @@ namespace CalculatorApp
                 }
             }
 
-            Windows.UI.Xaml.DataTemplate SeparatorTemplate
+            public Windows.UI.Xaml.DataTemplate SeparatorTemplate
             {
                 get
                 {
