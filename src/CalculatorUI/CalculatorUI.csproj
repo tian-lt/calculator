@@ -155,6 +155,9 @@
     <Compile Include="Converters\RadixToStringConverter.cs" />
     <Compile Include="Converters\VisibilityNegationConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="EquationStylePanelControl.xaml.cs">
+      <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KeyGraphFeaturesTemplateSelector.cs" />
     <Compile Include="Views\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
@@ -374,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="EquationStylePanelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AboutFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
