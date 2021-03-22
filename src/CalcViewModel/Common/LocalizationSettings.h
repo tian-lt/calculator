@@ -251,6 +251,16 @@ namespace CalculatorApp
                 return std::find(s_hexSymbols.begin(), s_hexSymbols.end(), digit) != s_hexSymbols.end();
             }
 
+            Platform::String ^ GetListSeparatorWinRT()
+            {
+                return ref new Platform::String(GetListSeparator().c_str());
+            }
+
+            Platform::String ^ GetDecimalSeparatorStrWinRT()
+            {
+                return ref new Platform::String(GetDecimalSeparatorStr().c_str());
+            }
+
         internal:
             void LocalizeDisplayValue(_Inout_ std::wstring* stringToLocalize)
             {

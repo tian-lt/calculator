@@ -39,6 +39,14 @@ namespace CalculatorApp
             Platform::String ^ GetFontFamilyOverride();
             Windows::UI::Text::FontWeight GetFontWeightOverride();
             double GetFontScaleFactorOverride(LanguageFontType fontType);
+            Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter();
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format);
+            Windows::Globalization::DateTimeFormatting::DateTimeFormatter
+                ^ GetRegionalSettingsAwareDateTimeFormatter(
+                    _In_ Platform::String ^ format,
+                    _In_ Platform::String ^ calendarIdentifier,
+                    _In_ Platform::String ^ clockIdentifier);
+            Windows::Globalization::NumberFormatting::CurrencyFormatter ^ GetRegionalSettingsAwareCurrencyFormatter();
 
         internal:
             static void OverrideWithLanguage(_In_ const wchar_t* const language);
@@ -54,16 +62,6 @@ namespace CalculatorApp
                     return coll.compare(str1->Begin(), str1->End(), str2->Begin(), str2->End()) < 0;
                 });
             }
-
-            Windows::Globalization::NumberFormatting::DecimalFormatter ^ GetRegionalSettingsAwareDecimalFormatter() const;
-            Windows::Globalization::DateTimeFormatting::DateTimeFormatter ^ GetRegionalSettingsAwareDateTimeFormatter(_In_ Platform::String ^ format) const;
-            Windows::Globalization::DateTimeFormatting::DateTimeFormatter
-                ^ GetRegionalSettingsAwareDateTimeFormatter(
-                    _In_ Platform::String ^ format,
-                    _In_ Platform::String ^ calendarIdentifier,
-                    _In_ Platform::String ^ clockIdentifier) const;
-
-            Windows::Globalization::NumberFormatting::CurrencyFormatter ^ GetRegionalSettingsAwareCurrencyFormatter() const;
 
             static Platform::String ^ GetNarratorReadableToken(Platform::String ^ rawToken);
             static Platform::String ^ GetNarratorReadableString(Platform::String ^ rawString);

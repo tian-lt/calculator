@@ -239,9 +239,9 @@ namespace CalculatorApp
             { NumbersAndOperatorsEnum.LogBaseE, Tuple.Create("ln()", 3, 0) },
             { NumbersAndOperatorsEnum.Sqrt, Tuple.Create("sqrt()", 5, 0) },
             { NumbersAndOperatorsEnum.CubeRoot, Tuple.Create("cbrt()", 5, 0) },
-            { NumbersAndOperatorsEnum.YRootX, Tuple.Create("root(x" + LocalizationSettings.GetInstance().GetListSeparator().TrimEnd('\0') + "n)", 7, 1) },
+            { NumbersAndOperatorsEnum.YRootX, Tuple.Create("root(x" + LocalizationSettings.GetInstance().GetListSeparatorWinRT().TrimEnd('\0') + "n)", 7, 1) },
             { NumbersAndOperatorsEnum.TwoPowerX, Tuple.Create("2^", 2, 0) },
-            { NumbersAndOperatorsEnum.LogBaseY, Tuple.Create("log(b" + LocalizationSettings.GetInstance().GetListSeparator().TrimEnd('\0') + " x)", 4, 1) },
+            { NumbersAndOperatorsEnum.LogBaseY, Tuple.Create("log(b" + LocalizationSettings.GetInstance().GetListSeparatorWinRT().TrimEnd('\0') + " x)", 4, 1) },
             { NumbersAndOperatorsEnum.EPowerX, Tuple.Create("e^", 4, 0) },
             { NumbersAndOperatorsEnum.Abs, Tuple.Create("abs()", 4, 0) },
             { NumbersAndOperatorsEnum.X, Tuple.Create("x", 1, 0) },
@@ -269,7 +269,7 @@ namespace CalculatorApp
             { NumbersAndOperatorsEnum.Seven, Tuple.Create("7", 1, 0) },
             { NumbersAndOperatorsEnum.Eight, Tuple.Create("8", 1, 0) },
             { NumbersAndOperatorsEnum.Nine, Tuple.Create("9", 1, 0) },
-            { NumbersAndOperatorsEnum.Decimal, Tuple.Create(LocalizationSettings.GetInstance().GetDecimalSeparatorStr().TrimEnd('\0'), 1, 0) },
+            { NumbersAndOperatorsEnum.Decimal, Tuple.Create(LocalizationSettings.GetInstance().GetDecimalSeparatorStrWinRT().TrimEnd('\0'), 1, 0) },
         };
 
         private static Tuple<string, int, int> GetButtonOutput(NumbersAndOperatorsEnum id)

@@ -10,9 +10,9 @@ using CalculatorApp.Common;
 using CalculatorApp.Common.Automation;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
-using CalcManager.NumberFormattingUtils;
+//using CalcManager.NumberFormattingUtils;
 using GraphControl;
-using Utils;
+//using Utils;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
@@ -347,14 +347,14 @@ namespace CalculatorApp
             }
             catch (System.Runtime.InteropServices.COMException ex)
             {
-                // CSHARP_MIGRATION: TODO:
                 // COMException and HResult, long RPC_E_SERVERCALL_RETRYLATER is out of range of int
                 // LogPlatformException is internal
                 long rpc_e_servercall_retrylater = 0x8001010A;
                 if (ex.HResult == unchecked(rpc_e_servercall_retrylater))
                 {
                     ShowShareError();
-                    TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+                    // CSHARP_MIGRATION: TODO: recover below commented line
+                    //TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
                 }
                 else
                 {
@@ -438,7 +438,7 @@ namespace CalculatorApp
                         
                         equationHtml += "<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;"
                                         + equationColorHtml + "\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">"
-                                        + EscapeHtmlSpecialCharacters(expression) + "</div></td>";
+                                        + Utilities.EscapeHtmlSpecialCharacters(expression) + "</div></td>";
                     }
                     equationHtml += "</table>";
 
@@ -452,7 +452,7 @@ namespace CalculatorApp
 
                 if (variables.Count > 0)
                 {
-                    var localizedSeperator = LocalizationSettings.GetInstance().GetListSeparator() + " ";
+                    var localizedSeperator = LocalizationSettings.GetInstance().GetListSeparatorWinRT() + " ";
 
                     rawHtml += "<br><span style=\"color: rgb(68, 114, 196); font-style: bold; font-size: 13pt;\">"
                                + resourceLoader.GetString("VariablesShareHeader")
@@ -465,7 +465,7 @@ namespace CalculatorApp
 
                         rawHtml += name + "=";
                         var formattedValue = value.ToString("R");
-                        TrimTrailingZeros(formattedValue);
+                        formattedValue = Utilities.TrimTrailingZeros(formattedValue);
                         rawHtml += formattedValue;
 
                         if (variables.Count - 1 != i)
@@ -500,8 +500,10 @@ namespace CalculatorApp
             catch (Exception ex)
             {
                 ShowShareError();
-                TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, 
-                    System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
+
+                // CSHARP_MIGRATION: TODO:
+                //TraceLogger.GetInstance().LogPlatformException(ViewMode.Graphing, 
+                //    System.Reflection.MethodBase.GetCurrentMethod().Name, ex);
             }
         }
 
@@ -794,13 +796,14 @@ namespace CalculatorApp
 
             IsMatchAppTheme = isMatchAppTheme;
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                GraphingCGraphingCalculator_DataContextChangedalculator refThis = weakThis.Target as GraphingCalculator;
-                                            if (refThis != null)
-                                            {
-                                                refThis.UpdateGraphTheme();
-                                            }
-                                        }));
+            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            {
+                var refThis = weakThis.Target as GraphingCalculator;
+                if (refThis != null)
+                {
+                    refThis.UpdateGraphTheme();
+                }
+            }));
         }
 
         private CalculatorApp.ViewModel.GraphingCalculatorViewModel m_viewModel;

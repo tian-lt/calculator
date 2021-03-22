@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-using Graphing;
+//using Graphing;
 using GraphControl;
 using CalculatorApp;
 using CalculatorApp.ViewModel;

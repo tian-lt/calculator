@@ -10,6 +10,7 @@
 #include "Common/AppResourceProvider.h"
 #include "Common/ExpressionCommandSerializer.h"
 #include "Common/ExpressionCommandDeserializer.h"
+#include "CalcManager/NumberFormattingUtils.h"
 
 using namespace CalculatorApp;
 using namespace CalculatorApp::Common;
@@ -168,18 +169,35 @@ void Utils::TrimBack(wstring& value)
     }).base(), value.end());
 }
 
-String^ Utils::EscapeHtmlSpecialCharacters(String^ originalString, shared_ptr<vector<wchar_t>> specialCharacters)
+bool operator==(const Color& color1, const Color& color2)
+{
+    return equal_to<Color>()(color1, color2);
+}
+
+bool operator!=(const Color& color1, const Color& color2)
+{
+    return !(color1 == color2);
+}
+
+// This method calculates the luminance ratio between White and the given background color.
+// The luminance is calculate using the RGB values and does not use the A value.
+// White or Black is returned
+SolidColorBrush ^ Utils::GetContrastColor(Color backgroundColor)
+{
+    auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
+
+    if ((255 + 0.05) / (luminance + 0.05) >= 2.5)
+    {
+        return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"WhiteBrush"));
+    }
+
+    return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
+}
+
+String^ CalculatorApp::Utilities::EscapeHtmlSpecialCharacters(String^ originalString)
 {
     // Construct a default special characters if not provided.
-    if (specialCharacters == nullptr)
-    {
-        specialCharacters = make_shared<vector<wchar_t>>();
-        specialCharacters->push_back(L'&');
-        specialCharacters->push_back(L'\"');
-        specialCharacters->push_back(L'\'');
-        specialCharacters->push_back(L'<');
-        specialCharacters->push_back(L'>');
-    }
+    const std::vector<wchar_t> specialCharacters {L'&', L'\"', L'\'', L'<', L'>'};
 
     bool replaceCharacters = false;
     const wchar_t* pCh;
@@ -189,7 +207,7 @@ String^ Utils::EscapeHtmlSpecialCharacters(String^ originalString, shared_ptr<ve
     // If there isn't any special character, we simply return the original string
     for (pCh = originalString->Data(); *pCh; pCh++)
     {
-        if (std::find(specialCharacters->begin(), specialCharacters->end(), *pCh) != specialCharacters->end())
+        if (std::find(specialCharacters.begin(), specialCharacters.end(), *pCh) != specialCharacters.end())
         {
             replaceCharacters = true;
             break;
@@ -233,27 +251,13 @@ String^ Utils::EscapeHtmlSpecialCharacters(String^ originalString, shared_ptr<ve
     return replaceCharacters ? replacementString : originalString;
 }
 
-bool operator==(const Color& color1, const Color& color2)
+Platform::String^ CalculatorApp::Utilities::TrimTrailingZeros(Platform::String^ input)
 {
-    return equal_to<Color>()(color1, color2);
+    std::wstring tmp(input->Data());
+    CalcManager::NumberFormattingUtils::TrimTrailingZeros(tmp);
+    return ref new Platform::String(tmp.c_str());
 }
 
-bool operator!=(const Color& color1, const Color& color2)
-{
-    return !(color1 == color2);
-}
 
-// This method calculates the luminance ratio between White and the given background color.
-// The luminance is calculate using the RGB values and does not use the A value.
-// White or Black is returned
-SolidColorBrush ^ Utils::GetContrastColor(Color backgroundColor)
-{
-    auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
 
-    if ((255 + 0.05) / (luminance + 0.05) >= 2.5)
-    {
-        return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"WhiteBrush"));
-    }
 
-    return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
-}

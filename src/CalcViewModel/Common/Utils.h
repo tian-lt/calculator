@@ -400,8 +400,6 @@ namespace Utils
     void TrimFront(std::wstring& value);
     void TrimBack(std::wstring& value);
 
-    Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString, std::shared_ptr<std::vector<wchar_t>> specialCharacters = nullptr);
-
     Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
 }
 
@@ -698,6 +696,15 @@ namespace CalculatorApp
 
         return to;
     }
+
+    // CSHARP_MIGRATION: TODO: Review below utils
+public
+    ref class Utilities sealed
+    {
+    public:
+        static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
+        static Platform::String^ TrimTrailingZeros(Platform::String^ input);
+    };
 }
 
 // There's no standard definition of equality for Windows::UI::Color structs.
