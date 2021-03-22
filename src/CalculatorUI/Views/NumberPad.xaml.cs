@@ -72,6 +72,8 @@ namespace CalculatorApp
                 self.OnCurrentRadixTypePropertyChanged((NumberBase)args.OldValue, (NumberBase)args.NewValue);
             }));
 
+        public bool IsErrorVisualState { get; set; }
+
         private void OnCurrentRadixTypePropertyChanged(NumberBase oldValue, NumberBase newValue)
         {
             Num0Button.IsEnabled = true;

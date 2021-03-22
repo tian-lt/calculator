@@ -182,7 +182,7 @@ bool operator!=(const Color& color1, const Color& color2)
 // This method calculates the luminance ratio between White and the given background color.
 // The luminance is calculate using the RGB values and does not use the A value.
 // White or Black is returned
-SolidColorBrush ^ Utils::GetContrastColor(Color backgroundColor)
+SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Color backgroundColor)
 {
     auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
 
@@ -257,7 +257,3 @@ Platform::String^ CalculatorApp::Utilities::TrimTrailingZeros(Platform::String^ 
     CalcManager::NumberFormattingUtils::TrimTrailingZeros(tmp);
     return ref new Platform::String(tmp.c_str());
 }
-
-
-
-

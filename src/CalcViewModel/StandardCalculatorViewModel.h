@@ -253,6 +253,11 @@ namespace CalculatorApp
             void OnMemorySubtract(Platform::Object ^ memoryItemPosition);
             void OnMemoryClear(_In_ Platform::Object ^ memoryItemPosition);
             void SelectHistoryItem(HistoryItemViewModel ^ item);
+            void SwitchProgrammerModeBase(CalculatorApp::Common::NumberBase calculatorBase);
+            void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
+            void SetOpenParenthesisCountNarratorAnnouncement();
+            void SwitchAngleType(NumbersAndOperatorsEnum num);
+            void FtoEButtonToggled();
 
         internal:
             void OnPaste(Platform::String ^ pastedString);
@@ -264,13 +269,11 @@ namespace CalculatorApp
             void OnInputChanged();
             void DisplayPasteError();
             void SetParenthesisCount(_In_ unsigned int parenthesisCount);
-            void SetOpenParenthesisCountNarratorAnnouncement();
             void OnNoRightParenAdded();
             void SetNoParenAddedNarratorAnnouncement();
             void OnMaxDigitsReached();
             void OnBinaryOperatorReceived();
             void OnMemoryItemChanged(unsigned int indexOfMemory);
-            void SetBitshiftRadioButtonCheckedAnnouncement(Platform::String ^ announcement);
 
             Platform::String ^ GetLocalizedStringFormat(Platform::String ^ format, Platform::String ^ displayValue);
             void OnPropertyChanged(Platform::String ^ propertyname);
@@ -279,10 +282,7 @@ namespace CalculatorApp
             Platform::String ^ GetRawDisplayValue();
             void Recalculate(bool fromHistory = false);
             bool IsOperator(CalculationManager::Command cmdenum);
-            void FtoEButtonToggled();
-            void SwitchProgrammerModeBase(CalculatorApp::Common::NumberBase calculatorBase);
-            void SetMemorizedNumbersString();
-            void SwitchAngleType(NumbersAndOperatorsEnum num);
+            void SetMemorizedNumbersString();   
             void ResetDisplay();
           
             void SetPrecision(int32_t precision);
