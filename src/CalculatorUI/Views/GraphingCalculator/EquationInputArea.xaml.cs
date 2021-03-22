@@ -484,21 +484,21 @@ namespace CalculatorApp
             return defaultValue;
         }
 
-        private void TextBoxGotFocus(TextBox sender, RoutedEventArgs e)
+        private void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            sender.SelectAll();
+            ((TextBox)sender).SelectAll();
         }
 
-        private void TextBoxLosingFocus(TextBox sender, LosingFocusEventArgs e)
+        private void TextBoxLosingFocus(object sender, LosingFocusEventArgs e)
         {
-            SubmitTextbox(sender);
+            SubmitTextbox((TextBox)sender);
         }
 
-        private void TextBoxKeyDown(TextBox sender, KeyRoutedEventArgs e)
+        private void TextBoxKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
-                SubmitTextbox(sender);
+                SubmitTextbox((TextBox)sender);
             }
         }
 

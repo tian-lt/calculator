@@ -175,6 +175,10 @@ namespace CalculatorApp
             CopyPasteManager.CopyToClipboard(calcResult.Text);
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+        }
+
         private void DateCalcOption_Changed(object sender, SelectionChangedEventArgs e)
         {
             FindName("AddSubtractDateGrid");
