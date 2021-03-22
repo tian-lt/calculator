@@ -62,9 +62,6 @@
     <ClCompile Include="Common\Utils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ViewModelUtilities.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Automation\NarratorAnnouncement.cpp">
       <Filter>Common\Automation</Filter>
     </ClCompile>
@@ -94,6 +91,8 @@
     <ClCompile Include="HistoryItemViewModel.cpp" />
     <ClCompile Include="HistoryViewModel.cpp" />
     <ClCompile Include="MemoryItemViewModel.cpp" />
+    <ClCompile Include="StandardCalculatorViewModel.cpp" />
+    <ClCompile Include="UnitConverterViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -161,9 +160,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Utils.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ViewModelUtilities.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\Automation\NarratorAnnouncement.h">

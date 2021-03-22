@@ -263,4 +263,8 @@ SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Color backgroundCol
     return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
 }
 
+int CalculatorApp::Utilities::GetWindowId()
+{
+    return Utils::GetWindowId();
+}
 

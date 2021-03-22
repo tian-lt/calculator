@@ -283,7 +283,7 @@ namespace CalculatorApp
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     if (s_ignoreNextEscape.ContainsKey(viewId))
                     {
@@ -303,7 +303,7 @@ namespace CalculatorApp
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     if (s_ignoreNextEscape.ContainsKey(viewId))
                     {
@@ -322,7 +322,7 @@ namespace CalculatorApp
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     if (s_fHonorShortcuts.ContainsKey(viewId))
                     {
@@ -342,7 +342,7 @@ namespace CalculatorApp
 
             public static void DisableShortcuts(bool disable)
             {
-                int viewId = ViewModelUtilities.GetWindowId();
+                int viewId = Utilities.GetWindowId();
 
                 if (s_fDisableShortcuts.ContainsKey(viewId))
                 {
@@ -354,7 +354,7 @@ namespace CalculatorApp
 
             public static void UpdateDropDownState(bool isOpen)
             {
-                int viewId = ViewModelUtilities.GetWindowId();
+                int viewId = Utilities.GetWindowId();
 
                 if (s_IsDropDownOpen.ContainsKey(viewId))
                 {
@@ -367,7 +367,7 @@ namespace CalculatorApp
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-                    int appViewId = ViewModelUtilities.GetWindowId();
+                    int appViewId = Utilities.GetWindowId();
 
                     // Check if the View Id has already been registered
                     if (!s_characterForButtons.ContainsKey(appViewId))
@@ -438,7 +438,7 @@ namespace CalculatorApp
 
                     var button = (target as ButtonBase);
 
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
                     if (s_characterForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
                         if (!string.IsNullOrEmpty(oldValue))
@@ -485,7 +485,7 @@ namespace CalculatorApp
 
                     var button = ((ButtonBase)target);
 
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     // Check if the View Id has already been registered
                     if (s_virtualKey.TryGetValue(viewId, out var iterViewMap))
@@ -515,7 +515,7 @@ namespace CalculatorApp
                         control = (target as MUXC.NavigationView);
                     }
 
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyControlChordsForButtons.TryGetValue(viewId, out var iterViewMap))
@@ -538,7 +538,7 @@ namespace CalculatorApp
                 {
                     var button = (target as ButtonBase);
 
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyShiftChordsForButtons.TryGetValue(viewId, out var iterViewMap))
@@ -562,7 +562,7 @@ namespace CalculatorApp
                 {
                     MUXC.NavigationView navView = (target as MUXC.NavigationView);
 
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyAltChordsForButtons.TryGetValue(viewId, out var iterViewMap))
@@ -585,7 +585,7 @@ namespace CalculatorApp
                 {
                     var button = (target as ButtonBase);
 
-                    int viewId = ViewModelUtilities.GetWindowId();
+                    int viewId = Utilities.GetWindowId();
 
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyControlShiftChordsForButtons.TryGetValue(viewId, out var iterViewMap))
@@ -606,7 +606,7 @@ namespace CalculatorApp
             // the normal keyboard handling.
             private static void OnCharacterReceivedHandler(CoreWindow sender, CharacterReceivedEventArgs args)
             {
-                int viewId = ViewModelUtilities.GetWindowId();
+                int viewId = Utilities.GetWindowId();
                 bool hit = s_fHonorShortcuts.TryGetValue(viewId, out var currentHonorShortcuts);
 
                 if (!hit || currentHonorShortcuts)
@@ -627,7 +627,7 @@ namespace CalculatorApp
                 }
 
                 var key = args.VirtualKey;
-                int viewId = ViewModelUtilities.GetWindowId();
+                int viewId = Utilities.GetWindowId();
 
                 bool isControlKeyPressed = (Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
                 bool isShiftKeyPressed = (Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
@@ -766,7 +766,7 @@ namespace CalculatorApp
             // double check this is equivalent before and after migration
             private static SortedDictionary<char, List<WeakReference>> GetCurrentKeyDictionary(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed)
             {
-                int viewId = ViewModelUtilities.GetWindowId();
+                int viewId = Utilities.GetWindowId();
 
                 if (controlKeyPressed)
                 {
