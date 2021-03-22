@@ -179,21 +179,6 @@ bool operator!=(const Color& color1, const Color& color2)
     return !(color1 == color2);
 }
 
-// This method calculates the luminance ratio between White and the given background color.
-// The luminance is calculate using the RGB values and does not use the A value.
-// White or Black is returned
-SolidColorBrush ^ Utils::GetContrastColor(Color backgroundColor)
-{
-    auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
-
-    if ((255 + 0.05) / (luminance + 0.05) >= 2.5)
-    {
-        return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"WhiteBrush"));
-    }
-
-    return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
-}
-
 String^ CalculatorApp::Utilities::EscapeHtmlSpecialCharacters(String^ originalString)
 {
     // Construct a default special characters if not provided.
@@ -263,8 +248,19 @@ bool CalculatorApp::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows
     return Utils::AreColorsEqual(color1, color2);
 }
 
-Windows::UI::Xaml::Media::SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Windows::UI::Color backgroundColor)
+// This method calculates the luminance ratio between White and the given background color.
+// The luminance is calculate using the RGB values and does not use the A value.
+// White or Black is returned
+SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Color backgroundColor)
 {
-    return Utils::GetContrastColor(backgroundColor);
+    auto luminance = 0.2126 * backgroundColor.R + 0.7152 * backgroundColor.G + 0.0722 * backgroundColor.B;
+
+    if ((255 + 0.05) / (luminance + 0.05) >= 2.5)
+    {
+        return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"WhiteBrush"));
+    }
+
+    return static_cast<SolidColorBrush ^>(Application::Current->Resources->Lookup(L"BlackBrush"));
 }
+
 

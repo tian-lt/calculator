@@ -46,7 +46,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ButtonPressed == null)
                 {
-                    donotuse_ButtonPressed = CalculatorApp.Common.MakeDelegate(this, CalculatorScientificAngleButtons.OnAngleButtonPressed);
+                    donotuse_ButtonPressed = new CalculatorApp.Common.DelegateCommand<CalculatorScientificAngleButtons>(this, OnAngleButtonPressed);
                 }
                 return donotuse_ButtonPressed;
             }
@@ -55,7 +55,7 @@ namespace CalculatorApp
 
         public bool IsErrorVisualState { get; set; }
 
-        private void OnAngleButtonPressed(in object commandParameter)
+        private void OnAngleButtonPressed(object commandParameter)
         {
             string buttonId = (string)commandParameter;
 

@@ -399,8 +399,6 @@ namespace Utils
     void Trim(std::wstring& value);
     void TrimFront(std::wstring& value);
     void TrimBack(std::wstring& value);
-
-    Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
 }
 
 // This goes into the header to define the property, in the public: section of the class
