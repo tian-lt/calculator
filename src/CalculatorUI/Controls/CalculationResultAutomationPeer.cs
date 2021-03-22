@@ -36,7 +36,7 @@ namespace CalculatorApp
 
             public void Invoke()
             {
-                var owner = ((CalculationResult)this.Owner);
+                var owner = (CalculationResult)this.Owner;
                 owner.ProgrammaticSelect();
             }
         }

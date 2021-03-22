@@ -35,9 +35,6 @@ namespace CalculatorApp
 
         public sealed class OverflowTextBlock : Windows.UI.Xaml.Controls.Control
         {
-            public static readonly uint SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
-            public static readonly double SCROLL_RATIO = 0.7;
-
             public OverflowTextBlock()
             {
                 m_isAccessibilityViewControl = false;
@@ -266,22 +263,16 @@ namespace CalculatorApp
                 return new OverflowTextBlockAutomationPeer(this);
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // void OverflowTextBlock::OnScrollLeftClick(_In_ Object ^ sender, _In_ RoutedEventArgs ^)
             private void OnScrollLeftClick(object sender, RoutedEventArgs e)
             {
                 ScrollLeft();
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // void OverflowTextBlock::OnScrollRightClick(_In_ Object ^ sender, _In_ RoutedEventArgs ^)
             private void OnScrollRightClick(object sender, RoutedEventArgs e)
             {
                 ScrollRight();
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // void OverflowTextBlock::OnViewChanged(_In_opt_ Object ^ /*sender*/, _In_opt_ ScrollViewerViewChangedEventArgs ^ /*args*/)
             private void OnViewChanged(object sender, ScrollViewerViewChangedEventArgs args)
             {
                 UpdateScrollButtons();
@@ -326,6 +317,9 @@ namespace CalculatorApp
                     UpdateScrollButtons();
                 }
             }
+
+            private const uint SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
+            private const double SCROLL_RATIO = 0.7;
 
             private bool m_isAccessibilityViewControl;
             private bool m_ignoreViewChanged;

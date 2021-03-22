@@ -23,10 +23,6 @@ namespace CalculatorApp
             this.Loaded += KeyGraphFeaturesPanel_Loaded;
         }
 
-        // CSHARP_MIGRATION: TODO:
-        // look for macros. removed virtual for sealed class
-        //public OBSERVABLE_OBJECT();
-        //public OBSERVABLE_PROPERTY_RW(CalculatorApp.ViewModel.EquationViewModel , ViewModel);
         public event PropertyChangedEventHandler PropertyChanged;
         internal void RaisePropertyChanged(string p)
         {
@@ -59,7 +55,7 @@ namespace CalculatorApp
             return new Windows.UI.Xaml.Media.SolidColorBrush(color);
         }
 
-        private void KeyGraphFeaturesPanel_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void KeyGraphFeaturesPanel_Loaded(object sender, RoutedEventArgs e)
         {
             BackButton.Focus(FocusState.Programmatic);
         }

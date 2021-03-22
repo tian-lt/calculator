@@ -31,22 +31,6 @@ namespace CalculatorApp
 
         public sealed class CalculationResult : Windows.UI.Xaml.Controls.Control
         {
-            private const double SCALEFACTOR = 0.357143;
-            private const double SMALLHEIGHTSCALEFACTOR = 0;
-            private const double HEIGHTCUTOFF = 100;
-            private const double INCREMENTOFFSET = 1;
-            private const double MAXFONTINCREMENT = 5;
-            private const double WIDTHTOFONTSCALAR = 0.0556513;
-            private const double WIDTHTOFONTOFFSET = 3;
-            private const double WIDTHCUTOFF = 50;
-            private const double FONTTOLERANCE = 0.001;
-            private const double SCROLL_RATIO = 0.7;
-
-            // We need a safety margin to guarantee we correctly always show/hide ScrollLeft and ScrollRight buttons when necessary.
-            // In rare cases, ScrollViewer::HorizontalOffset is a little low by a few (sub)pixels when users scroll to one of the extremity
-            // and no events are launched when they scroll again in the same direction
-            private const double SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
-
             public CalculationResult()
             {
                 m_isScalingText = false;
@@ -294,7 +278,7 @@ namespace CalculatorApp
             {
                 var requestedElement = e.OriginalSource;
 
-                if (requestedElement.Equals((m_textBlock as object)))
+                if (requestedElement.Equals(m_textBlock as object))
                 {
                     m_textBlock.Focus(FocusState.Programmatic);
                 }
@@ -334,10 +318,7 @@ namespace CalculatorApp
                     // message is localized and therefore can contain characters that are not
                     // available in the normal font.
                     // We use UIText as the font type because this is the most common font type to use
-
-                    // CSHARP_MIGRATION: TODO:
-                    // LocalizationService.GetInstance() not defined
-                    //m_textBlock.FontFamily = LocalizationService.GetInstance().GetLanguageFontFamilyForType(LanguageFontType.UIText);
+                    m_textBlock.FontFamily = LocalizationService.GetInstance().GetLanguageFontFamilyForType(LanguageFontType.UIText);
                 }
                 else
                 {
@@ -346,7 +327,6 @@ namespace CalculatorApp
                     // for the TextBlock in the template.
                     m_textBlock.ClearValue(TextBlock.FontFamilyProperty);
                 }
-
             }
 
             private void OnMinFontSizePropertyChanged(double oldValue, double newValue)
@@ -492,6 +472,22 @@ namespace CalculatorApp
             {
                 Selected(this);
             }
+
+            private const double SCALEFACTOR = 0.357143;
+            private const double SMALLHEIGHTSCALEFACTOR = 0;
+            private const double HEIGHTCUTOFF = 100;
+            private const double INCREMENTOFFSET = 1;
+            private const double MAXFONTINCREMENT = 5;
+            private const double WIDTHTOFONTSCALAR = 0.0556513;
+            private const double WIDTHTOFONTOFFSET = 3;
+            private const double WIDTHCUTOFF = 50;
+            private const double FONTTOLERANCE = 0.001;
+            private const double SCROLL_RATIO = 0.7;
+
+            // We need a safety margin to guarantee we correctly always show/hide ScrollLeft and ScrollRight buttons when necessary.
+            // In rare cases, ScrollViewer::HorizontalOffset is a little low by a few (sub)pixels when users scroll to one of the extremity
+            // and no events are launched when they scroll again in the same direction
+            private const double SCROLL_BUTTONS_APPROXIMATION_RANGE = 4;
 
             private Windows.UI.Xaml.Controls.ScrollViewer m_textContainer;
             private Windows.UI.Xaml.Controls.TextBlock m_textBlock;

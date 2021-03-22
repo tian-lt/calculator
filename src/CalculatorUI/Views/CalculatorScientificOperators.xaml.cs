@@ -74,29 +74,29 @@ namespace CalculatorApp
             NumberPad.IsErrorVisualState = newValue;
         }
 
-        private void ShiftButton_Check(in object sender, in RoutedEventArgs e)
+        private void ShiftButton_Check(object sender, RoutedEventArgs e)
         {
             SetOperatorRowVisibility();
         }
 
-        private void ShiftButton_Uncheck(in object sender, in RoutedEventArgs e)
+        private void ShiftButton_Uncheck(object sender, RoutedEventArgs e)
         {
             ShiftButton.IsChecked = false;
             SetOperatorRowVisibility();
             ShiftButton.Focus(FocusState.Programmatic);
         }
 
-        private void TrigFlyoutShift_Toggle(in object sender, in RoutedEventArgs e)
+        private void TrigFlyoutShift_Toggle(object sender, RoutedEventArgs e)
         {
             SetTrigRowVisibility();
         }
 
-        private void TrigFlyoutHyp_Toggle(in object sender, in RoutedEventArgs e)
+        private void TrigFlyoutHyp_Toggle(object sender, RoutedEventArgs e)
         {
             SetTrigRowVisibility();
         }
 
-        private void FlyoutButton_Clicked(in object sender, in RoutedEventArgs e)
+        private void FlyoutButton_Clicked(object sender, RoutedEventArgs e)
         {
             HypButton.IsChecked = false;
             TrigShiftButton.IsChecked = false;
@@ -104,7 +104,7 @@ namespace CalculatorApp
             FuncFlyout.Hide();
         }
 
-        private void ShiftButton_IsEnabledChanged(in object sender, in DependencyPropertyChangedEventArgs e)
+        private void ShiftButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             SetOperatorRowVisibility();
         }

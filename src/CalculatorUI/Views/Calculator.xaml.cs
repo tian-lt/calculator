@@ -30,7 +30,7 @@ using Windows.UI.ViewManagement;
 
 namespace CalculatorApp
 {
-    class FontTable
+    public class FontTable
     {
         public string numericSystem;
         public double fullFont;
@@ -475,12 +475,12 @@ namespace CalculatorApp
             }
         }
 
-        private void OnLayoutVisualStateCompleted(in object sender, in object e)
+        private void OnLayoutVisualStateCompleted(object sender, object e)
         {
             UpdatePanelViewState();
         }
 
-        private void OnModeVisualStateCompleted(in object sender, in object e)
+        private void OnModeVisualStateCompleted(object sender, object e)
         {
             m_isLastAnimatedInScientific = IsScientific;
             m_isLastAnimatedInProgrammer = IsProgrammer;
@@ -507,12 +507,12 @@ namespace CalculatorApp
             }
         }
 
-        private void OnErrorVisualStateCompleted(in object sender, in object e)
+        private void OnErrorVisualStateCompleted(object sender, object e)
         {
             SetDefaultFocus();
         }
 
-        private void OnDisplayVisualStateCompleted(in object sender, in object e)
+        private void OnDisplayVisualStateCompleted(object sender, object e)
         {
             SetDefaultFocus();
         }
@@ -647,7 +647,7 @@ namespace CalculatorApp
         private bool m_IsDigit = false;
         private Memory m_memory;
 
-        private void HistoryFlyout_Opened(in object sender, in object args)
+        private void HistoryFlyout_Opened(object sender, object args)
         {
             m_fIsHistoryFlyoutOpen = true;
             m_IsLastFlyoutMemory = false;
@@ -662,7 +662,7 @@ namespace CalculatorApp
             AutomationProperties.SetName(HistoryButton, m_openHistoryFlyoutAutomationName);
         }
 
-        private void HistoryFlyout_Closed(in object sender, in object args)
+        private void HistoryFlyout_Closed(object sender, object args)
         {
             // Ideally, this would be renamed in the Closing event because the Closed event is too late.
             // Closing is not available until RS1+ so we set the name again here for TH2 support.
@@ -742,7 +742,7 @@ namespace CalculatorApp
         private bool m_fIsHistoryFlyoutOpen;
         private bool m_fIsMemoryFlyoutOpen;
 
-        private void OnMemoryFlyoutOpened(in object sender, in object args)
+        private void OnMemoryFlyoutOpened(object sender, object args)
         {
             m_IsLastFlyoutMemory = true;
             m_IsLastFlyoutHistory = false;
@@ -757,7 +757,7 @@ namespace CalculatorApp
             AutomationProperties.SetName(MemoryButton, m_openMemoryFlyoutAutomationName);
         }
 
-        private void OnMemoryFlyoutClosed(in object sender, in object args)
+        private void OnMemoryFlyoutClosed(object sender, object args)
         {
             // Ideally, this would be renamed in the Closing event because the Closed event is too late.
             // Closing is not available until RS1+ so we set the name again here for TH2 support.
@@ -816,7 +816,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnMemoryFlyOutTapped(in object sender, in TappedRoutedEventArgs e)
+        private void OnMemoryFlyOutTapped(object sender, TappedRoutedEventArgs e)
         {
             Grid grid = (Grid)sender;
             Point point = e.GetPosition(null);
@@ -827,7 +827,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnHistoryFlyOutTapped(in object sender, in TappedRoutedEventArgs e)
+        private void OnHistoryFlyOutTapped(object sender, TappedRoutedEventArgs e)
         {
             Grid grid = (Grid)sender;
             Point point = e.GetPosition(null);
@@ -838,7 +838,7 @@ namespace CalculatorApp
             }
         }
 
-        private void DockPanelTapped(in TappedRoutedEventArgs e)
+        private void DockPanelTapped(TappedRoutedEventArgs e)
         {
             int index = DockPivot.SelectedIndex;
             if (index == 1 && !IsProgrammer)
@@ -850,12 +850,12 @@ namespace CalculatorApp
             m_IsLastFlyoutHistory = false;
         }
 
-        private void OnHistoryAccessKeyInvoked(in UIElement sender, in AccessKeyInvokedEventArgs args)
+        private void OnHistoryAccessKeyInvoked(UIElement sender, AccessKeyInvokedEventArgs args)
         {
             DockPivot.SelectedItem = HistoryPivotItem;
         }
 
-        private void OnMemoryAccessKeyInvoked(in UIElement sender, in AccessKeyInvokedEventArgs args)
+        private void OnMemoryAccessKeyInvoked(UIElement sender, AccessKeyInvokedEventArgs args)
         {
             DockPivot.SelectedItem = MemoryPivotItem;
         }

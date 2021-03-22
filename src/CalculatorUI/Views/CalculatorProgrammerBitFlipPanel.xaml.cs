@@ -42,7 +42,7 @@ namespace CalculatorApp
 
         public StandardCalculatorViewModel Model
         {
-            get { return ((StandardCalculatorViewModel)this.DataContext); }
+            get { return (StandardCalculatorViewModel)this.DataContext; }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -163,7 +163,7 @@ namespace CalculatorApp
             m_flipButtons[63] = this.Bit63;
         }
 
-        private void OnBitToggled(in object sender, in RoutedEventArgs e)
+        private void OnBitToggled(object sender, RoutedEventArgs e)
         {
             if (m_updatingCheckedStates)
             {
@@ -285,135 +285,3 @@ namespace CalculatorApp
         private BitLength m_currentValueBitLength;
     }
 }
-
-#if False //Code from .cpp not merged
-//--------------------------------------------------------------------------------
-
-// Info: Parsed in .cpp but declaration not found in .h
-  CalculatorProgrammerBitFlipPanel()
-{
-
-    InitializeComponent();
-    AssignFlipButtons();
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void OnLoaded(Object sender, RoutedEventArgs e)
-{
-
-    SubscribePropertyChanged();
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void OnUnloaded(Object sender, RoutedEventArgs e)
-{
-
-    UnsubscribePropertyChanged();
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void SubscribePropertyChanged()
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void UnsubscribePropertyChanged()
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void OnPropertyChanged(Object sender, PropertyChangedEventArgs e)
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- StandardCalculatorViewModel  get()
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void AssignFlipButtons()
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void OnBitToggled(Object sender, RoutedEventArgs e)
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void UpdateCheckedStates(bool updateAutomationPropertiesNames)
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- void UpdateAutomationPropertiesNames()
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- bool ShouldEnableBit(BitLength length, int index)
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- int GetIndexOfLastBit(BitLength length)
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-// Info: Parsed in .cpp but declaration not found in .h
- String  GenerateAutomationPropertiesName(int position, bool value)
-{
-
-    
-
-}
-
-//--------------------------------------------------------------------------------
-#endif

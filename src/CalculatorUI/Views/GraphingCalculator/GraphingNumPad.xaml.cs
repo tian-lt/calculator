@@ -23,10 +23,6 @@ namespace CalculatorApp
     [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class GraphingNumPad
     {
-        // CSHARP_MIGRATION: TODO:
-        // convert const to static readonly
-        public static readonly LocalizationSettings localizationSettings = LocalizationSettings.GetInstance();
-
         public GraphingNumPad()
         {
             InitializeComponent();
@@ -43,12 +39,12 @@ namespace CalculatorApp
             Num9Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
         }
 
-        private void ShiftButton_Check(in object sender, in RoutedEventArgs e)
+        private void ShiftButton_Check(object sender, RoutedEventArgs e)
         {
             SetOperatorRowVisibility();
         }
 
-        private void ShiftButton_Uncheck(in object sender, in RoutedEventArgs e)
+        private void ShiftButton_Uncheck(object sender, RoutedEventArgs e)
         {
             ShiftButton.IsChecked = false;
             SetOperatorRowVisibility();
@@ -56,17 +52,17 @@ namespace CalculatorApp
             Button_Clicked(sender, null);
         }
 
-        private void TrigFlyoutShift_Toggle(in object sender, in RoutedEventArgs e)
+        private void TrigFlyoutShift_Toggle(object sender, RoutedEventArgs e)
         {
             SetTrigRowVisibility();
         }
 
-        private void TrigFlyoutHyp_Toggle(in object sender, in RoutedEventArgs e)
+        private void TrigFlyoutHyp_Toggle(object sender, RoutedEventArgs e)
         {
             SetTrigRowVisibility();
         }
 
-        private void FlyoutButton_Clicked(in object sender, in RoutedEventArgs e)
+        private void FlyoutButton_Clicked(object sender, RoutedEventArgs e)
         {
             this.HypButton.IsChecked = false;
             this.TrigShiftButton.IsChecked = false;
@@ -77,7 +73,7 @@ namespace CalculatorApp
             Button_Clicked(sender, null);
         }
 
-        private void ShiftButton_IsEnabledChanged(in object sender, in DependencyPropertyChangedEventArgs e)
+        private void ShiftButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             SetOperatorRowVisibility();
         }
@@ -128,7 +124,7 @@ namespace CalculatorApp
             }
         }
 
-        private void Button_Clicked(in object sender, in DependencyPropertyChangedEventArgs e)
+        private void Button_Clicked(object sender, DependencyPropertyChangedEventArgs e)
         {
             var mathRichEdit = GetActiveRichEdit();
             var button = sender as CalculatorApp.Controls.CalculatorButton;
@@ -282,5 +278,7 @@ namespace CalculatorApp
 
             return null;
         }
+
+        private static readonly LocalizationSettings localizationSettings = LocalizationSettings.GetInstance();
     }
 }

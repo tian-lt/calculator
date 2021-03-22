@@ -54,11 +54,9 @@ namespace CalculatorApp
                 base.OnApplyTemplate();
             }
 
-            // CSHARP_MIGRATION: TODO:
-            // void OperatorPanelListView::ScrollViewChanged(_In_ Object^, _In_ ScrollViewerViewChangedEventArgs^ e)
             private void OnScrollClick(object sender, RoutedEventArgs e)
             {
-                var clicked = (sender as Button);
+                var clicked = sender as Button;
                 if (clicked == m_scrollLeft)
                 {
                     ScrollLeft();
@@ -87,7 +85,7 @@ namespace CalculatorApp
 
             private void OnButtonPointerExited(object sender, PointerRoutedEventArgs e)
             {
-                var button = (sender as Button);
+                var button = sender as Button;
 
                 // Do not bubble up the pointer exit event to the control if the button being exited was not visible
                 if (button.Visibility == Visibility.Collapsed)

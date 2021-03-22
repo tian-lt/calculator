@@ -73,7 +73,7 @@ namespace CalculatorApp
             }
         }
 
-        private void DecButtonChecked(in object sender, in RoutedEventArgs e)
+        private void DecButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.DecButton, ViewMode.Programmer);
             if (Model != null)
@@ -82,7 +82,7 @@ namespace CalculatorApp
             }
         }
 
-        private void HexButtonChecked(in object sender, in RoutedEventArgs e)
+        private void HexButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.HexButton, ViewMode.Programmer);
             if (Model != null)
@@ -91,7 +91,7 @@ namespace CalculatorApp
             }
         }
 
-        private void BinButtonChecked(in object sender, in RoutedEventArgs e)
+        private void BinButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.BinButton, ViewMode.Programmer);
             if (Model != null)
@@ -100,7 +100,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OctButtonChecked(in object sender, in RoutedEventArgs e)
+        private void OctButtonChecked(object sender, RoutedEventArgs e)
         {
             TraceLogger.GetInstance().UpdateButtonUsage(NumbersAndOperatorsEnum.OctButton, ViewMode.Programmer);
             if (Model != null)
@@ -109,7 +109,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnCopyMenuItemClicked(in object sender, in RoutedEventArgs e)
+        private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var source = (RadixButton)ProgrammerOperatorsContextMenu.Target;
 

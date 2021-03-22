@@ -37,15 +37,6 @@ namespace CalculatorApp
 {
     [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class DateCalculator
     {
-        // We choose 2550 as the max year because CalendarDatePicker experiences clipping
-        // issues just after 2558.  We would like 9999 but will need to wait for a platform
-        // fix before we use a higher max year.  This platform issue is tracked by
-        // TODO: MSFT-9273247
-        public static readonly int c_maxYear = 2550;
-        public static readonly int c_minYear = 1601;
-
-        public static readonly LocalizationSettings localizationSettings = LocalizationSettings.GetInstance();
-
         public DateCalculator()
         {
             InitializeComponent();
@@ -125,7 +116,7 @@ namespace CalculatorApp
             DateCalculationOption.Focus(FocusState.Programmatic);
         }
 
-        private void FromDate_DateChanged(in CalendarDatePicker sender, in CalendarDatePickerDateChangedEventArgs e)
+        private void FromDate_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs e)
         {
             if (e.NewDate != null)
             {
@@ -139,7 +130,7 @@ namespace CalculatorApp
             }
         }
 
-        private void ToDate_DateChanged(in CalendarDatePicker sender, in CalendarDatePickerDateChangedEventArgs e)
+        private void ToDate_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs e)
         {
             if (e.NewDate != null)
             {
@@ -153,7 +144,7 @@ namespace CalculatorApp
             }
         }
 
-        private void AddSubtract_DateChanged(in CalendarDatePicker sender, in CalendarDatePickerDateChangedEventArgs e)
+        private void AddSubtract_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs e)
         {
             if (e.NewDate != null)
             {
@@ -167,7 +158,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OffsetValue_Changed(in object sender, in SelectionChangedEventArgs e)
+        private void OffsetValue_Changed(object sender, SelectionChangedEventArgs e)
         {
             var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
             // do not log diagnostics for no-ops and initialization of combo boxes
@@ -177,7 +168,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnCopyMenuItemClicked(in object sender, in RoutedEventArgs e)
+        private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var calcResult = (TextBlock)ResultsContextMenu.Target;
 
@@ -210,7 +201,7 @@ namespace CalculatorApp
             }
         }
 
-        private void AddSubtractDateGrid_Loaded(in object sender, in RoutedEventArgs e)
+        private void AddSubtractDateGrid_Loaded(object sender, RoutedEventArgs e)
         {
             AddSubtract_FromDate.PlaceholderText = DateDiff_FromDate.PlaceholderText;
             AddSubtract_FromDate.CalendarIdentifier = localizationSettings.GetCalendarIdentifier();
@@ -222,14 +213,14 @@ namespace CalculatorApp
             AddSubtract_FromDate.DateFormat = "day month year";
         }
 
-        private void AddSubtractOption_Checked(in object sender, in RoutedEventArgs e)
+        private void AddSubtractOption_Checked(object sender, RoutedEventArgs e)
         {
             RaiseLiveRegionChangedAutomationEvent(false);
         }
 
         // CSHARP_MIGRATION: TODO:
         // can we change the calendarDatePicker.Date of in arg?
-        private void ReselectCalendarDate(in CalendarDatePicker calendarDatePicker, DateTimeOffset? dateTime)
+        private void ReselectCalendarDate(CalendarDatePicker calendarDatePicker, DateTimeOffset? dateTime)
         {
             // Reselect the unselected Date
             calendarDatePicker.Date = dateTime;
@@ -238,18 +229,18 @@ namespace CalculatorApp
             calendarDatePicker.IsCalendarOpen = false;
         }
 
-        private void OffsetDropDownClosed(in object sender, in object e)
+        private void OffsetDropDownClosed(object sender, object e)
         {
             RaiseLiveRegionChangedAutomationEvent(false);
         }
 
-        private void CalendarFlyoutClosed(in object sender, in object e)
+        private void CalendarFlyoutClosed(object sender, object e)
         {
             var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
             RaiseLiveRegionChangedAutomationEvent(dateCalcViewModel.IsDateDiffMode);
         }
 
-        private void RaiseLiveRegionChangedAutomationEvent(in bool isDateDiffMode)
+        private void RaiseLiveRegionChangedAutomationEvent(bool isDateDiffMode)
         {
             TextBlock resultTextBlock = isDateDiffMode ? DateDiffAllUnitsResultLabel : DateResultLabel;
             string automationName = AutomationProperties.GetName(resultTextBlock);
@@ -260,5 +251,14 @@ namespace CalculatorApp
         {
             TraceLogger.GetInstance().LogVisualStateChanged(ViewMode.Date, e.NewState.Name, false);
         }
+
+        // We choose 2550 as the max year because CalendarDatePicker experiences clipping
+        // issues just after 2558.  We would like 9999 but will need to wait for a platform
+        // fix before we use a higher max year.  This platform issue is tracked by
+        // TODO: MSFT-9273247
+        private const int c_maxYear = 2550;
+        private const int c_minYear = 1601;
+
+        private static readonly LocalizationSettings localizationSettings = LocalizationSettings.GetInstance();
     }
 }

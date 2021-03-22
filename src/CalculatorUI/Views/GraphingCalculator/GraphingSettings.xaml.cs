@@ -27,14 +27,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden]
-    public sealed partial class GraphingSettings
+    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class GraphingSettings
     {
         public GraphingSettings()
         {
-            InitializeComponent();
             m_ViewModel = new GraphingSettingsViewModel();
             m_IsMatchAppTheme = false;
+            InitializeComponent();
         }
 
         public CalculatorApp.ViewModel.GraphingSettingsViewModel ViewModel

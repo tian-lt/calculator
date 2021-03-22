@@ -83,7 +83,7 @@ namespace CalculatorApp
             }
         }
 
-        private void FToEButton_Toggled(in object sender, in RoutedEventArgs e)
+        private void FToEButton_Toggled(object sender, RoutedEventArgs e)
         {
             var viewModel = (StandardCalculatorViewModel)this.DataContext;
             viewModel.FtoEButtonToggled();

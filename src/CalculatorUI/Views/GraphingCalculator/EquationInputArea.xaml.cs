@@ -27,12 +27,6 @@ namespace CalculatorApp
 {
     public sealed partial class EquationInputArea : System.ComponentModel.INotifyPropertyChanged
     {
-        public static readonly int maxEquationSize = 14;
-        public static readonly int colorCount = 14;
-        public static readonly int[] colorAssignmentMapping = { 0, 3, 7, 10, 1, 4, 8, 11, 2, 5, 9, 12, 6, 13 };
-        public static readonly string EquationsPropertyName = "Equations";
-        public static readonly string IsMatchAppThemePropertyName = "IsMatchAppTheme";
-
         public EquationInputArea()
         {
             m_lastLineColorIndex = -1;
@@ -119,7 +113,7 @@ namespace CalculatorApp
         public event System.EventHandler<ViewModel.EquationViewModel> KeyGraphFeaturesRequested;
         public event System.EventHandler<CalculatorApp.Controls.MathRichEditBoxFormatRequest> EquationFormatRequested;
 
-        public static Windows.UI.Xaml.Visibility ManageEditVariablesButtonVisibility(uint numberOfVariables)
+        public static Visibility ManageEditVariablesButtonVisibility(uint numberOfVariables)
         {
             return numberOfVariables == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -134,8 +128,6 @@ namespace CalculatorApp
             return isCollapsed ? "\uE70E" : "\uE70D";
         }
 
-        // CSHARP_MIGRATION: TODO:
-        // not used anywhere
         public static SolidColorBrush ToSolidColorBrush(Color color)
         {
             return new SolidColorBrush(color);
@@ -153,7 +145,7 @@ namespace CalculatorApp
             {
                 return;
             }
-            var container = ((UIElement)EquationInputList.ContainerFromIndex(index));
+            var container = (UIElement)EquationInputList.ContainerFromIndex(index);
             if (container != null)
             {
                 container.StartBringIntoView();
@@ -318,7 +310,7 @@ namespace CalculatorApp
                 {
                     themeDictionaryName = "Default";
                 }
-                var themeDictionary = ((ResourceDictionary)Application.Current.Resources.ThemeDictionaries[themeDictionaryName]);
+                var themeDictionary = (ResourceDictionary)Application.Current.Resources.ThemeDictionaries[themeDictionaryName];
                 m_AvailableColors.Add((SolidColorBrush)themeDictionary["EquationBrush1"]);
                 m_AvailableColors.Add((SolidColorBrush)themeDictionary["EquationBrush2"]);
                 m_AvailableColors.Add((SolidColorBrush)themeDictionary["EquationBrush3"]);
@@ -428,7 +420,7 @@ namespace CalculatorApp
 
         private void EquationTextBox_Loaded(object sender, RoutedEventArgs e)
         {
-            var tb = ((EquationTextBox)sender);
+            var tb = (EquationTextBox)sender;
 
             var colorChooser = (EquationStylePanelControl)tb.ColorChooserFlyout.Content;
             colorChooser.AvailableColors = AvailableColors;
@@ -442,7 +434,7 @@ namespace CalculatorApp
                 int index = Equations.IndexOf(copyEquationToFocus);
                 if (index >= 0)
                 {
-                    var container = ((UIElement)EquationInputList.ContainerFromIndex(index));
+                    var container = (UIElement)EquationInputList.ContainerFromIndex(index);
                     if (container != null)
                     {
                         container.StartBringIntoView();
@@ -453,7 +445,7 @@ namespace CalculatorApp
 
         private void EquationTextBox_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
-            var tb = ((EquationTextBox)sender);
+            var tb = (EquationTextBox)sender;
             if (!tb.IsLoaded)
             {
                 return;
@@ -462,7 +454,7 @@ namespace CalculatorApp
             FocusEquationIfNecessary(tb);
         }
 
-        private void FocusEquationIfNecessary(CalculatorApp.Controls.EquationTextBox textBox)
+        private void FocusEquationIfNecessary(EquationTextBox textBox)
         {
             if (m_equationToFocus != null && textBox.DataContext == m_equationToFocus)
             {
@@ -472,7 +464,7 @@ namespace CalculatorApp
                 int index = Equations.IndexOf(m_equationToFocus);
                 if (index >= 0)
                 {
-                    var container = ((UIElement)EquationInputList.ContainerFromIndex(index));
+                    var container = (UIElement)EquationInputList.ContainerFromIndex(index);
                     if (container != null)
                     {
                         container.StartBringIntoView();
@@ -512,7 +504,7 @@ namespace CalculatorApp
 
         private void SubmitTextbox(TextBox sender)
         {
-            var variableViewModel = ((VariableViewModel)sender.DataContext);
+            var variableViewModel = (VariableViewModel)sender.DataContext;
             double val;
             if (sender.Name == "ValueTextBox")
             {
@@ -644,6 +636,12 @@ namespace CalculatorApp
                 }
             }
         }
+
+        private const int maxEquationSize = 14;
+        private const int colorCount = 14;
+        private static readonly int[] colorAssignmentMapping = { 0, 3, 7, 10, 1, 4, 8, 11, 2, 5, 9, 12, 6, 13 };
+        private const string EquationsPropertyName = "Equations";
+        private const string IsMatchAppThemePropertyName = "IsMatchAppTheme";
 
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
         private Windows.UI.ViewManagement.UISettings m_uiSettings;

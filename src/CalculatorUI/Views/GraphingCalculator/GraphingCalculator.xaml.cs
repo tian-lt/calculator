@@ -38,11 +38,6 @@ namespace CalculatorApp
 {
     public sealed partial class GraphingCalculator : System.ComponentModel.INotifyPropertyChanged
     {
-        public static readonly double zoomInScale = 1 / 1.0625;
-        public static readonly double zoomOutScale = 1.0625;
-        public static readonly string sc_ViewModelPropertyName = "ViewModel";
-        public static readonly string sc_IsGraphThemeMatchApp = "IsGraphThemeMatchApp";
-
         public GraphingCalculator()
         {
             InitializeComponent();
@@ -805,6 +800,11 @@ namespace CalculatorApp
                 }
             }));
         }
+
+        private const double zoomInScale = 1 / 1.0625;
+        private const double zoomOutScale = 1.0625;
+        private const string sc_ViewModelPropertyName = "ViewModel";
+        private const string sc_IsGraphThemeMatchApp = "IsGraphThemeMatchApp";
 
         private CalculatorApp.ViewModel.GraphingCalculatorViewModel m_viewModel;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;

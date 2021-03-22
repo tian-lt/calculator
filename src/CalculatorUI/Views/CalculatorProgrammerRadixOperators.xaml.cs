@@ -127,7 +127,7 @@ namespace CalculatorApp
             Model.SetBitshiftRadioButtonCheckedAnnouncement(announcementString);
         }
 
-        private void FlyoutButton_Clicked(in object sender, in RoutedEventArgs e)
+        private void FlyoutButton_Clicked(object sender, RoutedEventArgs e)
         {
             this.BitwiseFlyout.Hide();
         }
