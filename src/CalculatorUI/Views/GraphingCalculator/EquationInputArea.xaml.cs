@@ -143,7 +143,7 @@ namespace CalculatorApp
 
         public static SolidColorBrush GetForegroundColor(Color lineColor)
         {
-            return Utils.GetContrastColor(lineColor);
+            return Utilities.GetContrastColor(lineColor);
         }
 
         public void FocusEquationTextBox(EquationViewModel equation)

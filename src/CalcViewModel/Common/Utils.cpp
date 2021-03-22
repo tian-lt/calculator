@@ -258,6 +258,13 @@ Platform::String^ CalculatorApp::Utilities::TrimTrailingZeros(Platform::String^ 
     return ref new Platform::String(tmp.c_str());
 }
 
+bool CalculatorApp::Utilities::AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2)
+{
+    return Utils::AreColorsEqual(color1, color2);
+}
 
-
+Windows::UI::Xaml::Media::SolidColorBrush ^ CalculatorApp::Utilities::GetContrastColor(Windows::UI::Color backgroundColor)
+{
+    return Utils::GetContrastColor(backgroundColor);
+}
 
