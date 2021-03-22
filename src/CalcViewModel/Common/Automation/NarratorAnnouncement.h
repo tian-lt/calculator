@@ -47,6 +47,7 @@ public
 
     // CalculatorAnnouncement is intended to contain only static methods
     // that return announcements made for the Calculator app.
+public
     ref class CalculatorAnnouncement sealed
     {
     public:
