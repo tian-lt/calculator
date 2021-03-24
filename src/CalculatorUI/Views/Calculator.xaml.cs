@@ -74,7 +74,7 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
         {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
+            get => (StandardCalculatorViewModel)this.DataContext;
         }
 
         public bool IsStandard
@@ -719,7 +719,7 @@ namespace CalculatorApp
             }
         }
 
-        private void ToggleMemoryFlyout()
+        private void ToggleMemoryFlyout(object sender, RoutedEventArgs e)
         {
             if (DockPanel.Visibility == Visibility.Visible)
             {
@@ -838,7 +838,7 @@ namespace CalculatorApp
             }
         }
 
-        private void DockPanelTapped(TappedRoutedEventArgs e)
+        private void DockPanelTapped(object sender, TappedRoutedEventArgs e)
         {
             int index = DockPivot.SelectedIndex;
             if (index == 1 && !IsProgrammer)

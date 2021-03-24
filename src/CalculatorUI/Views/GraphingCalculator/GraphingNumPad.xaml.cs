@@ -124,7 +124,7 @@ namespace CalculatorApp
             }
         }
 
-        private void Button_Clicked(object sender, DependencyPropertyChangedEventArgs e)
+        private void Button_Clicked(object sender, RoutedEventArgs e)
         {
             var mathRichEdit = GetActiveRichEdit();
             var button = sender as CalculatorApp.Controls.CalculatorButton;

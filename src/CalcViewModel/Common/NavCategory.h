@@ -153,6 +153,7 @@ namespace CalculatorApp
             static int GetPosition(ViewMode mode);
 
             static ViewMode GetViewModeForVirtualKey(MyVirtualKey virtualKey);
+            static void GetCategoryAcceleratorKeys(Windows::Foundation::Collections::IVector<MyVirtualKey>^ resutls);
 
             internal : NavCategory(
                            Platform::String ^ name,
@@ -173,8 +174,6 @@ namespace CalculatorApp
                 , m_IsEnabled(isEnabled)
             {
             }
-
-            static std::vector<MyVirtualKey> GetCategoryAcceleratorKeys();
 
         private:
             static bool IsModeInCategoryGroup(ViewMode mode, CategoryGroupType groupType);

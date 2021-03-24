@@ -118,7 +118,7 @@ namespace CalculatorApp
             return numberOfVariables == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        public static bool ManageEditVariablesButtonLoaded(uint numberOfVariables)
+        public static bool ManageEditVariablesButtonLoaded(int numberOfVariables)
         {
             return numberOfVariables != 0;
         }
