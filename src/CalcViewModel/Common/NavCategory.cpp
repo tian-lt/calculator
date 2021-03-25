@@ -541,8 +541,3 @@ NavCategoryGroup ^ NavCategoryGroup::CreateConverterCategory()
         NavCategoryGroupInitializer{ CategoryGroupType::Converter, L"ConverterModeTextCaps", L"ConverterModeText", L"ConverterModePluralText" });
 }
 
-void NavCategory::Dummy()
-{
-
-
-}

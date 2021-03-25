@@ -133,8 +133,6 @@ namespace CalculatorApp
             static ViewMode Deserialize(Platform::Object ^ obj);
             static ViewMode GetViewModeForFriendlyName(Platform::String ^ name);
 
-            static void Dummy();
-
             static bool IsValidViewMode(ViewMode mode);
             static bool IsViewModeEnabled(ViewMode mode);
             static bool IsCalculatorViewMode(ViewMode mode);

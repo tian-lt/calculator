@@ -28,10 +28,6 @@ public
         static bool IsValid(NarratorAnnouncement ^ announcement);
 
     private:
-        // Make CalculatorAnnouncement a friend class so it is the only
-        // class that can access the private constructor.
-        // friend class CalculatorAnnouncement;
-
         Platform::String ^ m_announcement;
         Platform::String ^ m_activityId;
         Windows::UI::Xaml::Automation::Peers::AutomationNotificationKind m_kind;
