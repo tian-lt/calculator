@@ -588,19 +588,21 @@ namespace CalculatorApp
         {
             DecimalFormatter formatter = LocalizationService.GetInstance().GetRegionalSettingsAwareDecimalFormatter();
 
-            foreach (FontTable currentItem in fontTables)
+            int currentItemIdx = 0;
+            while (!fontTables[currentItemIdx].numericSystem.Equals("Default") &&
+                   !fontTables[currentItemIdx].numericSystem.Equals(formatter.NumeralSystem))
             {
-                if (currentItem.numericSystem.Equals("Default") || currentItem.numericSystem.Equals(formatter.NumeralSystem))
-                {
-                    this.Resources.Add("ResultFullFontSize", currentItem.fullFont);
-                    this.Resources.Add("ResultFullMinFontSize", currentItem.fullFontMin);
-                    this.Resources.Add("ResultPortraitMinFontSize", currentItem.portraitMin);
-                    this.Resources.Add("ResultSnapFontSize", currentItem.snapFont);
-                    this.Resources.Add("CalcButtonCaptionSizeOverride", currentItem.fullNumPadFont);
-                    this.Resources.Add("CalcButtonScientificSnapCaptionSizeOverride", currentItem.snapScientificNumPadFont);
-                    this.Resources.Add("CalcButtonScientificPortraitCaptionSizeOverride", currentItem.portraitScientificNumPadFont);
-                }
-            } 
+                ++currentItemIdx;
+            }
+
+            var currentItem = fontTables[currentItemIdx];
+            this.Resources.Add("ResultFullFontSize", currentItem.fullFont);
+            this.Resources.Add("ResultFullMinFontSize", currentItem.fullFontMin);
+            this.Resources.Add("ResultPortraitMinFontSize", currentItem.portraitMin);
+            this.Resources.Add("ResultSnapFontSize", currentItem.snapFont);
+            this.Resources.Add("CalcButtonCaptionSizeOverride", currentItem.fullNumPadFont);
+            this.Resources.Add("CalcButtonScientificSnapCaptionSizeOverride", currentItem.snapScientificNumPadFont);
+            this.Resources.Add("CalcButtonScientificPortraitCaptionSizeOverride", currentItem.portraitScientificNumPadFont);
         }
 
         private string GetCurrentLayoutState()
