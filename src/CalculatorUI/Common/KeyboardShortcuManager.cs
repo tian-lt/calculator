@@ -142,7 +142,7 @@ namespace CalculatorApp
                     "Character",
                     typeof(string),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(default(string), (sender, args)=> {
+                    new PropertyMetadata(string.Empty, (sender, args)=> {
                         OnCharacterPropertyChanged(sender, (string)args.OldValue, (string)args.NewValue);
                     }));
 

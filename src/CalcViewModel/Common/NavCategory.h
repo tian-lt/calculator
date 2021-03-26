@@ -192,7 +192,7 @@ namespace CalculatorApp
 
             static Windows::Foundation::Collections::IObservableVector<NavCategoryGroup ^> ^ CreateMenuOptions();
 
-            internal : static NavCategoryGroup ^ CreateCalculatorCategory();
+            static NavCategoryGroup ^ CreateCalculatorCategory();
             static NavCategoryGroup ^ CreateConverterCategory();
 
         private:

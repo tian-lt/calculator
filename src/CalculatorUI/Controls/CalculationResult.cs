@@ -97,7 +97,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for DisplayValue.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty DisplayValueProperty =
-                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register(nameof(DisplayValue), typeof(string), typeof(CalculationResult), new PropertyMetadata(string.Empty, new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculationResult)sender;
                     self.OnDisplayValuePropertyChanged((string)args.OldValue, (string)args.NewValue);

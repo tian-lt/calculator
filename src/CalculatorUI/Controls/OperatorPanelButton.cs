@@ -33,7 +33,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty TextProperty =
-                DependencyProperty.Register(nameof(Text), typeof(string), typeof(OperatorPanelButton), new PropertyMetadata(default(string)));
+                DependencyProperty.Register(nameof(Text), typeof(string), typeof(OperatorPanelButton), new PropertyMetadata(string.Empty));
 
             public string Glyph
             {
@@ -43,7 +43,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for Glyph.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty GlyphProperty =
-                DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(OperatorPanelButton), new PropertyMetadata(default(string)));
+                DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(OperatorPanelButton), new PropertyMetadata(string.Empty));
 
             public double GlyphFontSize
             {

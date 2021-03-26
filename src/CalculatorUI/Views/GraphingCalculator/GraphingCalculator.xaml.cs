@@ -166,7 +166,7 @@ namespace CalculatorApp
 
         // Using a DependencyProperty as the backing store for GraphControlAutomationName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GraphControlAutomationNameProperty =
-            DependencyProperty.Register(nameof(GraphControlAutomationName), typeof(string), typeof(GraphingCalculator), new PropertyMetadata(default(string)));
+            DependencyProperty.Register(nameof(GraphControlAutomationName), typeof(string), typeof(GraphingCalculator), new PropertyMetadata(string.Empty));
 
         public bool IsMatchAppTheme
         {

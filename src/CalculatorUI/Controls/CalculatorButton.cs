@@ -52,7 +52,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for AuditoryFeedback.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty AuditoryFeedbackProperty =
-                DependencyProperty.Register("AuditoryFeedback", typeof(string), typeof(CalculatorButton), new PropertyMetadata(default(string), new PropertyChangedCallback((sender, args) =>
+                DependencyProperty.Register("AuditoryFeedback", typeof(string), typeof(CalculatorButton), new PropertyMetadata(string.Empty, new PropertyChangedCallback((sender, args) =>
                 {
                     var self = (CalculatorButton)sender;
                     self.OnAuditoryFeedbackPropertyChanged((string)args.OldValue, (string)args.NewValue);

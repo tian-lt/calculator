@@ -78,7 +78,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for EquationButtonContentIndex.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty EquationButtonContentIndexProperty =
-                DependencyProperty.Register(nameof(EquationButtonContentIndex), typeof(string), typeof(EquationTextBox), new PropertyMetadata(default(string), (sender, args)=> {
+                DependencyProperty.Register(nameof(EquationButtonContentIndex), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty, (sender, args)=> {
                     var self = (EquationTextBox)sender;
                     self.OnEquationButtonContentIndexPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
@@ -95,7 +95,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MathEquation.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MathEquationProperty =
-                DependencyProperty.Register(nameof(MathEquation), typeof(string), typeof(EquationTextBox), new PropertyMetadata(default(string)));
+                DependencyProperty.Register(nameof(MathEquation), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty));
 
 
 
@@ -137,7 +137,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for ErrorText.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ErrorTextProperty =
-                DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(EquationTextBox), new PropertyMetadata(default(string)));
+                DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty));
 
 
 

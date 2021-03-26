@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
-//using CalculatorApp.Common;
-//using CalculatorApp.Common.Automation;
+using CalculatorApp.Common;
+using CalculatorApp.Common.Automation;
 using TraceLogging;
 
 //using Microsoft.WRL;
@@ -57,22 +57,6 @@ namespace CalculatorApp
     /// </summary>
     sealed partial class App
     {
-        static App()
-        {
-            //Task.Run(() =>
-            //{
-            //    Common.NavCategory.Dummy();
-            //}).Wait();
-
-            //Thread thrd = new Thread(() =>
-            //{
-            //    Common.NavCategory.Dummy();
-            //});
-            //thrd.Start();
-            //thrd.Join();
-        }
-
-
         /// <summary>
         /// Initializes the singleton application object. This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -151,10 +135,7 @@ namespace CalculatorApp
         private static Frame CreateFrame()
         {
             var frame = new Frame();
-
-            // CSHARP_MIGRATION: TODO:
-            //frame.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
-
+            frame.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
             return frame;
         }
 
@@ -389,8 +370,7 @@ namespace CalculatorApp
 
         private void RegisterDependencyProperties()
         {
-            // CSHARP_MIGRATION: TODO:
-            //NarratorNotifier.RegisterDependencyProperties();
+            NarratorNotifier.RegisterDependencyProperties();
         }
 
         private void OnSuspending(Object sender, SuspendingEventArgs args)
@@ -444,26 +424,26 @@ namespace CalculatorApp
             try
             {
                 // CSHARP_MIGRATION: TODO:
-                //var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
+                var calculatorOptions = NavCategoryGroup.CreateCalculatorCategory();
 
                 var jumpList = await JumpList.LoadCurrentAsync();
                 jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
                 jumpList.Items.Clear();
 
                 // CSHARP_MIGRATION: TODO:
-                //foreach (NavCategory option in calculatorOptions.Categories)
-                //{
-                //    if (!option.IsEnabled)
-                //    {
-                //        continue;
-                //    }
-                //    ViewMode mode = option.Mode;
-                //    var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode));
-                //    item.Description = "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode);
-                //    item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
+                foreach (NavCategory option in calculatorOptions.Categories)
+                {
+                    if (!option.IsEnabled)
+                    {
+                        continue;
+                    }
+                    ViewMode mode = option.Mode;
+                    var item = JumpListItem.CreateWithArguments(((int)mode).ToString(), "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode));
+                    item.Description = "ms-resource:///Resources/" + NavCategory.GetNameResourceKey(mode);
+                    item.Logo = new Uri("ms-appx:///Assets/" + mode.ToString() + ".png");
 
-                //    jumpList.Items.Append(item);
-                //}
+                    jumpList.Items.Add(item);
+                }
 
                 await jumpList.SaveAsync();
             }
@@ -480,8 +460,7 @@ namespace CalculatorApp
             var frame = (Window.Current.Content as Frame);
             var mainPage = (frame.Content as MainPage);
 
-            // CSHARP_MIGRATION: TODO:
-            //mainPage.UnregisterEventHandlers();
+            mainPage.UnregisterEventHandlers();
 
             await frameService.HandleViewRelease();
             await Task.Run(() =>
