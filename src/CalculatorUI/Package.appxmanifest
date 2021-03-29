@@ -23,6 +23,7 @@
                         <uap:ShowOn Tile="square310x310Logo" />
                     </uap:ShowNameOnTiles>
                 </uap:DefaultTile>
+                <uap:SplashScreen Image="Assets\CalculatorSplashScreen.png" uap5:Optional="true"/>
             </uap:VisualElements>
             <Extensions>
                 <uap:Extension Category="windows.protocol">
