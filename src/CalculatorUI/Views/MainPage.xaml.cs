@@ -265,7 +265,6 @@ namespace CalculatorApp
 
         private void OnNavLoaded(object sender, RoutedEventArgs e)
         {
-
             if (NavView.SelectedItem == null)
             {
                 var menuItems = ((IObservableVector<object>)NavView.MenuItemsSource);
@@ -287,7 +286,6 @@ namespace CalculatorApp
             }
             // Special case logic for Ctrl+E accelerator for Date Calculation Mode
             NavView.SetValue(Common.KeyboardShortcutManager.VirtualKeyControlChordProperty, Common.MyVirtualKey.E);
-
         }
 
         private void OnNavPaneOpening(MUXC.NavigationView sender, object args)
@@ -512,16 +510,16 @@ namespace CalculatorApp
             SetDefaultFocus();
 
             // Delay load things later when we get a chance.
-            this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                    if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
-                    {
-                        AppLifecycleLogger.GetInstance().LaunchUIResponsive();
-                        AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
-                    }
+            _ = this.Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+                        if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
+                        {
+                            AppLifecycleLogger.GetInstance().LaunchUIResponsive();
+                            AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
+                        }
 
-                    this.FindName("NavView");
-                }));
+                        this.FindName("NavView");
+                    }));
 
         }
 
