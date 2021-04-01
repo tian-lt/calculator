@@ -26,6 +26,7 @@ namespace CalculatorApp
     {
         public NumberPad()
         {
+            m_isErrorVisualState = false;
             this.InitializeComponent();
 
             var localizationSettings = LocalizationSettings.GetInstance();
@@ -43,8 +44,6 @@ namespace CalculatorApp
             this.Num9Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
         }
 
-
-
         public Windows.UI.Xaml.Style ButtonStyle
         {
             get { return (Windows.UI.Xaml.Style)GetValue(ButtonStyleProperty); }
@@ -54,9 +53,6 @@ namespace CalculatorApp
         // Using a DependencyProperty as the backing store for ButtonStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ButtonStyleProperty =
             DependencyProperty.Register(nameof(ButtonStyle), typeof(Windows.UI.Xaml.Style), typeof(NumberPad), new PropertyMetadata(default(Windows.UI.Xaml.Style)));
-
-
-
 
         public CalculatorApp.Common.NumberBase CurrentRadixType
         {
@@ -72,7 +68,19 @@ namespace CalculatorApp
                 self.OnCurrentRadixTypePropertyChanged((NumberBase)args.OldValue, (NumberBase)args.NewValue);
             }));
 
-        public bool IsErrorVisualState { get; set; }
+        public bool IsErrorVisualState
+        {
+            get { return m_isErrorVisualState; }
+            set
+            {
+                if (m_isErrorVisualState != value)
+                {
+                    m_isErrorVisualState = value;
+                    string newState = m_isErrorVisualState ? "ErrorLayout" : "NoErrorLayout";
+                    VisualStateManager.GoToState(this, newState, false);
+                }
+            }
+        }
 
         private void OnCurrentRadixTypePropertyChanged(NumberBase oldValue, NumberBase newValue)
         {
@@ -105,6 +113,6 @@ namespace CalculatorApp
             }
         }
 
-        private bool m_isErrorVisualState = false;
+        private bool m_isErrorVisualState;
     }
 }

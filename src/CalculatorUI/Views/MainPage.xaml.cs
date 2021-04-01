@@ -265,7 +265,6 @@ namespace CalculatorApp
 
         private void OnNavLoaded(object sender, RoutedEventArgs e)
         {
-
             if (NavView.SelectedItem == null)
             {
                 var menuItems = ((IObservableVector<object>)NavView.MenuItemsSource);
@@ -287,7 +286,6 @@ namespace CalculatorApp
             }
             // Special case logic for Ctrl+E accelerator for Date Calculation Mode
             NavView.SetValue(Common.KeyboardShortcutManager.VirtualKeyControlChordProperty, Common.MyVirtualKey.E);
-
         }
 
         private void OnNavPaneOpening(MUXC.NavigationView sender, object args)
