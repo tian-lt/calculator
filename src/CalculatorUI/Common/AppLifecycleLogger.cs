@@ -161,7 +161,7 @@ namespace CalculatorApp
         }
 
         private LoggingChannel m_appLifecycleProvider;
-        private static Lazy<AppLifecycleLogger> s_selfInstance = new Lazy<AppLifecycleLogger>(System.Threading.LazyThreadSafetyMode.PublicationOnly);
+        private static readonly Lazy<AppLifecycleLogger> s_selfInstance = new Lazy<AppLifecycleLogger>(()=> new AppLifecycleLogger(), true);
     }
 }
 

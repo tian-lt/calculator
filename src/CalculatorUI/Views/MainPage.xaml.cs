@@ -512,7 +512,7 @@ namespace CalculatorApp
             SetDefaultFocus();
 
             // Delay load things later when we get a chance.
-            this.Dispatcher.RunAsync(
+            _ = this.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
