@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -132,17 +133,17 @@ namespace CalculatorApp
 
         }
 
-        public DependencyObjectCollection CreateUIElementsForCategories(IObservableVector<NavCategoryGroup> categories)
+        public ObservableCollection<object> CreateUIElementsForCategories(IObservableVector<NavCategoryGroup> categories)
         {
-            var menuCategories = new DependencyObjectCollection(); // CSHARP_MIGRATION: TODO: Check if DependencyObjectCollection fits here
+            var menuCategories = new ObservableCollection<object>(); // CSHARP_MIGRATION: TODO: Check if ObservableCollection fits here
 
             foreach (var group in categories)
             {
-                menuCategories.Append(CreateNavViewHeaderFromGroup(group));
+                menuCategories.Add(CreateNavViewHeaderFromGroup(group));
 
                 foreach (var category in group.Categories)
                 {
-                    menuCategories.Append(CreateNavViewItemFromCategory(category));
+                    menuCategories.Add(CreateNavViewItemFromCategory(category));
                 }
             }
 
@@ -267,7 +268,7 @@ namespace CalculatorApp
         {
             if (NavView.SelectedItem == null)
             {
-                var menuItems = ((IObservableVector<object>)NavView.MenuItemsSource);
+                var menuItems = ((ObservableCollection<object>)NavView.MenuItemsSource);
                 var itemCount = ((int)menuItems.Count);
                 var flatIndex = NavCategory.GetFlatIndex(Model.Mode);
 
