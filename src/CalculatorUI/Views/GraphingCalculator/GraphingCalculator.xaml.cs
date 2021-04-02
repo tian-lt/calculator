@@ -104,7 +104,7 @@ namespace CalculatorApp
         internal void RaisePropertyChanged(string p)
         {
 #if !UNIT_TESTS
-            PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(p));
+            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(p));
 #endif
         }
 

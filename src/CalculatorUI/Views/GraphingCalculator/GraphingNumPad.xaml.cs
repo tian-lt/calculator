@@ -239,7 +239,6 @@ namespace CalculatorApp
             { NumbersAndOperatorsEnum.TwoPowerX, Tuple.Create("2^", 2, 0) },
             { NumbersAndOperatorsEnum.LogBaseY, Tuple.Create("log(b" + LocalizationSettings.GetInstance().GetListSeparatorWinRT().TrimEnd('\0') + " x)", 4, 1) },
             { NumbersAndOperatorsEnum.EPowerX, Tuple.Create("e^", 4, 0) },
-            { NumbersAndOperatorsEnum.Abs, Tuple.Create("abs()", 4, 0) },
             { NumbersAndOperatorsEnum.X, Tuple.Create("x", 1, 0) },
             { NumbersAndOperatorsEnum.Y, Tuple.Create("y", 1, 0) },
             { NumbersAndOperatorsEnum.OpenParenthesis, Tuple.Create("(", 1, 0) },

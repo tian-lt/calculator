@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using CalculatorApp;
@@ -32,6 +33,7 @@ namespace CalculatorApp
             m_lastLineColorIndex = -1;
             // CSHARP_MIGRATION: TODO:
             // m_AvailableColors is initialized as Vector/List here, but it is defined as other type in macro OBSERVABLE_PROPERTY_RW
+            m_AvailableColors = new ObservableCollection<SolidColorBrush>();
             m_accessibilitySettings = new AccessibilitySettings();
             m_equationToFocus = null;
 
@@ -49,7 +51,7 @@ namespace CalculatorApp
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         internal void RaisePropertyChanged(string p)
         {
-            PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(p));
+            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(p));
             OnPropertyChanged(p);
         }
 
@@ -81,7 +83,7 @@ namespace CalculatorApp
         }
         private Windows.Foundation.Collections.IObservableVector<ViewModel.VariableViewModel> m_Variables;
 
-        public Windows.Foundation.Collections.IObservableVector<SolidColorBrush> AvailableColors
+        public ObservableCollection<SolidColorBrush> AvailableColors
         {
             get { return m_AvailableColors; }
             set
@@ -93,7 +95,7 @@ namespace CalculatorApp
                 }
             }
         }
-        private Windows.Foundation.Collections.IObservableVector<SolidColorBrush> m_AvailableColors;
+        private ObservableCollection<SolidColorBrush> m_AvailableColors;
 
 
         public bool IsMatchAppTheme
