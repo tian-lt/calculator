@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Linq;
 
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -612,7 +613,7 @@ namespace CalculatorApp
                 if (!hit || currentHonorShortcuts)
                 {
                     char character = ((char)args.KeyCode);
-                    var buttons = s_characterForButtons[viewId][character];
+                    var buttons = EqualRange(s_characterForButtons[viewId], character);
                     KeyboardShortcutManagerLocals.RunFirstEnabledButtonCommand(buttons);
 
                     KeyboardShortcutManagerLocals.LightUpButtons(buttons);
@@ -642,8 +643,8 @@ namespace CalculatorApp
                         return;
                     }
 
-                    var buttons = lookupMap[(char)key];
-                    var navView = buttons[0].Target as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: double check if button[0] exists
+                    var buttons = EqualRange(lookupMap, (char)key);
+                    var navView = buttons.ElementAt(0).Target as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: double check if button[0] exists
                     var appViewModel = (navView.DataContext as ApplicationViewModel);
                     appViewModel.Mode = ViewMode.Date;
                     var categoryName = AppResourceProvider.GetInstance().GetResourceString("DateCalculationModeText");
@@ -681,8 +682,8 @@ namespace CalculatorApp
                             return;
                         }
 
-                        var buttons = lookupMap[myVirtualKey];
-                        if(buttons.Count <= 0) // CSHARP_MIGRATION: TODO: double check if this is equivalent to `if (buttons.first == buttons.second)`
+                        var buttons = EqualRange(lookupMap, myVirtualKey);
+                        if(buttons.Count() <= 0) // CSHARP_MIGRATION: TODO: double check if this is equivalent to `if (buttons.first == buttons.second)`
                         {
                             return;
                         }
@@ -731,7 +732,7 @@ namespace CalculatorApp
                     var lookupMap = GetCurrentKeyDictionary(controlKeyPressed, shiftKeyPressed, altPressed);
                     if (lookupMap != null)
                     {
-                        var listItems = lookupMap[(char)key];
+                        var listItems = EqualRange(lookupMap, (char)key);
                         foreach(var itemRef in listItems)
                         {
                             var item = itemRef.Target as MUXC.NavigationView;
@@ -810,6 +811,21 @@ namespace CalculatorApp
                             return s_virtualKey[viewId];
                         }
                     }
+                }
+            }
+
+            // CSHARP_MIGRATION: TODO: double check below design
+            // EqualRange is a helper function to pick a range from std::multimap.
+            private static IEnumerable<TValue> EqualRange<TKey, TValue>(SortedDictionary<TKey, List<TValue>> source, TKey key)
+            {
+                Debug.Assert(source != null);
+                if(source.TryGetValue(key, out List<TValue> items))
+                {
+                    return items;
+                }
+                else
+                {
+                    return Enumerable.Empty<TValue>();
                 }
             }
 
