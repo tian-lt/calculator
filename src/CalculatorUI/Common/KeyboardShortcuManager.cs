@@ -452,11 +452,11 @@ namespace CalculatorApp
                             if (newValue == ".")
                             {
                                 char decSep = LocalizationSettings.GetInstance().GetDecimalSeparator();
-                                iterViewMap.Add(decSep, new List<WeakReference>() { new WeakReference(button) });
+                                Insert(iterViewMap, decSep, new WeakReference(button));
                             }
                             else
                             {
-                                iterViewMap.Add(newValue[0], new List<WeakReference>() { new WeakReference(button) });
+                                Insert(iterViewMap, newValue[0], new WeakReference(button));
                             }
                         }
                     }
@@ -467,11 +467,11 @@ namespace CalculatorApp
                         if (newValue == ".")
                         {
                             char decSep = LocalizationSettings.GetInstance().GetDecimalSeparator();
-                            s_characterForButtons[viewId].Add(decSep, new List<WeakReference>() { new WeakReference(button) });
+                            Insert(s_characterForButtons[viewId], decSep, new WeakReference(button));
                         }
                         else
                         {
-                            s_characterForButtons[viewId].Add(newValue[0], new List<WeakReference>() { new WeakReference(button) });
+                            Insert(s_characterForButtons[viewId], newValue[0], new WeakReference(button));
                         }
                     }
                 }
@@ -491,13 +491,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_virtualKey.TryGetValue(viewId, out var iterViewMap))
                     {
-                        iterViewMap.Add((char)newValue, new List<WeakReference>() {new WeakReference(button) });
+                        Insert(iterViewMap, (char)newValue, new WeakReference(button));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
                         s_virtualKey.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        s_virtualKey[viewId].Add((char)newValue, new List<WeakReference>() { new WeakReference(button) });
+                        Insert(s_virtualKey[viewId], (char)newValue, new WeakReference(button));
                     }
                 }
             }
@@ -521,13 +521,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyControlChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        iterViewMap.Add((char)newValue, new List<WeakReference>() { new WeakReference(control) });
+                        Insert(iterViewMap, (char)newValue, new WeakReference(control));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
                         s_VirtualKeyControlChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        s_VirtualKeyControlChordsForButtons[viewId].Add((char)newValue, new List<WeakReference>() { new WeakReference(control) });
+                        Insert(s_VirtualKeyControlChordsForButtons[viewId], (char)newValue, new WeakReference(control));
                     }
                 }
             }
@@ -544,13 +544,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyShiftChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        iterViewMap.Add((char)newValue, new List<WeakReference>() { new WeakReference(button) });
+                        Insert(iterViewMap, (char)newValue, new WeakReference(button));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
                         s_VirtualKeyShiftChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        s_VirtualKeyShiftChordsForButtons[viewId].Add((char)newValue, new List<WeakReference>() { new WeakReference(button) });
+                        Insert(s_VirtualKeyShiftChordsForButtons[viewId], (char)newValue, new WeakReference(button));
                     }
                 }
             }
@@ -568,13 +568,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyAltChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        iterViewMap.Add((char)newValue, new List<WeakReference>() { new WeakReference(navView) });
+                        Insert(iterViewMap, (char)newValue, new WeakReference(navView));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
                         s_VirtualKeyAltChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        s_VirtualKeyAltChordsForButtons[viewId].Add((char)newValue, new List<WeakReference>() { new WeakReference(navView) });
+                        Insert(s_VirtualKeyAltChordsForButtons[viewId], (char)newValue, new WeakReference(navView));
                     }
                 }
             }
@@ -591,13 +591,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyControlShiftChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        iterViewMap.Add((char)newValue, new List<WeakReference>() { new WeakReference(button) });
+                        Insert(iterViewMap, (char)newValue, new WeakReference(button));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
                         s_VirtualKeyControlShiftChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        s_VirtualKeyControlShiftChordsForButtons[viewId].Add((char)newValue, new List<WeakReference>() { new WeakReference(button) });
+                        Insert(s_VirtualKeyControlShiftChordsForButtons[viewId], (char)newValue, new WeakReference(button));
                     }
                 }
             }
@@ -826,6 +826,21 @@ namespace CalculatorApp
                 else
                 {
                     return Enumerable.Empty<TValue>();
+                }
+            }
+
+            // CSHARP_MIGRATION: TODO: double check below design
+            // Insert is a helper function to insert a pair into std::multimap.
+            private static void Insert<Tkey, TValue>(SortedDictionary<Tkey, List<TValue>> dest, Tkey key, TValue value)
+            {
+                if(dest.TryGetValue(key, out List<TValue> items))
+                {
+                    items.Add(value);
+                }
+                else
+                {
+                    items = new List<TValue> { value };
+                    dest.Add(key, items);
                 }
             }
 
