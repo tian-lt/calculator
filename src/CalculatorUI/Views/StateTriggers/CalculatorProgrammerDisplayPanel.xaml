@@ -13,8 +13,7 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <!-- CSHARP_MIGRATION: TODO -->
-        <!-- <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/> -->
+         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/> 
     </UserControl.Resources>
 
     <Grid x:Name="ProgrammerDisplay">
