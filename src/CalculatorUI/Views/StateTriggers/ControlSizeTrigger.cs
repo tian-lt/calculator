@@ -63,9 +63,17 @@ namespace CalculatorApp.Views.StateTriggers
 
         ~ControlSizeTrigger()
         {
-
-            UnregisterSizeChanged(Source);
-
+            // CSHARP_MIGRATION: TODO:
+            // finalization will happen on a finalizer's thread.
+            // to prevent crashing the entire app, switch to UI thread to do unregistering work
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                UnregisterSizeChanged(Source);
+            })
+                .AsTask()
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult();
         }
 
         private void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
