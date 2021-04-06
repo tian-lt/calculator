@@ -95,7 +95,7 @@
                       AutomationProperties.AutomationId="ftoeButton"
                       Checked="FToEButton_Toggled"
                       Content="F-E"
-                      IsChecked="{Binding IsFToEChecked, Mode=TwoWay}"
+                      IsChecked="{x:Bind Model.IsFToEChecked, Mode=OneWay}"
                       Unchecked="FToEButton_Toggled"
                       IsEnabled="{x:Bind Model.IsFToEEnabled, Mode=OneWay}">
             <ToggleButton.CommandParameter>

@@ -470,7 +470,7 @@ namespace CalculatorApp
 
             private void RaiseSelectedEvent()
             {
-                Selected(this);
+                Selected?.Invoke(this);
             }
 
             private const double SCALEFACTOR = 0.357143;
