@@ -56,7 +56,7 @@ namespace CalculatorApp
         private Windows.Foundation.Rect m_coreBounds;
         private bool m_isErrorVisualState = false;
 
-        private void MemoryListItemClick(Object sender, ItemClickEventArgs e)
+        private void MemoryListItemClick(object sender, ItemClickEventArgs e)
         {
             MemoryItemViewModel memorySlot = ((MemoryItemViewModel)e.ClickedItem);
 
@@ -68,7 +68,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnClearMenuItemClicked(Object sender, RoutedEventArgs e)
+        private void OnClearMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
             if (memoryItem != null)
@@ -77,7 +77,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnMemoryAddMenuItemClicked(Object sender, RoutedEventArgs e)
+        private void OnMemoryAddMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
             if (memoryItem != null)
@@ -86,7 +86,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnMemorySubtractMenuItemClicked(Object sender, RoutedEventArgs e)
+        private void OnMemorySubtractMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var memoryItem = GetMemoryItemForCurrentFlyout();
             if (memoryItem != null)

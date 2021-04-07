@@ -223,7 +223,7 @@ namespace CalculatorApp
             }
         }
 
-        private void SelectionChanged(Object sender, SelectionChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
             {
@@ -246,7 +246,7 @@ namespace CalculatorApp
             SelectColor(newColor);
         }
 
-        private void ColorChooserLoaded(Object sender, RoutedEventArgs e)
+        private void ColorChooserLoaded(object sender, RoutedEventArgs e)
         {
             SelectColor(SelectedColor);
         }
@@ -311,7 +311,7 @@ namespace CalculatorApp
             }
         }
 
-        private void StyleChooserBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
+        private void StyleChooserBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
             {
@@ -319,7 +319,7 @@ namespace CalculatorApp
             }
         }
 
-        private void StyleChooserBox_Loaded(Object sender, RoutedEventArgs e)
+        private void StyleChooserBox_Loaded(object sender, RoutedEventArgs e)
         {
             SelectStyle(SelectedStyle);
         }

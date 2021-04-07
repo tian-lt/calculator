@@ -44,16 +44,16 @@ namespace CalculatorApp
             VisualStateManager.GoToState(this, "MemoryButtonsHidden", true);
         }
 
-        private void OnMemoryAddButtonClicked(Object sender, RoutedEventArgs e)
+        private void OnMemoryAddButtonClicked(object sender, RoutedEventArgs e)
         {
             Model.MemoryAdd();
         }
 
-        private void OnClearButtonClicked(Object sender, RoutedEventArgs e)
+        private void OnClearButtonClicked(object sender, RoutedEventArgs e)
         {
             Model.Clear();
         }
-        private void OnMemorySubtractButtonClicked(Object sender, RoutedEventArgs e)
+        private void OnMemorySubtractButtonClicked(object sender, RoutedEventArgs e)
         {
             Model.MemorySubtract();
         }

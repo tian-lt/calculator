@@ -46,7 +46,7 @@ namespace CalculatorApp
         private Windows.Foundation.Rect m_visibleBounds;
         private Windows.Foundation.Rect m_coreBounds;
 
-        private void ListView_ItemClick(Object sender, ItemClickEventArgs e)
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             HistoryViewModel historyVM = (DataContext as HistoryViewModel);
             HistoryItemViewModel clickedItem = (e.ClickedItem as HistoryItemViewModel);
@@ -57,7 +57,7 @@ namespace CalculatorApp
                 historyVM.ShowItem(clickedItem);
             }
         }
-        private void OnCopyMenuItemClicked(Object sender, RoutedEventArgs e)
+        private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
             var itemViewModel = (HistoryListView.ItemFromContainer(listViewItem) as HistoryItemViewModel);
@@ -66,7 +66,7 @@ namespace CalculatorApp
                 CopyPasteManager.CopyToClipboard(itemViewModel.Result);
             }
         }
-        private void OnDeleteMenuItemClicked(Object sender, RoutedEventArgs e)
+        private void OnDeleteMenuItemClicked(object sender, RoutedEventArgs e)
         {
             var listViewItem = HistoryContextMenu.Target;
             var itemViewModel = (HistoryListView.ItemFromContainer(listViewItem) as HistoryItemViewModel);

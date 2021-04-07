@@ -637,7 +637,7 @@ namespace CalculatorUITests
             page.ProgrammerOperators.RightShiftLogicalButton.Click();
             page.StandardOperators.NumberPad.Input(1);
             page.StandardOperators.EqualButton.Click();
-            Assert.IsTrue(String.Equals(page.CalculatorResults.GetCalculatorResultText(), "1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 0 1 1", StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(string.Equals(page.CalculatorResults.GetCalculatorResultText(), "1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 1 1 1  1 0 1 1", StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

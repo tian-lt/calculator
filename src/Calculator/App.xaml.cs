@@ -135,7 +135,7 @@ namespace CalculatorApp
             Window.Current.Activate();
         }
 
-        private void OnAppLaunch(IActivatedEventArgs args, String argument)
+        private void OnAppLaunch(IActivatedEventArgs args, string argument)
         {
             // Uncomment the following lines to display frame-rate and per-frame CPU usage info.
             //#if _DEBUG
@@ -299,8 +299,7 @@ namespace CalculatorApp
                         }
                         else
                         {
-                            // CSHARP_MIGRATION: TODO:
-                            //TraceLogger.GetInstance().LogError(ViewMode.None, "App.OnAppLaunch", "Null_ActivationViewSwitcher");
+                            TraceLogger.GetInstance().LogError(ViewMode.None, "App.OnAppLaunch", "Null_ActivationViewSwitcher");
                         }
                     }
                     // Set the preLaunched flag to false
@@ -348,7 +347,7 @@ namespace CalculatorApp
             }
         }
 
-        private void DismissedEventHandler(SplashScreen sender, Object e)
+        private void DismissedEventHandler(SplashScreen sender, object e)
         {
             _ = SetupJumpList();
         }
@@ -358,10 +357,9 @@ namespace CalculatorApp
             NarratorNotifier.RegisterDependencyProperties();
         }
 
-        private void OnSuspending(Object sender, SuspendingEventArgs args)
+        private void OnSuspending(object sender, SuspendingEventArgs args)
         {
-            // CSHARP_MIGRATION: TODO:
-            //TraceLogger.GetInstance().LogButtonUsage();
+            TraceLogger.GetInstance().LogButtonUsage();
         }
 
         private sealed class SafeFrameWindowCreation : IDisposable
@@ -461,8 +459,7 @@ namespace CalculatorApp
             try
             {
                 m_secondaryWindows[frameService.GetViewId()] = frameService;
-                // CSHARP_MIGRATION: TODO:
-                //TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
+                TraceLogger.GetInstance().UpdateWindowCount(m_secondaryWindows.size());
             }
             finally
             {

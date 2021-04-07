@@ -76,7 +76,7 @@ namespace CalculatorApp
         }
 
         // Throws InvalidArgumentException if a service is already registered with the specified id
-        public void RegisterRuntimeWindowService(Type serviceId, Object service)
+        public void RegisterRuntimeWindowService(Type serviceId, object service)
         {
             if (TryResolveRuntimeWindowService(serviceId) != null)
             {
@@ -93,7 +93,7 @@ namespace CalculatorApp
         }
 
         // Throws InvalidArgumentException if no service is registered with the specified id
-        public Object ResolveRuntimeWindowService(Type serviceId)
+        public object ResolveRuntimeWindowService(Type serviceId)
         {
             var service = TryResolveRuntimeWindowService(serviceId);
 
@@ -147,8 +147,7 @@ namespace CalculatorApp
 
         private void OnConsolidated(ApplicationView sender, ApplicationViewConsolidatedEventArgs e)
         {
-            // CSHARP_MIGRATION: TODO:
-            //TraceLogger.GetInstance().DecreaseWindowCount();
+            TraceLogger.GetInstance().DecreaseWindowCount();
             if (m_parent.IsAlive)
             {
                 var parent = m_parent.Target as App;
@@ -185,7 +184,7 @@ namespace CalculatorApp
         private int m_viewId;
         private WeakReference m_parent;
 
-        private Dictionary<string, Object> m_runtimeServicesMap = new Dictionary<string, object>();
+        private Dictionary<string, object> m_runtimeServicesMap = new Dictionary<string, object>();
         private List<Action> m_onWindowClosingHandlers = new List<Action>();
     }
 }

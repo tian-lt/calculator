@@ -75,7 +75,7 @@ namespace CalculatorUITestFramework
                         this.NegateButton.Click();
                         break;
                     default:
-                        throw (new ArgumentException(String.Format("{0} is not valid", digit)));
+                        throw (new ArgumentException(string.Format("{0} is not valid", digit)));
                 }
             }
         }

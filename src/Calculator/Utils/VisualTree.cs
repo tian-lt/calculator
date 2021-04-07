@@ -85,7 +85,7 @@ namespace Calculator.Utils
         /// <param name="element">Parent element.</param>
         /// <param name="name">Name of the control to find</param>
         /// <returns>Descendant control or null if not found.</returns>
-        private static FrameworkElement FindAscendantByName(DependencyObject element, String name)
+        private static FrameworkElement FindAscendantByName(DependencyObject element, string name)
         {
             if (element == null || name == null || name.Length == 0)
             {
@@ -113,7 +113,7 @@ namespace Calculator.Utils
         /// <param name="element">Child element.</param>
         /// <param name="type">Type of ascendant to look for.</param>
         /// <returns>Ascendant control or null if not found.</returns>
-        private static Object FindAscendant(DependencyObject element, Type typeName)
+        private static object FindAscendant(DependencyObject element, Type typeName)
         {
             var parent = VisualTreeHelper.GetParent(element);
 

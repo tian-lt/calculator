@@ -31,7 +31,6 @@ namespace CalculatorApp
                 if (item != null)
                 {
                     int newCurrentPosition = m_source.IndexOf(item);
-                    //bool result = m_source.IndexOf(item, &newCurrentPosition);
                     if (newCurrentPosition != -1)
                     {
                         m_currentPosition = newCurrentPosition;

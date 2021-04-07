@@ -363,27 +363,27 @@ namespace CalculatorApp
 
                     if (!s_virtualKey.ContainsKey(appViewId))
                     {
-                        s_virtualKey.Add(appViewId, new SortedDictionary<char, List<WeakReference>>());
+                        s_virtualKey.Add(appViewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
                     }
 
                     if (!s_VirtualKeyControlChordsForButtons.ContainsKey(appViewId))
                     {
-                        s_VirtualKeyControlChordsForButtons.Add(appViewId, new SortedDictionary<char, List<WeakReference>>());
+                        s_VirtualKeyControlChordsForButtons.Add(appViewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
                     }
 
                     if (!s_VirtualKeyShiftChordsForButtons.ContainsKey(appViewId))
                     {
-                        s_VirtualKeyShiftChordsForButtons.Add(appViewId, new SortedDictionary<char, List<WeakReference>>());
+                        s_VirtualKeyShiftChordsForButtons.Add(appViewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
                     }
 
                     if (!s_VirtualKeyAltChordsForButtons.ContainsKey(appViewId))
                     {
-                        s_VirtualKeyAltChordsForButtons.Add(appViewId, new SortedDictionary<char, List<WeakReference>>());
+                        s_VirtualKeyAltChordsForButtons.Add(appViewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
                     }
 
                     if (!s_VirtualKeyControlShiftChordsForButtons.ContainsKey(appViewId))
                     {
-                        s_VirtualKeyControlShiftChordsForButtons.Add(appViewId, new SortedDictionary<char, List<WeakReference>>());
+                        s_VirtualKeyControlShiftChordsForButtons.Add(appViewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
                     }
 
                     s_IsDropDownOpen[appViewId] = false;
@@ -415,7 +415,7 @@ namespace CalculatorApp
                 }
             }
 
-            private static void OnCharacterPropertyChanged(DependencyObject target, String oldValue, String newValue)
+            private static void OnCharacterPropertyChanged(DependencyObject target, string oldValue, string newValue)
             {
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
@@ -472,13 +472,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_virtualKey.TryGetValue(viewId, out var iterViewMap))
                     {
-                        Insert(iterViewMap, (char)newValue, new WeakReference(button));
+                        Insert(iterViewMap, newValue, new WeakReference(button));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
-                        s_virtualKey.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        Insert(s_virtualKey[viewId], (char)newValue, new WeakReference(button));
+                        s_virtualKey.Add(viewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
+                        Insert(s_virtualKey[viewId], newValue, new WeakReference(button));
                     }
                 }
             }
@@ -501,13 +501,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyControlChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        Insert(iterViewMap, (char)newValue, new WeakReference(control));
+                        Insert(iterViewMap, newValue, new WeakReference(control));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
-                        s_VirtualKeyControlChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        Insert(s_VirtualKeyControlChordsForButtons[viewId], (char)newValue, new WeakReference(control));
+                        s_VirtualKeyControlChordsForButtons.Add(viewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
+                        Insert(s_VirtualKeyControlChordsForButtons[viewId], newValue, new WeakReference(control));
                     }
                 }
             }
@@ -524,13 +524,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyShiftChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        Insert(iterViewMap, (char)newValue, new WeakReference(button));
+                        Insert(iterViewMap, newValue, new WeakReference(button));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
-                        s_VirtualKeyShiftChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        Insert(s_VirtualKeyShiftChordsForButtons[viewId], (char)newValue, new WeakReference(button));
+                        s_VirtualKeyShiftChordsForButtons.Add(viewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
+                        Insert(s_VirtualKeyShiftChordsForButtons[viewId], newValue, new WeakReference(button));
                     }
                 }
             }
@@ -547,13 +547,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyAltChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        Insert(iterViewMap, (char)newValue, new WeakReference(navView));
+                        Insert(iterViewMap, newValue, new WeakReference(navView));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
-                        s_VirtualKeyAltChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        Insert(s_VirtualKeyAltChordsForButtons[viewId], (char)newValue, new WeakReference(navView));
+                        s_VirtualKeyAltChordsForButtons.Add(viewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
+                        Insert(s_VirtualKeyAltChordsForButtons[viewId], newValue, new WeakReference(navView));
                     }
                 }
             }
@@ -570,13 +570,13 @@ namespace CalculatorApp
                     // Check if the View Id has already been registered
                     if (s_VirtualKeyControlShiftChordsForButtons.TryGetValue(viewId, out var iterViewMap))
                     {
-                        Insert(iterViewMap, (char)newValue, new WeakReference(button));
+                        Insert(iterViewMap, newValue, new WeakReference(button));
                     }
                     else
                     {
                         // If the View Id is not already registered, then register it and make the entry
-                        s_VirtualKeyControlShiftChordsForButtons.Add(viewId, new SortedDictionary<char, List<WeakReference>>());
-                        Insert(s_VirtualKeyControlShiftChordsForButtons[viewId], (char)newValue, new WeakReference(button));
+                        s_VirtualKeyControlShiftChordsForButtons.Add(viewId, new SortedDictionary<MyVirtualKey, List<WeakReference>>());
+                        Insert(s_VirtualKeyControlShiftChordsForButtons[viewId], newValue, new WeakReference(button));
                     }
                 }
             }
@@ -622,7 +622,7 @@ namespace CalculatorApp
                         return;
                     }
 
-                    var buttons = EqualRange(lookupMap, (char)key);
+                    var buttons = EqualRange(lookupMap, (MyVirtualKey)key);
                     var navView = buttons.ElementAt(0).Target as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: double check if button[0] exists
                     var appViewModel = (navView.DataContext as ApplicationViewModel);
                     appViewModel.Mode = ViewMode.Date;
@@ -654,14 +654,14 @@ namespace CalculatorApp
                 {
                     if (currentHonorShortcuts)
                     {
-                        var myVirtualKey = (char)key;
+                        var myVirtualKey = key;
                         var lookupMap = GetCurrentKeyDictionary(isControlKeyPressed, isShiftKeyPressed, isAltKeyPressed);
                         if (lookupMap == null)
                         {
                             return;
                         }
 
-                        var buttons = EqualRange(lookupMap, myVirtualKey);
+                        var buttons = EqualRange(lookupMap, (MyVirtualKey)myVirtualKey);
                         if (buttons.Count() <= 0) // CSHARP_MIGRATION: TODO: double check if this is equivalent to `if (buttons.first == buttons.second)`
                         {
                             return;
@@ -710,7 +710,7 @@ namespace CalculatorApp
                     var lookupMap = GetCurrentKeyDictionary(controlKeyPressed, shiftKeyPressed, altPressed);
                     if (lookupMap != null)
                     {
-                        var listItems = EqualRange(lookupMap, (char)key);
+                        var listItems = EqualRange(lookupMap, (MyVirtualKey)key);
                         foreach (var itemRef in listItems)
                         {
                             var item = itemRef.Target as MUXC.NavigationView;
@@ -718,7 +718,7 @@ namespace CalculatorApp
                             {
                                 var navView = item as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: check if this line is still needed
 
-                                var menuItems = ((IObservableVector<Object>)navView.MenuItemsSource);
+                                var menuItems = ((IObservableVector<object>)navView.MenuItemsSource);
                                 if (menuItems != null)
                                 {
                                     var vm = (navView.DataContext as ApplicationViewModel);
@@ -742,7 +742,7 @@ namespace CalculatorApp
 
             // CSHARP_MIGRATION: TODO: reinterpreted SortedDictionary<MyVirtualKey, List<WeakReference>> to SortedDictionary<char, List<WeakReference>>
             // double check this is equivalent before and after migration
-            private static SortedDictionary<char, List<WeakReference>> GetCurrentKeyDictionary(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed)
+            private static SortedDictionary<MyVirtualKey, List<WeakReference>> GetCurrentKeyDictionary(bool controlKeyPressed, bool shiftKeyPressed, bool altPressed)
             {
                 int viewId = Utilities.GetWindowId();
 
@@ -822,11 +822,11 @@ namespace CalculatorApp
             }
 
             private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_characterForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_virtualKey = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_VirtualKeyControlChordsForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_VirtualKeyShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_VirtualKeyAltChordsForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
-            private static SortedDictionary<int, SortedDictionary<char, List<WeakReference>>> s_VirtualKeyControlShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<char, List<WeakReference>>>();
+            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_virtualKey = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyAltChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
+            private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
 
 
             private static SortedDictionary<int, bool> s_IsDropDownOpen = new SortedDictionary<int, bool>();

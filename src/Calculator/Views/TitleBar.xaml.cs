@@ -52,7 +52,7 @@ namespace CalculatorApp
         public event Windows.UI.Xaml.RoutedEventHandler AlwaysOnTopClick;
 
 
-        private void OnLoaded(Object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             // Register events
             m_coreTitleBar.IsVisibleChanged += CoreTitleBarIsVisibleChanged;
@@ -74,7 +74,7 @@ namespace CalculatorApp
             SetTitleBarVisibility(forceDisplay);
         }
 
-        private void OnUnloaded(Object sender, RoutedEventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             // Unregister events
             m_coreTitleBar.LayoutMetricsChanged -= CoreTitleBarLayoutMetricsChanged;
@@ -126,7 +126,7 @@ namespace CalculatorApp
             LayoutRoot.Height = m_coreTitleBar.Height;
         }
 
-        private void ColorValuesChanged(Windows.UI.ViewManagement.UISettings sender, Object e)
+        private void ColorValuesChanged(Windows.UI.ViewManagement.UISettings sender, object e)
         {
             _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
         }
@@ -178,7 +178,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnHighContrastChanged(Windows.UI.ViewManagement.AccessibilitySettings sender, Object args)
+        private void OnHighContrastChanged(Windows.UI.ViewManagement.AccessibilitySettings sender, object args)
         {
             _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
             {
@@ -187,7 +187,7 @@ namespace CalculatorApp
             }));
         }
 
-        private void OnWindowActivated(Object sender, WindowActivatedEventArgs e)
+        private void OnWindowActivated(object sender, WindowActivatedEventArgs e)
         {
             VisualStateManager.GoToState(
                 this, e.WindowActivationState == CoreWindowActivationState.Deactivated ? WindowNotFocused.Name : WindowFocused.Name, false);
@@ -199,7 +199,7 @@ namespace CalculatorApp
             VisualStateManager.GoToState(this, newValue ? "AOTMiniState" : "AOTNormalState", false);
         }
 
-        private void AlwaysOnTopButton_Click(Object sender, RoutedEventArgs e)
+        private void AlwaysOnTopButton_Click(object sender, RoutedEventArgs e)
         {
             AlwaysOnTopClick(this, e);
         }

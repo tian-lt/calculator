@@ -33,7 +33,7 @@ namespace CalculatorUITestFramework
                 Thread.Sleep(10);
             }
             timer.Stop();
-            Assert.Fail(String.Format("{0} was not displayed in {1} ms", element, timeout));
+            Assert.Fail(string.Format("{0} was not displayed in {1} ms", element, timeout));
         }
     }
 }

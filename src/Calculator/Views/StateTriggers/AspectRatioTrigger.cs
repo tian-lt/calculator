@@ -114,7 +114,7 @@ namespace CalculatorApp.Views.StateTriggers
             }
         }
 
-        private void OnSizeChanged(Object sender, SizeChangedEventArgs e)
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateIsActive(e.NewSize);
         }

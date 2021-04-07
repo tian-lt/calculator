@@ -32,9 +32,6 @@ namespace CalculatorApp
                 DependencyProperty.Register(nameof(EquationColor), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(EquationTextBox), new PropertyMetadata(default(Windows.UI.Xaml.Media.SolidColorBrush)));
 
 
-            //public   DEPENDENCY_PROPERTY(Windows.UI.Xaml.Media.SolidColorBrush , EquationButtonForegroundColor);
-
-
             public Windows.UI.Xaml.Media.SolidColorBrush EquationButtonForegroundColor
             {
                 get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationButtonForegroundColorProperty); }
@@ -70,9 +67,6 @@ namespace CalculatorApp
                     var self = (EquationTextBox)sender;
                     self.OnEquationButtonContentIndexPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
-
-
-            //public   DEPENDENCY_PROPERTY(string , MathEquation);
 
 
             public string MathEquation
@@ -312,7 +306,7 @@ namespace CalculatorApp
 
             private void UpdateCommonVisualState()
             {
-                String state = null;
+                string state = null;
                 bool richEditHasContent = RichEditHasContent();
 
                 if (m_HasFocus && HasError)
@@ -356,7 +350,7 @@ namespace CalculatorApp
 
             private void UpdateButtonsVisualState()
             {
-                String state;
+                string state;
 
                 if (m_HasFocus && RichEditHasContent())
                 {
@@ -384,14 +378,14 @@ namespace CalculatorApp
                 return !string.IsNullOrEmpty(text);
             }
 
-            private void OnRichEditBoxGotFocus(Object sender, RoutedEventArgs e)
+            private void OnRichEditBoxGotFocus(object sender, RoutedEventArgs e)
             {
                 m_HasFocus = true;
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
             }
 
-            private void OnRichEditBoxLostFocus(Object sender, RoutedEventArgs e)
+            private void OnRichEditBoxLostFocus(object sender, RoutedEventArgs e)
             {
                 if (!m_richEditBox.ContextFlyout.IsOpen)
                 {
@@ -402,13 +396,13 @@ namespace CalculatorApp
                 UpdateButtonsVisualState();
             }
 
-            private void OnRichEditTextChanged(Object sender, RoutedEventArgs e)
+            private void OnRichEditTextChanged(object sender, RoutedEventArgs e)
             {
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
             }
 
-            private void OnDeleteButtonClicked(Object sender, RoutedEventArgs e)
+            private void OnDeleteButtonClicked(object sender, RoutedEventArgs e)
             {
                 if (m_richEditBox != null)
                 {
@@ -420,14 +414,14 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnEquationButtonClicked(Object sender, RoutedEventArgs e)
+            private void OnEquationButtonClicked(object sender, RoutedEventArgs e)
             {
                 EquationButtonClicked(this, new RoutedEventArgs());
 
                 SetEquationButtonTooltipAndAutomationName();
             }
 
-            private void OnRemoveButtonClicked(Object sender, RoutedEventArgs e)
+            private void OnRemoveButtonClicked(object sender, RoutedEventArgs e)
             {
                 if (IsAddEquationMode)
                 {
@@ -457,7 +451,7 @@ namespace CalculatorApp
                 VisualStateManager.GoToState(this, "Normal", true);
             }
 
-            private void OnColorChooserButtonClicked(Object sender, RoutedEventArgs e)
+            private void OnColorChooserButtonClicked(object sender, RoutedEventArgs e)
             {
                 if (ColorChooserFlyout != null && m_richEditBox != null)
                 {
@@ -466,12 +460,12 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnFunctionButtonClicked(Object sender, RoutedEventArgs e)
+            private void OnFunctionButtonClicked(object sender, RoutedEventArgs e)
             {
                 KeyGraphFeaturesButtonClicked(this, new RoutedEventArgs());
             }
 
-            private void OnFunctionMenuButtonClicked(Object sender, RoutedEventArgs e)
+            private void OnFunctionMenuButtonClicked(object sender, RoutedEventArgs e)
             {
                 // Submit the equation before trying to analyze it if invoked from context menu
                 if (m_richEditBox != null)
@@ -482,7 +476,7 @@ namespace CalculatorApp
                 KeyGraphFeaturesButtonClicked(this, new RoutedEventArgs());
             }
 
-            private void OnRichEditMenuOpened(Object sender, Object args)
+            private void OnRichEditMenuOpened(object sender, object args)
             {
                 if (m_removeMenuItem != null)
                 {
@@ -520,7 +514,7 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnCutClicked(Object sender, RoutedEventArgs e)
+            private void OnCutClicked(object sender, RoutedEventArgs e)
             {
                 if (m_richEditBox != null)
                 {
@@ -528,7 +522,7 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnCopyClicked(Object sender, RoutedEventArgs e)
+            private void OnCopyClicked(object sender, RoutedEventArgs e)
             {
                 if (m_richEditBox != null)
                 {
@@ -536,7 +530,7 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnPasteClicked(Object sender, RoutedEventArgs e)
+            private void OnPasteClicked(object sender, RoutedEventArgs e)
             {
                 if (m_richEditBox != null)
                 {
@@ -544,7 +538,7 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnUndoClicked(Object sender, RoutedEventArgs e)
+            private void OnUndoClicked(object sender, RoutedEventArgs e)
             {
                 if (m_richEditBox != null)
                 {
@@ -552,7 +546,7 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnSelectAllClicked(Object sender, RoutedEventArgs e)
+            private void OnSelectAllClicked(object sender, RoutedEventArgs e)
             {
                 if (m_richEditBox != null)
                 {
@@ -560,13 +554,13 @@ namespace CalculatorApp
                 }
             }
 
-            private void OnColorFlyoutOpened(Object sender, Object e)
+            private void OnColorFlyoutOpened(object sender, object e)
             {
                 m_isColorChooserFlyoutOpen = true;
                 UpdateCommonVisualState();
             }
 
-            private void OnColorFlyoutClosed(Object sender, Object e)
+            private void OnColorFlyoutClosed(object sender, object e)
             {
                 m_colorChooserButton.IsChecked = false;
                 m_isColorChooserFlyoutOpen = false;
@@ -578,7 +572,7 @@ namespace CalculatorApp
                 UpdateCommonVisualState();
             }
 
-            private void OnEquationButtonContentIndexPropertyChanged(String oldValue, String newValue)
+            private void OnEquationButtonContentIndexPropertyChanged(string oldValue, string newValue)
             {
                 SetEquationButtonTooltipAndAutomationName();
             }
@@ -620,7 +614,7 @@ namespace CalculatorApp
 
             private bool m_isPointerOver;
             private bool m_isColorChooserFlyoutOpen;
-            private void OnEquationSubmitted(Object sender, MathRichEditBoxSubmission args)
+            private void OnEquationSubmitted(object sender, MathRichEditBoxSubmission args)
             {
                 if (args.HasTextChanged)
                 {
@@ -633,7 +627,7 @@ namespace CalculatorApp
                 EquationSubmitted(this, args);
             }
 
-            private void OnEquationFormatRequested(Object sender, MathRichEditBoxFormatRequest args)
+            private void OnEquationFormatRequested(object sender, MathRichEditBoxFormatRequest args)
             {
                 EquationFormatRequested(this, args);
             }
