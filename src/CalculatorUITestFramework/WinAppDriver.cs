@@ -41,7 +41,7 @@ namespace CalculatorUITestFramework
             this.windowsDriverService.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
             {
                 var outputData = e.Data?.Replace("\0", string.Empty);
-                if (!string.IsNullOrEmpty(outputData))
+                if (!String.IsNullOrEmpty(outputData))
                 {
                     Console.WriteLine(outputData);
                 }
