@@ -25,8 +25,7 @@ namespace CalculatorUITestFramework
                 }
                 return instance;
             }
-
-        }
+}
 
         public WindowsDriver<WindowsElement> CalculatorSession { get; private set; }
 
@@ -87,6 +86,5 @@ namespace CalculatorUITestFramework
                 this.windowsDriverService = null;
             }
         }
-
-    }
+}
 }

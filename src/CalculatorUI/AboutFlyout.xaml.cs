@@ -1,21 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using CalculatorApp;
 using CalculatorApp.Common;
-
+using System;
+using System.Diagnostics;
 using Windows.ApplicationModel;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 
 namespace CalculatorApp
 {
@@ -32,7 +23,7 @@ namespace CalculatorApp
 
             Language = locService.GetLanguage();
 
-            this.SetVersionString();
+            SetVersionString();
 
             Header.Text = resourceLoader.GetResourceString("AboutButton/Content");
 

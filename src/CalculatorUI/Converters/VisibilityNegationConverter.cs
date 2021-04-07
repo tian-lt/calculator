@@ -2,14 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using Windows.Foundation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Interop;
-using Windows.UI.Xaml.Data;
 
 namespace CalculatorApp
 {
@@ -23,7 +16,7 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var boxedVisibility = (value as Visibility? );
+                var boxedVisibility = (value as Visibility?);
                 if (boxedVisibility != null && boxedVisibility.Value == Visibility.Collapsed)
                 {
                     return Visibility.Visible;

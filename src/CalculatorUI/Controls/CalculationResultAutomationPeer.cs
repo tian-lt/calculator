@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
 
@@ -36,7 +32,7 @@ namespace CalculatorApp
 
             public void Invoke()
             {
-                var owner = (CalculationResult)this.Owner;
+                var owner = (CalculationResult)Owner;
                 owner.ProgrammaticSelect();
             }
         }

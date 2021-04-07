@@ -1,43 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalculatorApp.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Linq;
-
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.System;
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.ViewModel;
 using MUXC = Microsoft.UI.Xaml.Controls;
-using System.Globalization;
-using System.Collections;
-using System.Reflection.Metadata;
 
 namespace CalculatorApp
 {
     namespace Common
     {
-
         static partial class KeyboardShortcutManagerLocals
         {
             // Lights up all of the buttons in the given range
             // The range is defined by a pair of iterators
             static public void LightUpButtons(IEnumerable<WeakReference> buttons)
             {
-                foreach(var button in buttons)
+                foreach (var button in buttons)
                 {
                     var btn = button.Target as ButtonBase;
-                    if(btn != null && btn.IsEnabled)
+                    if (btn != null && btn.IsEnabled)
                     {
                         LightUpButton(btn);
                     }
@@ -68,13 +57,13 @@ namespace CalculatorApp
                 timer.Tick += (sender, args) =>
                 {
                     var btn = buttonWeakReference.Target as ButtonBase;
-                    if(btn != null)
+                    if (btn != null)
                     {
                         VisualStateManager.GoToState(button, "Normal", true);
                     }
 
                     var tmr = timerWeakReference.Target as DispatcherTimer;
-                    if(tmr != null)
+                    if (tmr != null)
                     {
                         tmr.Stop();
                     }
@@ -88,7 +77,7 @@ namespace CalculatorApp
             // key have the same command
             static public void RunFirstEnabledButtonCommand(IEnumerable<WeakReference> buttons)
             {
-                foreach(var button in buttons)
+                foreach (var button in buttons)
                 {
                     var btn = button.Target as ButtonBase;
                     if (btn != null && btn.IsEnabled)
@@ -130,12 +119,9 @@ namespace CalculatorApp
 
         public sealed class KeyboardShortcutManager : DependencyObject
         {
-
             public KeyboardShortcutManager()
             {
-
             }
-
 
 
             public static readonly DependencyProperty CharacterProperty =
@@ -143,7 +129,8 @@ namespace CalculatorApp
                     "Character",
                     typeof(string),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(string.Empty, (sender, args)=> {
+                    new PropertyMetadata(string.Empty, (sender, args) =>
+                    {
                         OnCharacterPropertyChanged(sender, (string)args.OldValue, (string)args.NewValue);
                     }));
 
@@ -158,13 +145,13 @@ namespace CalculatorApp
             }
 
 
-
             public static readonly DependencyProperty VirtualKeyProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(default(MyVirtualKey), (sender, args)=> {
+                    new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
+                    {
                         OnVirtualKeyPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
                     }));
 
@@ -179,13 +166,13 @@ namespace CalculatorApp
             }
 
 
-
             public static readonly DependencyProperty VirtualKeyControlChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(default(MyVirtualKey), (sender, args)=> {
+                    new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
+                    {
                         OnVirtualKeyControlChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
                     }));
 
@@ -200,13 +187,13 @@ namespace CalculatorApp
             }
 
 
-
             public static readonly DependencyProperty VirtualKeyShiftChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(default(MyVirtualKey), (sender, args)=> {
+                    new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
+                    {
                         OnVirtualKeyShiftChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
                     }));
 
@@ -221,13 +208,13 @@ namespace CalculatorApp
             }
 
 
-
             public static readonly DependencyProperty VirtualKeyAltChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(default(MyVirtualKey), (sender, args)=> {
+                    new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
+                    {
                         OnVirtualKeyAltChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
                     }));
 
@@ -242,13 +229,13 @@ namespace CalculatorApp
             }
 
 
-
             public static readonly DependencyProperty VirtualKeyControlShiftChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
                     typeof(MyVirtualKey),
                     typeof(KeyboardShortcutManager),
-                    new PropertyMetadata(default(MyVirtualKey), (sender, args)=> {
+                    new PropertyMetadata(default(MyVirtualKey), (sender, args) =>
+                    {
                         OnVirtualKeyControlShiftChordPropertyChanged(sender, (MyVirtualKey)args.OldValue, (MyVirtualKey)args.NewValue);
                     }));
 
@@ -261,7 +248,6 @@ namespace CalculatorApp
             {
                 target.SetValue(VirtualKeyControlShiftChordProperty, value);
             }
-
 
 
             internal static void Initialize()
@@ -296,7 +282,6 @@ namespace CalculatorApp
                         s_keepIgnoringEscape[viewId] = !onlyOnce;
                     }
                 }
-
             }
 
             public static void HonorEscape()
@@ -432,11 +417,9 @@ namespace CalculatorApp
 
             private static void OnCharacterPropertyChanged(DependencyObject target, String oldValue, String newValue)
             {
-
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-
                     var button = (target as ButtonBase);
 
                     int viewId = Utilities.GetWindowId();
@@ -479,11 +462,9 @@ namespace CalculatorApp
 
             private static void OnVirtualKeyPropertyChanged(DependencyObject target, MyVirtualKey oldValue, MyVirtualKey newValue)
             {
-
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
-
                     var button = ((ButtonBase)target);
 
                     int viewId = Utilities.GetWindowId();
@@ -504,7 +485,6 @@ namespace CalculatorApp
 
             private static void OnVirtualKeyControlChordPropertyChanged(DependencyObject target, MyVirtualKey oldValue, MyVirtualKey newValue)
             {
-
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
@@ -557,7 +537,6 @@ namespace CalculatorApp
 
             private static void OnVirtualKeyAltChordPropertyChanged(DependencyObject target, MyVirtualKey oldValue, MyVirtualKey newValue)
             {
-
                 // Writer lock for the static maps
                 lock (s_keyboardShortcutMapLockMutex)
                 {
@@ -683,7 +662,7 @@ namespace CalculatorApp
                         }
 
                         var buttons = EqualRange(lookupMap, myVirtualKey);
-                        if(buttons.Count() <= 0) // CSHARP_MIGRATION: TODO: double check if this is equivalent to `if (buttons.first == buttons.second)`
+                        if (buttons.Count() <= 0) // CSHARP_MIGRATION: TODO: double check if this is equivalent to `if (buttons.first == buttons.second)`
                         {
                             return;
                         }
@@ -694,7 +673,7 @@ namespace CalculatorApp
                         // is pressed. When drop down is open, pressing escape shifts focus to clear button. So dont's shift focus if drop down is open. Ctrl+Insert is
                         // equivalent to Ctrl+C and Shift+Insert is equivalent to Ctrl+V
                         //var currentIsDropDownOpen = s_IsDropDownOpen.find(viewId);
-                        if(!s_IsDropDownOpen.TryGetValue(viewId, out var currentIsDropDownOpen) || !currentIsDropDownOpen)
+                        if (!s_IsDropDownOpen.TryGetValue(viewId, out var currentIsDropDownOpen) || !currentIsDropDownOpen)
                         {
                             // Do not Light Up Buttons when Ctrl+C, Ctrl+V, Ctrl+Insert or Shift+Insert is pressed
                             if (!(isControlKeyPressed && (key == Windows.System.VirtualKey.C || key == Windows.System.VirtualKey.V || key == Windows.System.VirtualKey.Insert))
@@ -705,7 +684,6 @@ namespace CalculatorApp
                         }
                     }
                 }
-
             }
 
             private static void OnAcceleratorKeyActivated(CoreDispatcher dispatcher, AcceleratorKeyEventArgs args)
@@ -733,10 +711,10 @@ namespace CalculatorApp
                     if (lookupMap != null)
                     {
                         var listItems = EqualRange(lookupMap, (char)key);
-                        foreach(var itemRef in listItems)
+                        foreach (var itemRef in listItems)
                         {
                             var item = itemRef.Target as MUXC.NavigationView;
-                            if(item != null)
+                            if (item != null)
                             {
                                 var navView = item as MUXC.NavigationView; // CSHARP_MIGRATION: TODO: check if this line is still needed
 
@@ -760,7 +738,6 @@ namespace CalculatorApp
                         }
                     }
                 }
-
             }
 
             // CSHARP_MIGRATION: TODO: reinterpreted SortedDictionary<MyVirtualKey, List<WeakReference>> to SortedDictionary<char, List<WeakReference>>
@@ -819,7 +796,7 @@ namespace CalculatorApp
             private static IEnumerable<TValue> EqualRange<TKey, TValue>(SortedDictionary<TKey, List<TValue>> source, TKey key)
             {
                 Debug.Assert(source != null);
-                if(source.TryGetValue(key, out List<TValue> items))
+                if (source.TryGetValue(key, out List<TValue> items))
                 {
                     return items;
                 }
@@ -833,7 +810,7 @@ namespace CalculatorApp
             // Insert is a helper function to insert a pair into std::multimap.
             private static void Insert<Tkey, TValue>(SortedDictionary<Tkey, List<TValue>> dest, Tkey key, TValue value)
             {
-                if(dest.TryGetValue(key, out List<TValue> items))
+                if (dest.TryGetValue(key, out List<TValue> items))
                 {
                     items.Add(value);
                 }

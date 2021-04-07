@@ -2,15 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp.Converters;
-
-using Windows.Foundation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Interop;
-using Windows.UI.Xaml.Data;
 
 namespace CalculatorApp
 {
@@ -21,7 +12,7 @@ namespace CalculatorApp
         {
             public object Convert(object value, Type targetType, object parameter, string language)
             {
-                var items = (value as int? );
+                var items = (value as int?);
                 var boolValue = (items != null && (items.Value == 0));
                 return BooleanToVisibilityConverter.Convert(boolValue);
             }
@@ -39,7 +30,6 @@ namespace CalculatorApp
                 var items = (value as int?);
                 var boolValue = (items != null && (items.Value > 0));
                 return BooleanToVisibilityConverter.Convert(boolValue);
-
             }
 
             public object ConvertBack(object value, Type targetType, object parameter, string language)

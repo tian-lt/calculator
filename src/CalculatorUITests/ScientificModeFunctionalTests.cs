@@ -306,14 +306,12 @@ namespace CalculatorUITests
         [Priority(2)]
         public void Trig_CosButton()
         {
-
             page.StandardOperators.NumberPad.Input(180);
             page.ScientificOperators.TrigButton.Click();
             page.ScientificOperators.CosButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -326,8 +324,7 @@ namespace CalculatorUITests
             page.ScientificOperators.TanButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -340,8 +337,7 @@ namespace CalculatorUITests
             page.ScientificOperators.SecButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("-1", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -354,8 +350,7 @@ namespace CalculatorUITests
             page.ScientificOperators.CscButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -368,8 +363,7 @@ namespace CalculatorUITests
             page.ScientificOperators.CotButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -383,8 +377,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvSinButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("90", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -398,8 +391,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvTanButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("45", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -414,8 +406,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvSecButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("180", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -429,8 +420,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvCscButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("90", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -444,8 +434,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvCotButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("45", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -459,8 +448,7 @@ namespace CalculatorUITests
             page.ScientificOperators.SinhButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("1.175201"));
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -474,8 +462,7 @@ namespace CalculatorUITests
             page.ScientificOperators.CoshButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("1.54308"));
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -489,8 +476,7 @@ namespace CalculatorUITests
             page.ScientificOperators.SechButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.64805"));
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -504,8 +490,7 @@ namespace CalculatorUITests
             page.ScientificOperators.CschButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.850918"));
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -519,8 +504,7 @@ namespace CalculatorUITests
             page.ScientificOperators.CothButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("1", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -535,8 +519,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvSinhButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.881373"));
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -551,8 +534,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvCoshButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -567,8 +549,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvTanhButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -583,8 +564,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvSechButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.AreEqual("0", page.CalculatorResults.GetCalculatorResultText());
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -599,8 +579,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvCschButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.881373"));
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -615,8 +594,7 @@ namespace CalculatorUITests
             page.ScientificOperators.InvCothButton.Click();
             page.StandardOperators.EqualButton.Click();
             Assert.IsTrue(page.CalculatorResults.GetCalculatorResultText().StartsWith("0.549306"));
-
-        }
+}
         #endregion
     }
 }

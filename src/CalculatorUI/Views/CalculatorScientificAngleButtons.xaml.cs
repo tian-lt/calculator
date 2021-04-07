@@ -6,28 +6,13 @@
 // Declaration of the CalculatorScientificAngleButtons class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.ViewModel;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.ViewManagement;
-using Windows.UI.Core;
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class CalculatorScientificAngleButtons
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class CalculatorScientificAngleButtons
     {
         public CalculatorScientificAngleButtons()
         {
@@ -37,7 +22,7 @@ namespace CalculatorApp
 
         public StandardCalculatorViewModel Model
         {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
+            get { return (StandardCalculatorViewModel)DataContext; }
         }
 
         public System.Windows.Input.ICommand ButtonPressed
@@ -85,7 +70,7 @@ namespace CalculatorApp
 
         private void FToEButton_Toggled(object sender, RoutedEventArgs e)
         {
-            var viewModel = (StandardCalculatorViewModel)this.DataContext;
+            var viewModel = (StandardCalculatorViewModel)DataContext;
             viewModel.FtoEButtonToggled();
         }
 

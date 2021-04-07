@@ -2,18 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -31,7 +21,7 @@ namespace CalculatorApp
         {
             Unit unit = (Unit)value;
             Debug.Assert(unit.IsModelUnitWhimsical());
-            if(!unit.IsModelUnitWhimsical())
+            if (!unit.IsModelUnitWhimsical())
             {
                 return null;
             }
@@ -53,24 +43,24 @@ namespace CalculatorApp
     public sealed class SupplementaryResultDataTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
     {
         public SupplementaryResultDataTemplateSelector()
-        {}
+        { }
 
         public Windows.UI.Xaml.DataTemplate RegularTemplate
         {
-            get => this.m_regularTemplate;
-            set => this.m_regularTemplate = value;
+            get => m_regularTemplate;
+            set => m_regularTemplate = value;
         }
 
         public Windows.UI.Xaml.DataTemplate DelighterTemplate
         {
-            get => this.m_delighterTemplate;
-            set => this.m_delighterTemplate = value;
+            get => m_delighterTemplate;
+            set => m_delighterTemplate = value;
         }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             SupplementaryResult result = (SupplementaryResult)item;
-            if(result.IsWhimsical())
+            if (result.IsWhimsical())
             {
                 return DelighterTemplate;
             }
@@ -88,13 +78,13 @@ namespace CalculatorApp
     {
         protected override bool ShouldPrioritizeLastItem()
         {
-            if(Children.Count == 0)
+            if (Children.Count == 0)
             {
                 return false;
             }
 
             var lastChild = Children[Children.Count - 1] as FrameworkElement;
-            if(lastChild == null)
+            if (lastChild == null)
             {
                 return false;
             }
@@ -109,7 +99,7 @@ namespace CalculatorApp
     {
         public SupplementaryResults()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public IEnumerable<ViewModel.SupplementaryResult> Results

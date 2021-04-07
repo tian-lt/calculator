@@ -42,6 +42,5 @@ namespace CalculatorUITestFramework
         {
             return Regex.Replace(this.CalculationResult2.Text.Trim(), "[^0-9.]", "");
         }
-
-    }
+}
 }

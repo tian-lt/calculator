@@ -1,22 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.System.Profile;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.System.Profile;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,16 +16,16 @@ namespace CalculatorApp
     {
         public TitleBar()
         {
-            this.m_coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            this.m_uiSettings = new UISettings();
-            this.m_accessibilitySettings = new AccessibilitySettings();
-            this.InitializeComponent();
+            m_coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            m_uiSettings = new UISettings();
+            m_accessibilitySettings = new AccessibilitySettings();
+            InitializeComponent();
 
-            this.m_coreTitleBar.ExtendViewIntoTitleBar = true;
+            m_coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(BackgroundElement);
 
-            this.Loaded += OnLoaded;
-            this.Unloaded += OnUnloaded;
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
 #if IS_STORE_BUILD
             AppName.Text = AppResourceProvider.GetInstance().GetResourceString("AppName");
 
@@ -52,7 +42,7 @@ namespace CalculatorApp
 
         // Using a DependencyProperty as the backing store for IsAlwaysOnTopMode.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsAlwaysOnTopModeProperty =
-            DependencyProperty.Register(nameof(IsAlwaysOnTopMode), typeof(bool), typeof(TitleBar), new PropertyMetadata(default(bool), (sender, args)=>
+            DependencyProperty.Register(nameof(IsAlwaysOnTopMode), typeof(bool), typeof(TitleBar), new PropertyMetadata(default(bool), (sender, args) =>
             {
                 var self = (TitleBar)sender;
                 self.OnIsAlwaysOnTopModePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
@@ -64,7 +54,6 @@ namespace CalculatorApp
 
         private void OnLoaded(Object sender, RoutedEventArgs e)
         {
-
             // Register events
             m_coreTitleBar.IsVisibleChanged += CoreTitleBarIsVisibleChanged;
             m_coreTitleBar.LayoutMetricsChanged += CoreTitleBarLayoutMetricsChanged;
@@ -97,23 +86,23 @@ namespace CalculatorApp
 
         private void CoreTitleBarIsVisibleChanged(CoreApplicationViewTitleBar cTitleBar, object args)
         {
-            this.SetTitleBarVisibility(false);
+            SetTitleBarVisibility(false);
         }
 
         private void CoreTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar cTitleBar, object args)
         {
-            this.SetTitleBarHeightAndPadding();
+            SetTitleBarHeightAndPadding();
         }
 
         private void SetTitleBarVisibility(bool forceDisplay)
         {
-            this.LayoutRoot.Visibility =
+            LayoutRoot.Visibility =
                 forceDisplay || m_coreTitleBar.IsVisible || IsAlwaysOnTopMode ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void SetTitleBarHeightAndPadding()
         {
-            if(m_coreTitleBar.Height == 0)
+            if (m_coreTitleBar.Height == 0)
             {
                 // The titlebar isn't init
                 return;
@@ -122,7 +111,7 @@ namespace CalculatorApp
             double leftAddition = 0;
             double rightAddition = 0;
 
-            if(this.FlowDirection == FlowDirection.LeftToRight)
+            if (FlowDirection == FlowDirection.LeftToRight)
             {
                 leftAddition = m_coreTitleBar.SystemOverlayLeftInset;
                 rightAddition = m_coreTitleBar.SystemOverlayRightInset;
@@ -133,13 +122,13 @@ namespace CalculatorApp
                 leftAddition = m_coreTitleBar.SystemOverlayLeftInset;
             }
 
-            this.LayoutRoot.Padding = new Thickness(leftAddition, 0, rightAddition, 0);
-            this.LayoutRoot.Height = m_coreTitleBar.Height;
+            LayoutRoot.Padding = new Thickness(leftAddition, 0, rightAddition, 0);
+            LayoutRoot.Height = m_coreTitleBar.Height;
         }
 
         private void ColorValuesChanged(Windows.UI.ViewManagement.UISettings sender, Object e)
         {
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { this.SetTitleBarControlColors(); }));
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => { SetTitleBarControlColors(); }));
         }
 
         private void SetTitleBarControlColors()
@@ -187,15 +176,14 @@ namespace CalculatorApp
                 applicationTitleBar.ButtonPressedBackgroundColor = pressedbgColor;
                 applicationTitleBar.ButtonPressedForegroundColor = pressedfgCoolor;
             }
-
         }
 
         private void OnHighContrastChanged(Windows.UI.ViewManagement.AccessibilitySettings sender, Object args)
         {
             _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
             {
-                this.SetTitleBarControlColors();
-                this.SetTitleBarVisibility(false);
+                SetTitleBarControlColors();
+                SetTitleBarVisibility(false);
             }));
         }
 
@@ -213,7 +201,7 @@ namespace CalculatorApp
 
         private void AlwaysOnTopButton_Click(Object sender, RoutedEventArgs e)
         {
-            this.AlwaysOnTopClick(this, e);
+            AlwaysOnTopClick(this, e);
         }
 
         private Windows.ApplicationModel.Core.CoreApplicationViewTitleBar m_coreTitleBar;

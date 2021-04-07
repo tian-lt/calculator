@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Background;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.ViewManagement;
@@ -41,57 +37,47 @@ namespace CalculatorApp
 
         public bool GetTraceLoggingProviderEnabled()
         {
-
             return m_appLifecycleProvider.Enabled;
-
         }
 
         public void LaunchUIResponsive()
         {
-
             if (!GetTraceLoggingProviderEnabled())
                 return;
 
             LoggingFields fields = new LoggingFields();
             PopulateAppInfo(fields);
             LogAppLifecycleEvent("ModernAppLaunch_UIResponsive", fields);
-
         }
 
         public void LaunchVisibleComplete()
         {
-
             if (!GetTraceLoggingProviderEnabled())
                 return;
 
             LoggingFields fields = new LoggingFields();
             PopulateAppInfo(fields);
             LogAppLifecycleEvent("ModernAppLaunch_VisibleComplete", fields);
-
         }
 
         public void ResumeUIResponsive()
         {
-
             if (!GetTraceLoggingProviderEnabled())
                 return;
 
             LoggingFields fields = new LoggingFields();
             PopulateAppInfo(fields);
             LogAppLifecycleEvent("ModernAppResume_UIResponsive", fields);
-
         }
 
         public void ResumeVisibleComplete()
         {
-
             if (!GetTraceLoggingProviderEnabled())
                 return;
 
             LoggingFields fields = new LoggingFields();
             PopulateAppInfo(fields);
             LogAppLifecycleEvent("ModernAppResume_VisibleComplete", fields);
-
         }
 
         public void ResizeUIResponsive()
@@ -148,7 +134,6 @@ namespace CalculatorApp
 
         private void PopulateAppInfo(LoggingFields fields)
         {
-
             var appId = CoreApplication.Id;
             var aumId = Package.Current.Id.FamilyName + "!" + appId;
             var packageFullName = Package.Current.Id.FullName;
@@ -157,11 +142,10 @@ namespace CalculatorApp
             fields.AddString("AumId", aumId);
             fields.AddString("PackageFullName", packageFullName);
             fields.AddString("PsmKey", psmKey);
-
         }
 
         private LoggingChannel m_appLifecycleProvider;
-        private static readonly Lazy<AppLifecycleLogger> s_selfInstance = new Lazy<AppLifecycleLogger>(()=> new AppLifecycleLogger(), true);
+        private static readonly Lazy<AppLifecycleLogger> s_selfInstance = new Lazy<AppLifecycleLogger>(() => new AppLifecycleLogger(), true);
     }
 }
 

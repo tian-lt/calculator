@@ -47,7 +47,6 @@ namespace CalculatorUITestFramework
         /// </summary>
         public void ClearHistory()
         {
-
             this.HistoryLabel.Click();
             string source = this.session.PageSource;
             if (source.Contains("ClearHistory"))

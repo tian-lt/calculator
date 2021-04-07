@@ -1,24 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.Controls;
-using Windows.System;
-using Windows.Foundation;
-using Windows.ApplicationModel;
+using System;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -26,7 +16,6 @@ namespace CalculatorApp
     {
         public sealed class EquationTextBox : Windows.UI.Xaml.Controls.Control
         {
-
             public EquationTextBox()
             {
             }
@@ -57,7 +46,6 @@ namespace CalculatorApp
                 DependencyProperty.Register(nameof(EquationButtonForegroundColor), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(EquationTextBox), new PropertyMetadata(default(Windows.UI.Xaml.Media.SolidColorBrush)));
 
 
-
             public Windows.UI.Xaml.Controls.Flyout ColorChooserFlyout
             {
                 get { return (Windows.UI.Xaml.Controls.Flyout)GetValue(ColorChooserFlyoutProperty); }
@@ -69,7 +57,6 @@ namespace CalculatorApp
                 DependencyProperty.Register(nameof(ColorChooserFlyout), typeof(Windows.UI.Xaml.Controls.Flyout), typeof(EquationTextBox), new PropertyMetadata(default(Windows.UI.Xaml.Controls.Flyout)));
 
 
-
             public string EquationButtonContentIndex
             {
                 get { return (string)GetValue(EquationButtonContentIndexProperty); }
@@ -78,7 +65,8 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for EquationButtonContentIndex.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty EquationButtonContentIndexProperty =
-                DependencyProperty.Register(nameof(EquationButtonContentIndex), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty, (sender, args)=> {
+                DependencyProperty.Register(nameof(EquationButtonContentIndex), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty, (sender, args) =>
+                {
                     var self = (EquationTextBox)sender;
                     self.OnEquationButtonContentIndexPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
@@ -98,7 +86,6 @@ namespace CalculatorApp
                 DependencyProperty.Register(nameof(MathEquation), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty));
 
 
-
             public bool HasError
             {
                 get { return (bool)GetValue(HasErrorProperty); }
@@ -107,11 +94,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for HasError.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty HasErrorProperty =
-                DependencyProperty.Register(nameof(HasError), typeof(bool), typeof(EquationTextBox), new PropertyMetadata(default(bool), (sender, args)=>{
+                DependencyProperty.Register(nameof(HasError), typeof(bool), typeof(EquationTextBox), new PropertyMetadata(default(bool), (sender, args) =>
+                {
                     var self = (EquationTextBox)sender;
                     self.OnHasErrorPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
                 }));
-
 
 
             public bool IsAddEquationMode
@@ -122,11 +109,11 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for IsAddEquationMode.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsAddEquationModeProperty =
-                DependencyProperty.Register(nameof(IsAddEquationMode), typeof(bool), typeof(EquationTextBox), new PropertyMetadata(default(bool), (sender, args)=> {
+                DependencyProperty.Register(nameof(IsAddEquationMode), typeof(bool), typeof(EquationTextBox), new PropertyMetadata(default(bool), (sender, args) =>
+                {
                     var self = (EquationTextBox)sender;
                     self.OnIsAddEquationModePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
                 }));
-
 
 
             public string ErrorText
@@ -138,7 +125,6 @@ namespace CalculatorApp
             // Using a DependencyProperty as the backing store for ErrorText.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ErrorTextProperty =
                 DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty));
-
 
 
             public bool IsEquationLineDisabled
@@ -154,7 +140,7 @@ namespace CalculatorApp
 
             public bool HasFocus
             {
-                get => this.m_HasFocus;
+                get => m_HasFocus;
             }
             private bool m_HasFocus;
 
@@ -166,27 +152,22 @@ namespace CalculatorApp
 
             public void SetEquationText(string equationText)
             {
-
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.MathText = equationText;
                 }
-
             }
 
             public void FocusTextBox()
             {
-
                 if (m_richEditBox != null)
                 {
                     _ = FocusManager.TryFocusAsync(m_richEditBox, FocusState.Programmatic);
                 }
-
             }
 
             protected override void OnApplyTemplate()
             {
-
                 m_equationButton = GetTemplateChild("EquationButton") as ToggleButton;
                 m_richEditBox = GetTemplateChild("MathRichEditBox") as MathRichEditBox;
                 m_deleteButton = GetTemplateChild("DeleteButton") as Button;
@@ -208,8 +189,8 @@ namespace CalculatorApp
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.GotFocus += OnRichEditBoxGotFocus;
-                    m_richEditBox.LostFocus +=  OnRichEditBoxLostFocus;
-                    m_richEditBox.TextChanged +=  OnRichEditTextChanged;
+                    m_richEditBox.LostFocus += OnRichEditBoxLostFocus;
+                    m_richEditBox.TextChanged += OnRichEditTextChanged;
                     m_richEditBox.SelectionFlyout = null;
                     m_richEditBox.EquationSubmitted += OnEquationSubmitted;
                     m_richEditBox.FormatRequest += OnEquationFormatRequested;
@@ -217,7 +198,7 @@ namespace CalculatorApp
 
                 if (m_equationButton != null)
                 {
-                    m_equationButton.Click +=  OnEquationButtonClicked;
+                    m_equationButton.Click += OnEquationButtonClicked;
                 }
 
                 if (m_richEditContextMenu != null)
@@ -227,41 +208,41 @@ namespace CalculatorApp
 
                 if (m_deleteButton != null)
                 {
-                    m_deleteButton.Click +=  OnDeleteButtonClicked;
+                    m_deleteButton.Click += OnDeleteButtonClicked;
                 }
 
                 if (m_removeButton != null)
                 {
-                    m_removeButton.Click +=  OnRemoveButtonClicked;
+                    m_removeButton.Click += OnRemoveButtonClicked;
                 }
 
                 if (m_removeMenuItem != null)
                 {
                     m_removeMenuItem.Text = resProvider.GetResourceString("removeMenuItem");
-                    m_removeMenuItem.Click +=  OnRemoveButtonClicked;
+                    m_removeMenuItem.Click += OnRemoveButtonClicked;
                 }
 
                 if (m_colorChooserButton != null)
                 {
-                    m_colorChooserButton.Click +=  OnColorChooserButtonClicked;
+                    m_colorChooserButton.Click += OnColorChooserButtonClicked;
                 }
 
                 if (m_colorChooserMenuItem != null)
                 {
                     m_colorChooserMenuItem.Text = resProvider.GetResourceString("colorChooserMenuItem");
-                    m_colorChooserMenuItem.Click +=  OnColorChooserButtonClicked;
+                    m_colorChooserMenuItem.Click += OnColorChooserButtonClicked;
                 }
 
                 if (m_functionButton != null)
                 {
-                    m_functionButton.Click +=  OnFunctionButtonClicked;
+                    m_functionButton.Click += OnFunctionButtonClicked;
                     m_functionButton.IsEnabled = false;
                 }
 
                 if (m_kgfEquationMenuItem != null)
                 {
                     m_kgfEquationMenuItem.Text = resProvider.GetResourceString("functionAnalysisMenuItem");
-                    m_kgfEquationMenuItem.Click +=  OnFunctionMenuButtonClicked;
+                    m_kgfEquationMenuItem.Click += OnFunctionMenuButtonClicked;
                 }
 
                 if (ColorChooserFlyout != null)
@@ -272,77 +253,65 @@ namespace CalculatorApp
 
                 if (m_cutMenuItem != null)
                 {
-                    m_cutMenuItem.Click +=  OnCutClicked;
+                    m_cutMenuItem.Click += OnCutClicked;
                 }
 
                 if (m_copyMenuItem != null)
                 {
-                    m_copyMenuItem.Click +=  OnCopyClicked;
+                    m_copyMenuItem.Click += OnCopyClicked;
                 }
 
                 if (m_pasteMenuItem != null)
                 {
-                    m_pasteMenuItem.Click +=  OnPasteClicked;
+                    m_pasteMenuItem.Click += OnPasteClicked;
                 }
 
                 if (m_undoMenuItem != null)
                 {
-                    m_undoMenuItem.Click +=  OnUndoClicked;
+                    m_undoMenuItem.Click += OnUndoClicked;
                 }
 
                 if (m_selectAllMenuItem != null)
                 {
-                    m_selectAllMenuItem.Click +=  OnSelectAllClicked;
+                    m_selectAllMenuItem.Click += OnSelectAllClicked;
                 }
 
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
-
             }
 
             protected override void OnPointerEntered(PointerRoutedEventArgs e)
             {
-
                 m_isPointerOver = true;
                 UpdateCommonVisualState();
-
             }
 
             protected override void OnPointerExited(PointerRoutedEventArgs e)
             {
-
                 m_isPointerOver = false;
                 UpdateCommonVisualState();
-
             }
 
             protected override void OnPointerCanceled(PointerRoutedEventArgs e)
             {
-
                 m_isPointerOver = false;
                 UpdateCommonVisualState();
-
             }
 
             protected override void OnPointerCaptureLost(PointerRoutedEventArgs e)
             {
-
                 m_isPointerOver = false;
                 UpdateCommonVisualState();
-
             }
 
             private void OnIsAddEquationModePropertyChanged(bool oldValue, bool newValue)
             {
-
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
-
             }
 
             private void UpdateCommonVisualState()
             {
-
                 String state = null;
                 bool richEditHasContent = RichEditHasContent();
 
@@ -383,12 +352,10 @@ namespace CalculatorApp
                     state = "Normal";
                 }
                 VisualStateManager.GoToState(this, state, false);
-
             }
 
             private void UpdateButtonsVisualState()
             {
-
                 String state;
 
                 if (m_HasFocus && RichEditHasContent())
@@ -405,7 +372,6 @@ namespace CalculatorApp
                 }
 
                 VisualStateManager.GoToState(this, state, true);
-
             }
 
             private bool RichEditHasContent()
@@ -416,21 +382,17 @@ namespace CalculatorApp
                     m_richEditBox.TextDocument.GetText(Windows.UI.Text.TextGetOptions.NoHidden, out text);
                 }
                 return !string.IsNullOrEmpty(text);
-
             }
 
             private void OnRichEditBoxGotFocus(Object sender, RoutedEventArgs e)
             {
-
                 m_HasFocus = true;
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
-
             }
 
             private void OnRichEditBoxLostFocus(Object sender, RoutedEventArgs e)
             {
-
                 if (!m_richEditBox.ContextFlyout.IsOpen)
                 {
                     m_HasFocus = false;
@@ -438,15 +400,12 @@ namespace CalculatorApp
 
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
-
             }
 
             private void OnRichEditTextChanged(Object sender, RoutedEventArgs e)
             {
-
                 UpdateCommonVisualState();
                 UpdateButtonsVisualState();
-
             }
 
             private void OnDeleteButtonClicked(Object sender, RoutedEventArgs e)
@@ -463,16 +422,13 @@ namespace CalculatorApp
 
             private void OnEquationButtonClicked(Object sender, RoutedEventArgs e)
             {
-
                 EquationButtonClicked(this, new RoutedEventArgs());
 
                 SetEquationButtonTooltipAndAutomationName();
-
             }
 
             private void OnRemoveButtonClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (IsAddEquationMode)
                 {
                     // Don't remove the last equation
@@ -499,30 +455,24 @@ namespace CalculatorApp
                 TraceLogger.GetInstance().LogGraphButtonClicked(GraphButton.RemoveFunction, GraphButtonValue.None);
 
                 VisualStateManager.GoToState(this, "Normal", true);
-
             }
 
             private void OnColorChooserButtonClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (ColorChooserFlyout != null && m_richEditBox != null)
                 {
                     ColorChooserFlyout.ShowAt(m_richEditBox);
                     TraceLogger.GetInstance().LogGraphButtonClicked(GraphButton.StylePicker, GraphButtonValue.None);
                 }
-
             }
 
             private void OnFunctionButtonClicked(Object sender, RoutedEventArgs e)
             {
-
                 KeyGraphFeaturesButtonClicked(this, new RoutedEventArgs());
-
             }
 
             private void OnFunctionMenuButtonClicked(Object sender, RoutedEventArgs e)
             {
-
                 // Submit the equation before trying to analyze it if invoked from context menu
                 if (m_richEditBox != null)
                 {
@@ -530,12 +480,10 @@ namespace CalculatorApp
                 }
 
                 KeyGraphFeaturesButtonClicked(this, new RoutedEventArgs());
-
             }
 
             private void OnRichEditMenuOpened(Object sender, Object args)
             {
-
                 if (m_removeMenuItem != null)
                 {
                     m_removeMenuItem.IsEnabled = !IsAddEquationMode;
@@ -570,93 +518,73 @@ namespace CalculatorApp
                 {
                     m_undoMenuItem.IsEnabled = m_richEditBox.TextDocument.CanUndo();
                 }
-
             }
 
             private void OnCutClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.TextDocument.Selection.Cut();
                 }
-
             }
 
             private void OnCopyClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.TextDocument.Selection.Copy();
                 }
-
             }
 
             private void OnPasteClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.TextDocument.Selection.Paste(0);
                 }
-
             }
 
             private void OnUndoClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.TextDocument.Undo();
                 }
-
             }
 
             private void OnSelectAllClicked(Object sender, RoutedEventArgs e)
             {
-
                 if (m_richEditBox != null)
                 {
                     m_richEditBox.TextDocument.Selection.SetRange(0, m_richEditBox.TextDocument.Selection.EndPosition);
                 }
-
             }
 
             private void OnColorFlyoutOpened(Object sender, Object e)
             {
-
                 m_isColorChooserFlyoutOpen = true;
                 UpdateCommonVisualState();
-
             }
 
             private void OnColorFlyoutClosed(Object sender, Object e)
             {
-
                 m_colorChooserButton.IsChecked = false;
                 m_isColorChooserFlyoutOpen = false;
                 UpdateCommonVisualState();
-
             }
 
             private void OnHasErrorPropertyChanged(bool oldValue, bool newValue)
             {
-
                 UpdateCommonVisualState();
-
             }
 
             private void OnEquationButtonContentIndexPropertyChanged(String oldValue, String newValue)
             {
-
                 SetEquationButtonTooltipAndAutomationName();
-
             }
 
             private void SetEquationButtonTooltipAndAutomationName()
             {
-
                 var toolTip = new ToolTip();
                 var resProvider = AppResourceProvider.GetInstance();
 
@@ -671,7 +599,6 @@ namespace CalculatorApp
                 toolTip.Content = equationButtonTooltip;
                 ToolTipService.SetToolTip(m_equationButton, toolTip);
                 AutomationProperties.SetName(m_equationButton, equationButtonMessage);
-
             }
 
             private CalculatorApp.Controls.MathRichEditBox m_richEditBox;
@@ -695,7 +622,6 @@ namespace CalculatorApp
             private bool m_isColorChooserFlyoutOpen;
             private void OnEquationSubmitted(Object sender, MathRichEditBoxSubmission args)
             {
-
                 if (args.HasTextChanged)
                 {
                     if (m_functionButton != null && m_richEditBox.MathText != "")
@@ -705,15 +631,12 @@ namespace CalculatorApp
                 }
 
                 EquationSubmitted(this, args);
-
             }
 
             private void OnEquationFormatRequested(Object sender, MathRichEditBoxFormatRequest args)
             {
                 EquationFormatRequested(this, args);
             }
-
         }
-
     }
 }

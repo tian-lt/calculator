@@ -8,25 +8,18 @@
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
-
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class CalculatorProgrammerBitFlipPanel
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class CalculatorProgrammerBitFlipPanel
     {
         public CalculatorProgrammerBitFlipPanel()
         {
@@ -42,7 +35,7 @@ namespace CalculatorApp
 
         public StandardCalculatorViewModel Model
         {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
+            get { return (StandardCalculatorViewModel)DataContext; }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -97,70 +90,70 @@ namespace CalculatorApp
         {
             Debug.Assert(m_flipButtons.Length == 64);
 
-            m_flipButtons[0] = this.Bit0;
-            m_flipButtons[1] = this.Bit1;
-            m_flipButtons[2] = this.Bit2;
-            m_flipButtons[3] = this.Bit3;
-            m_flipButtons[4] = this.Bit4;
-            m_flipButtons[5] = this.Bit5;
-            m_flipButtons[6] = this.Bit6;
-            m_flipButtons[7] = this.Bit7;
-            m_flipButtons[8] = this.Bit8;
-            m_flipButtons[9] = this.Bit9;
-            m_flipButtons[10] = this.Bit10;
-            m_flipButtons[11] = this.Bit11;
-            m_flipButtons[12] = this.Bit12;
-            m_flipButtons[13] = this.Bit13;
-            m_flipButtons[14] = this.Bit14;
-            m_flipButtons[15] = this.Bit15;
-            m_flipButtons[16] = this.Bit16;
-            m_flipButtons[17] = this.Bit17;
-            m_flipButtons[18] = this.Bit18;
-            m_flipButtons[19] = this.Bit19;
-            m_flipButtons[20] = this.Bit20;
-            m_flipButtons[21] = this.Bit21;
-            m_flipButtons[22] = this.Bit22;
-            m_flipButtons[23] = this.Bit23;
-            m_flipButtons[24] = this.Bit24;
-            m_flipButtons[25] = this.Bit25;
-            m_flipButtons[26] = this.Bit26;
-            m_flipButtons[27] = this.Bit27;
-            m_flipButtons[28] = this.Bit28;
-            m_flipButtons[29] = this.Bit29;
-            m_flipButtons[30] = this.Bit30;
-            m_flipButtons[31] = this.Bit31;
-            m_flipButtons[32] = this.Bit32;
-            m_flipButtons[33] = this.Bit33;
-            m_flipButtons[34] = this.Bit34;
-            m_flipButtons[35] = this.Bit35;
-            m_flipButtons[36] = this.Bit36;
-            m_flipButtons[37] = this.Bit37;
-            m_flipButtons[38] = this.Bit38;
-            m_flipButtons[39] = this.Bit39;
-            m_flipButtons[40] = this.Bit40;
-            m_flipButtons[41] = this.Bit41;
-            m_flipButtons[42] = this.Bit42;
-            m_flipButtons[43] = this.Bit43;
-            m_flipButtons[44] = this.Bit44;
-            m_flipButtons[45] = this.Bit45;
-            m_flipButtons[46] = this.Bit46;
-            m_flipButtons[47] = this.Bit47;
-            m_flipButtons[48] = this.Bit48;
-            m_flipButtons[49] = this.Bit49;
-            m_flipButtons[50] = this.Bit50;
-            m_flipButtons[51] = this.Bit51;
-            m_flipButtons[52] = this.Bit52;
-            m_flipButtons[53] = this.Bit53;
-            m_flipButtons[54] = this.Bit54;
-            m_flipButtons[55] = this.Bit55;
-            m_flipButtons[56] = this.Bit56;
-            m_flipButtons[57] = this.Bit57;
-            m_flipButtons[58] = this.Bit58;
-            m_flipButtons[59] = this.Bit59;
-            m_flipButtons[60] = this.Bit60;
-            m_flipButtons[61] = this.Bit61;
-            m_flipButtons[62] = this.Bit62;
-            m_flipButtons[63] = this.Bit63;
+            m_flipButtons[0] = Bit0;
+            m_flipButtons[1] = Bit1;
+            m_flipButtons[2] = Bit2;
+            m_flipButtons[3] = Bit3;
+            m_flipButtons[4] = Bit4;
+            m_flipButtons[5] = Bit5;
+            m_flipButtons[6] = Bit6;
+            m_flipButtons[7] = Bit7;
+            m_flipButtons[8] = Bit8;
+            m_flipButtons[9] = Bit9;
+            m_flipButtons[10] = Bit10;
+            m_flipButtons[11] = Bit11;
+            m_flipButtons[12] = Bit12;
+            m_flipButtons[13] = Bit13;
+            m_flipButtons[14] = Bit14;
+            m_flipButtons[15] = Bit15;
+            m_flipButtons[16] = Bit16;
+            m_flipButtons[17] = Bit17;
+            m_flipButtons[18] = Bit18;
+            m_flipButtons[19] = Bit19;
+            m_flipButtons[20] = Bit20;
+            m_flipButtons[21] = Bit21;
+            m_flipButtons[22] = Bit22;
+            m_flipButtons[23] = Bit23;
+            m_flipButtons[24] = Bit24;
+            m_flipButtons[25] = Bit25;
+            m_flipButtons[26] = Bit26;
+            m_flipButtons[27] = Bit27;
+            m_flipButtons[28] = Bit28;
+            m_flipButtons[29] = Bit29;
+            m_flipButtons[30] = Bit30;
+            m_flipButtons[31] = Bit31;
+            m_flipButtons[32] = Bit32;
+            m_flipButtons[33] = Bit33;
+            m_flipButtons[34] = Bit34;
+            m_flipButtons[35] = Bit35;
+            m_flipButtons[36] = Bit36;
+            m_flipButtons[37] = Bit37;
+            m_flipButtons[38] = Bit38;
+            m_flipButtons[39] = Bit39;
+            m_flipButtons[40] = Bit40;
+            m_flipButtons[41] = Bit41;
+            m_flipButtons[42] = Bit42;
+            m_flipButtons[43] = Bit43;
+            m_flipButtons[44] = Bit44;
+            m_flipButtons[45] = Bit45;
+            m_flipButtons[46] = Bit46;
+            m_flipButtons[47] = Bit47;
+            m_flipButtons[48] = Bit48;
+            m_flipButtons[49] = Bit49;
+            m_flipButtons[50] = Bit50;
+            m_flipButtons[51] = Bit51;
+            m_flipButtons[52] = Bit52;
+            m_flipButtons[53] = Bit53;
+            m_flipButtons[54] = Bit54;
+            m_flipButtons[55] = Bit55;
+            m_flipButtons[56] = Bit56;
+            m_flipButtons[57] = Bit57;
+            m_flipButtons[58] = Bit58;
+            m_flipButtons[59] = Bit59;
+            m_flipButtons[60] = Bit60;
+            m_flipButtons[61] = Bit61;
+            m_flipButtons[62] = Bit62;
+            m_flipButtons[63] = Bit63;
         }
 
         private void OnBitToggled(object sender, RoutedEventArgs e)
@@ -246,7 +239,7 @@ namespace CalculatorApp
                         m_flipButtons[index].SetValue(AutomationProperties.NameProperty, GenerateAutomationPropertiesName(index, val));
                     }
                     ++index;
-                }      
+                }
             }
 
             m_updatingCheckedStates = false;

@@ -1,17 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.ViewModel;
-
-using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using System.ComponentModel;
+using Windows.UI.Xaml;
 
 namespace CalculatorApp
 {
@@ -20,7 +11,7 @@ namespace CalculatorApp
         public KeyGraphFeaturesPanel()
         {
             InitializeComponent();
-            this.Loaded += KeyGraphFeaturesPanel_Loaded;
+            Loaded += KeyGraphFeaturesPanel_Loaded;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -6,40 +6,24 @@
 // Declaration of the App class.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.Common.Automation;
-using TraceLogging;
-
-//using Microsoft.WRL;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Interop;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using System.Threading;
-using System.Reflection;
 
 namespace CalculatorApp
 {
@@ -71,14 +55,15 @@ namespace CalculatorApp
 
             // TODO: MSFT 14645325: Set this directly from XAML.
             // Currently this is bugged so the property is only respected from code-behind.
-            this.HighContrastAdjustment = ApplicationHighContrastAdjustment.None;
+            HighContrastAdjustment = ApplicationHighContrastAdjustment.None;
 
-            this.Suspending += OnSuspending;
+            Suspending += OnSuspending;
 
             // CSHARP_MIGRATION: TODO:
 #if DEBUG
-            this.DebugSettings.IsBindingTracingEnabled = true;
-            this.DebugSettings.BindingFailed += (sender, args) => {
+            DebugSettings.IsBindingTracingEnabled = true;
+            DebugSettings.BindingFailed += (sender, args) =>
+            {
                 if (Debugger.IsAttached)
                 {
                     string errorMessage = args.Message;
@@ -416,7 +401,6 @@ namespace CalculatorApp
         };
 
 
-
         // CSHARP_MIGRATION: TODO: check what is the pragma used for???
         //#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
         private async Task SetupJumpList()
@@ -528,6 +512,5 @@ namespace CalculatorApp
         // CSHARP_MIGRATION: TODO: check whether or not this field is in use.
         private Windows.UI.Xaml.Controls.Primitives.Popup m_aboutPopup;
     }
-
 }
 

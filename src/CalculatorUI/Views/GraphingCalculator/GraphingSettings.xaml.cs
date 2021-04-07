@@ -3,31 +3,20 @@
 // Declaration of the MyUserControl class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 //using Graphing;
-using GraphControl;
-using CalculatorApp;
 using CalculatorApp.ViewModel;
 
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class GraphingSettings
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class GraphingSettings
     {
         public GraphingSettings()
         {
@@ -59,9 +48,9 @@ namespace CalculatorApp
 
         public Style SelectTextBoxStyle(bool incorrectRange, bool error)
         {
-            if ((incorrectRange || error) && this.Resources.ContainsKey("ErrorTextBoxStyle"))
+            if ((incorrectRange || error) && Resources.ContainsKey("ErrorTextBoxStyle"))
             {
-                return (Style)(this.Resources["ErrorTextBoxStyle"]);
+                return (Style)(Resources["ErrorTextBoxStyle"]);
             }
             else
             {

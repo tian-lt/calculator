@@ -1,22 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalculatorApp.Common;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Common;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
@@ -64,11 +55,11 @@ namespace CalculatorApp
 
         private void FlyoutButton_Clicked(object sender, RoutedEventArgs e)
         {
-            this.HypButton.IsChecked = false;
-            this.TrigShiftButton.IsChecked = false;
-            this.Trigflyout.Hide();
-            this.FuncFlyout.Hide();
-            this.InequalityFlyout.Hide();
+            HypButton.IsChecked = false;
+            TrigShiftButton.IsChecked = false;
+            Trigflyout.Hide();
+            FuncFlyout.Hide();
+            InequalityFlyout.Hide();
 
             Button_Clicked(sender, null);
         }

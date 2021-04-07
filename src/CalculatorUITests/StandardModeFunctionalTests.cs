@@ -404,7 +404,6 @@ namespace CalculatorUITests
         [Priority(2)]
         public void MixedInput_Operators_Addition()
         {
-
             //Verify Addition
             page.StandardOperators.NumberPad.Input(2);
             page.StandardOperators.PlusButton.Click();
@@ -466,8 +465,7 @@ namespace CalculatorUITests
             page.StandardOperators.InvertButton.Click();
             Assert.AreEqual("0.5", page.CalculatorResults.GetCalculatorResultText());
             CalculatorApp.Window.SendKeys(Keys.Escape);
-
-        }
+}
 
         [TestMethod]
         [Priority(2)]
@@ -654,8 +652,7 @@ namespace CalculatorUITests
         {
             page.StandardAoTCalculatorPage.NavigateToStandardAoTMode();
             page.StandardAoTCalculatorPage.NavigateToStandardMode();
-
-        }
+}
 
         [TestMethod]
         [Priority(0)]

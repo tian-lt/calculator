@@ -70,22 +70,18 @@ namespace CalculatorApp
 
         private void OnValueKeyDown(Object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-
             if (e.Key == VirtualKey.Space)
             {
                 OnValueSelected(sender);
             }
-
-        }
+}
         private void OnValueSelected(Object sender)
         {
-
             var value = ((CalculationResult)sender);
             // update the font size since the font is changed to bold
             value.UpdateTextState();
             ((UnitConverterViewModel)this.DataContext).OnValueActivated(AsActivatable(value));
-
-        }
+}
 
         private static Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
         private Windows.UI.Xaml.FlowDirection m_layoutDirection;

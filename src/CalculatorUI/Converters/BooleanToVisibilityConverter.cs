@@ -2,13 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using Windows.Foundation;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Interop;
 
 namespace CalculatorApp
 {
@@ -50,7 +44,6 @@ namespace CalculatorApp
                 var boxedBool = (value as bool?);
                 var boolValue = (boxedBool != null && boxedBool.Value);
                 return BooleanToVisibilityConverter.Convert(!boolValue);
-
             }
 
             public object ConvertBack(object value, Type targetType, object parameter, string language)

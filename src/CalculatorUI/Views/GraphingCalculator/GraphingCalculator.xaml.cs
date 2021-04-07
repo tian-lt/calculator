@@ -1,38 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.Common.Automation;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
 //using CalcManager.NumberFormattingUtils;
 using GraphControl;
+using System;
 //using Utils;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Popups;
 
 namespace CalculatorApp
 {
@@ -136,7 +125,7 @@ namespace CalculatorApp
 
         public bool IsKeyGraphFeaturesVisible
         {
-            get { return m_IsKeyGraphFeaturesVisible;  }
+            get { return m_IsKeyGraphFeaturesVisible; }
             private set
             {
                 if (m_IsKeyGraphFeaturesVisible != value)
@@ -170,7 +159,7 @@ namespace CalculatorApp
 
         public bool IsMatchAppTheme
         {
-            get { return m_IsMatchAppTheme;  }
+            get { return m_IsMatchAppTheme; }
             private set
             {
                 if (m_IsMatchAppTheme != value)
@@ -430,7 +419,7 @@ namespace CalculatorApp
 
                         string equationColorHtml;
                         equationColorHtml = "color:rgb(" + color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString() + ");";
-                        
+
                         equationHtml += "<tr style=\"margin: 0pt 0pt 0pt 0pt; padding: 0pt 0pt 0pt 0pt; \"><td><span style=\"font-size: 22pt; line-height: 0;"
                                         + equationColorHtml + "\">&#x25A0;</span></td><td><div style=\"margin: 4pt 0pt 0pt 6pt;\">"
                                         + Utilities.EscapeHtmlSpecialCharacters(expression) + "</div></td>";
@@ -610,7 +599,7 @@ namespace CalculatorApp
         {
             if (!m_cursorShadowInitialized)
             {
-                this.FindName("TraceCanvas");
+                FindName("TraceCanvas");
 
                 // add shadow to the trace pointer
                 AddTracePointerShadow();
@@ -704,7 +693,7 @@ namespace CalculatorApp
                 m_graphFlyout.Content = m_graphSettings;
             }
 
-            m_graphSettings.SetGrapher(this.GraphingControl);
+            m_graphSettings.SetGrapher(GraphingControl);
             m_graphSettings.IsMatchAppTheme = IsMatchAppTheme;
 
             var options = new FlyoutShowOptions();
@@ -755,13 +744,14 @@ namespace CalculatorApp
         private void OnColorValuesChanged(UISettings sender, object args)
         {
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                                            GraphingCalculator refThis = weakThis.Target as GraphingCalculator;
-                                            if (refThis != null && IsMatchAppTheme)
-                                            {
-                                                refThis.UpdateGraphTheme();
-                                            }
-                                        }));
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            {
+                GraphingCalculator refThis = weakThis.Target as GraphingCalculator;
+                if (refThis != null && IsMatchAppTheme)
+                {
+                    refThis.UpdateGraphTheme();
+                }
+            }));
         }
 
         private void UpdateGraphTheme()
@@ -791,7 +781,7 @@ namespace CalculatorApp
 
             IsMatchAppTheme = isMatchAppTheme;
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
             {
                 var refThis = weakThis.Target as GraphingCalculator;
                 if (refThis != null)

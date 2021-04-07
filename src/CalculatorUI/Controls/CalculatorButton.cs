@@ -1,19 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.Controls;
 using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Data;
-using Windows.Foundation.Collections;
-using Windows.Storage.Pickers;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -27,7 +19,7 @@ namespace CalculatorApp
                 // These are a replacement for binding in styles
                 Binding commandBinding = new Binding();
                 commandBinding.Path = new PropertyPath("ButtonPressed");
-                this.SetBinding(CommandProperty, commandBinding);
+                SetBinding(CommandProperty, commandBinding);
             }
 
             public NumbersAndOperatorsEnum ButtonId
@@ -122,12 +114,12 @@ namespace CalculatorApp
 
             private void OnButtonIdPropertyChanged(NumbersAndOperatorsEnum oldValue, NumbersAndOperatorsEnum newValue)
             {
-                this.CommandParameter = new CalculatorButtonPressedEventArgs(AuditoryFeedback, newValue);
+                CommandParameter = new CalculatorButtonPressedEventArgs(AuditoryFeedback, newValue);
             }
 
             private void OnAuditoryFeedbackPropertyChanged(string oldValue, string newValue)
             {
-                this.CommandParameter = new CalculatorButtonPressedEventArgs(newValue, ButtonId);
+                CommandParameter = new CalculatorButtonPressedEventArgs(newValue, ButtonId);
             }
         }
     }

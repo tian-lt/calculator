@@ -73,7 +73,6 @@ namespace CalculatorUITests
         [Priority(2)]
         public void StandardHistory_Panel()
         {
-
             //Verify selecting history items form the history panel, and clearing the history panel
             page.HistoryPanel.OpenHistoryPanel();
 
@@ -116,7 +115,6 @@ namespace CalculatorUITests
         [Priority(2)]
         public void StandardHistory_Flyout()
         {
-
             //Verify selecting history items form the history flyout, using up/down arrows and [enter] to select history items,
             // and clearing the history flyout.  Additionally, verify history panel and history flyout have same information.
 

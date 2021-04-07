@@ -75,7 +75,4 @@ namespace CalculatorUITestFramework
                 this.StandardAoTCalculatorPage.NavigateToStandardMode();
             }
         }
-
-    }
-
-}
+}}

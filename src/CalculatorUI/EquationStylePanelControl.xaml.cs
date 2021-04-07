@@ -1,19 +1,11 @@
-﻿using System;
+﻿using GraphControl;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using GraphControl;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -23,10 +15,8 @@ namespace CalculatorApp
     {
         public EquationStylePanelControl()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
-
-
 
 
         public Windows.UI.Color SelectedColor
@@ -37,12 +27,11 @@ namespace CalculatorApp
 
         // Using a DependencyProperty as the backing store for SelectedColor.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register(nameof(SelectedColor), typeof(Windows.UI.Color), typeof(EquationStylePanelControl), new PropertyMetadata(Windows.UI.Colors.Black, (sender, args)=>
+            DependencyProperty.Register(nameof(SelectedColor), typeof(Windows.UI.Color), typeof(EquationStylePanelControl), new PropertyMetadata(Windows.UI.Colors.Black, (sender, args) =>
             {
                 var self = (EquationStylePanelControl)sender;
                 self.OnSelectedColorPropertyChanged((Windows.UI.Color)args.OldValue, (Windows.UI.Color)args.NewValue);
             }));
-
 
 
         public GraphControl.EquationLineStyle SelectedStyle
@@ -53,13 +42,11 @@ namespace CalculatorApp
 
         // Using a DependencyProperty as the backing store for SelectedStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedStyleProperty =
-            DependencyProperty.Register(nameof(SelectedStyle), typeof(GraphControl.EquationLineStyle), typeof(EquationStylePanelControl), new PropertyMetadata(GraphControl.EquationLineStyle.Solid, (sender, args)=>
+            DependencyProperty.Register(nameof(SelectedStyle), typeof(GraphControl.EquationLineStyle), typeof(EquationStylePanelControl), new PropertyMetadata(GraphControl.EquationLineStyle.Solid, (sender, args) =>
             {
                 var self = (EquationStylePanelControl)sender;
                 self.OnSelectedStylePropertyChanged((GraphControl.EquationLineStyle)args.OldValue, (GraphControl.EquationLineStyle)args.NewValue);
             }));
-
-
 
 
         public int SelectedColorIndex
@@ -73,9 +60,6 @@ namespace CalculatorApp
             DependencyProperty.Register(nameof(SelectedColorIndex), typeof(int), typeof(EquationStylePanelControl), new PropertyMetadata(default(int)));
 
 
-
-
-
         public IList<Windows.UI.Xaml.Media.SolidColorBrush> AvailableColors
         {
             get { return (IList<Windows.UI.Xaml.Media.SolidColorBrush>)GetValue(AvailableColorsProperty); }
@@ -87,8 +71,6 @@ namespace CalculatorApp
             DependencyProperty.Register(nameof(AvailableColors), typeof(IList<Windows.UI.Xaml.Media.SolidColorBrush>), typeof(EquationStylePanelControl), new PropertyMetadata(null));
 
 
-
-
         public bool EnableLineStylePicker
         {
             get { return (bool)GetValue(EnableLineStylePickerProperty); }
@@ -98,7 +80,6 @@ namespace CalculatorApp
         // Using a DependencyProperty as the backing store for EnableLineStylePicker.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EnableLineStylePickerProperty =
             DependencyProperty.Register(nameof(EnableLineStylePicker), typeof(bool), typeof(EquationStylePanelControl), new PropertyMetadata(default(bool)));
-
 
 
         public static Windows.UI.Xaml.Media.DoubleCollection GetLinePattern(object line)
@@ -244,7 +225,6 @@ namespace CalculatorApp
 
         private void SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
-
             if (e.AddedItems.Count > 0)
             {
                 var brush = (e.AddedItems[0] as SolidColorBrush);
@@ -259,27 +239,21 @@ namespace CalculatorApp
 
                 TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Color);
             }
-
         }
 
         private void OnSelectedColorPropertyChanged(Color oldColor, Color newColor)
         {
-
             SelectColor(newColor);
-
         }
 
         private void ColorChooserLoaded(Object sender, RoutedEventArgs e)
         {
-
             SelectColor(SelectedColor);
-
         }
 
 
         private void SelectColor(Color selectedColor)
         {
-
             for (int i = 0; i < ColorChooser.Items.Count; i++)
             {
                 var item = ColorChooser.Items[i];
@@ -302,23 +276,19 @@ namespace CalculatorApp
                     gridViewItem.IsSelected = false;
                 }
             }
-
         }
 
         private void OnSelectedStylePropertyChanged(EquationLineStyle oldStyle, EquationLineStyle newStyle)
         {
-
             if (oldStyle != newStyle)
             {
                 SelectStyle(newStyle);
                 TraceLogger.GetInstance().LogGraphLineStyleChanged(LineStyleType.Pattern);
             }
-
         }
 
         private void SelectStyle(EquationLineStyle selectedStyle)
         {
-
             foreach (var item in StyleChooserBox.Items)
             {
                 var style = ((EquationLineStyle)item);
@@ -339,24 +309,19 @@ namespace CalculatorApp
                     comboBoxItem.IsSelected = false;
                 }
             }
-
         }
 
         private void StyleChooserBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
-
             if (e.AddedItems.Count > 0)
             {
                 SelectedStyle = ((EquationLineStyle)e.AddedItems[0]);
             }
-
         }
 
         private void StyleChooserBox_Loaded(Object sender, RoutedEventArgs e)
         {
-
             SelectStyle(SelectedStyle);
-
         }
     }
 }

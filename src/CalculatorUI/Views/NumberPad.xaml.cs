@@ -1,22 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using CalculatorApp.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.ViewModel;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -27,21 +11,21 @@ namespace CalculatorApp
         public NumberPad()
         {
             m_isErrorVisualState = false;
-            this.InitializeComponent();
+            InitializeComponent();
 
             var localizationSettings = LocalizationSettings.GetInstance();
 
-            this.DecimalSeparatorButton.Content = localizationSettings.GetDecimalSeparator();
-            this.Num0Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('0');
-            this.Num1Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('1');
-            this.Num2Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('2');
-            this.Num3Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('3');
-            this.Num4Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('4');
-            this.Num5Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('5');
-            this.Num6Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('6');
-            this.Num7Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('7');
-            this.Num8Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('8');
-            this.Num9Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
+            DecimalSeparatorButton.Content = localizationSettings.GetDecimalSeparator();
+            Num0Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('0');
+            Num1Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('1');
+            Num2Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('2');
+            Num3Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('3');
+            Num4Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('4');
+            Num5Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('5');
+            Num6Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('6');
+            Num7Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('7');
+            Num8Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('8');
+            Num9Button.Content = localizationSettings.GetDigitSymbolFromEnUsDigit('9');
         }
 
         public Windows.UI.Xaml.Style ButtonStyle

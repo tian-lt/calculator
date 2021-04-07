@@ -8,10 +8,6 @@
    greater than the threshold, or if equal should be considered acceptable for the state to trigger. */
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp.Views.StateTriggers;
 
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -26,7 +22,6 @@ namespace CalculatorApp.Views.StateTriggers
 
     public sealed class AspectRatioTrigger : Windows.UI.Xaml.StateTriggerBase
     {
-
         public AspectRatioTrigger()
         {
             SetActive(false);
@@ -41,7 +36,7 @@ namespace CalculatorApp.Views.StateTriggers
 
         // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(AspectRatioTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args)=>
+            DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(AspectRatioTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args) =>
             {
                 var self = (AspectRatioTrigger)sender;
                 self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
@@ -85,25 +80,19 @@ namespace CalculatorApp.Views.StateTriggers
             DependencyProperty.Register("ActiveIfEqual", typeof(bool), typeof(AspectRatioTrigger), new PropertyMetadata(false));
 
 
-
         ~AspectRatioTrigger()
         {
-
             UnregisterSizeChanged(Source);
-
         }
 
         private void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
         {
-
             UnregisterSizeChanged(oldValue);
             RegisterSizeChanged(newValue);
-
         }
 
         private void RegisterSizeChanged(FrameworkElement element)
         {
-
             if (element == null)
             {
                 return;
@@ -119,7 +108,7 @@ namespace CalculatorApp.Views.StateTriggers
 
         private void UnregisterSizeChanged(FrameworkElement element)
         {
-            if(element != null)
+            if (element != null)
             {
                 element.SizeChanged -= OnSizeChanged;
             }
@@ -127,14 +116,11 @@ namespace CalculatorApp.Views.StateTriggers
 
         private void OnSizeChanged(Object sender, SizeChangedEventArgs e)
         {
-
             UpdateIsActive(e.NewSize);
-
         }
 
         private void UpdateIsActive(Size sourceSize)
         {
-
             double numerator, denominator;
             if (NumeratorAspect == Aspect.Height)
             {
@@ -157,9 +143,8 @@ namespace CalculatorApp.Views.StateTriggers
             }
 
             SetActive(isActive);
-
         }
     }
-
 }
+
 

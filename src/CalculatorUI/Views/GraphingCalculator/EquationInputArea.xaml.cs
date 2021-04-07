@@ -1,28 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Calculator.Utils;
+using CalculatorApp.Common.Automation;
+using CalculatorApp.Controls;
+using CalculatorApp.ViewModel;
+using GraphControl;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.Common.Automation;
-using GraphControl;
-using CalculatorApp.ViewModel;
-using CalculatorApp.Controls;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Calculator.Utils;
+using Windows.UI.Xaml.Media;
 
 namespace CalculatorApp
 {
@@ -125,7 +120,7 @@ namespace CalculatorApp
             return numberOfVariables != 0;
         }
 
-        public static string GetChevronIcon(bool isCollapsed) 
+        public static string GetChevronIcon(bool isCollapsed)
         {
             return isCollapsed ? "\uE70E" : "\uE70D";
         }
@@ -176,7 +171,6 @@ namespace CalculatorApp
             {
                 ReloadAvailableColors(m_accessibilitySettings.HighContrast, false);
             }
-
         }
 
         private void OnEquationsPropertyChanged()
@@ -354,15 +348,15 @@ namespace CalculatorApp
 
         private void OnColorValuesChanged(UISettings sender, object args)
         {
-
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
-                                            var refThis = weakThis.Target as EquationInputArea;
-                                            if (refThis != null && refThis.m_isHighContrast == refThis.m_accessibilitySettings.HighContrast)
-                                            {
-                                                refThis.ReloadAvailableColors(false, false);
-                                            }
-                                        }));
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+            {
+                var refThis = weakThis.Target as EquationInputArea;
+                if (refThis != null && refThis.m_isHighContrast == refThis.m_accessibilitySettings.HighContrast)
+                {
+                    refThis.ReloadAvailableColors(false, false);
+                }
+            }));
         }
 
         private void EquationTextBox_RemoveButtonClicked(object sender, RoutedEventArgs e)
@@ -598,7 +592,8 @@ namespace CalculatorApp
             {
                 TimeSpan timeSpan = new TimeSpan(10000000); // 1 tick = 100 nanoseconds, and 10000000 ticks = 1 second.
                 DispatcherTimerDelayer delayer = new DispatcherTimerDelayer(timeSpan);
-                delayer.Action += new EventHandler<object>((object s, object arg) => {
+                delayer.Action += new EventHandler<object>((object s, object arg) =>
+                {
                     TraceLogger.GetInstance().LogVariableChanged("Slider", name);
                     variableSliders.Remove(name);
                 });

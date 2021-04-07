@@ -1,19 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Controls;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-
-using Windows.Foundation.Collections;
 
 namespace CalculatorApp
 {
@@ -104,12 +94,8 @@ namespace CalculatorApp
 
             private void OnButtonIdPropertyChanged(NumbersAndOperatorsEnum oldValue, NumbersAndOperatorsEnum newValue)
             {
-
-                this.CommandParameter = newValue;
-
+                CommandParameter = newValue;
             }
-
         }
-
     }
 }

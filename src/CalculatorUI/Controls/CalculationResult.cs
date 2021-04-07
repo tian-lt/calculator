@@ -1,27 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Controls;
 using CalculatorApp.Common;
-
-using Windows.Devices.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
+using System.Diagnostics;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
-using System.Reflection;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace CalculatorApp
 {
@@ -203,10 +189,10 @@ namespace CalculatorApp
                 switch (e.Key)
                 {
                     case Windows.System.VirtualKey.Left:
-                        this.ScrollLeft();
+                        ScrollLeft();
                         break;
                     case Windows.System.VirtualKey.Right:
-                        this.ScrollRight();
+                        ScrollRight();
                         break;
                 }
             }
@@ -270,7 +256,7 @@ namespace CalculatorApp
 
             protected override void OnTapped(TappedRoutedEventArgs e)
             {
-                this.Focus(FocusState.Programmatic);
+                Focus(FocusState.Programmatic);
                 RaiseSelectedEvent();
             }
 
@@ -284,7 +270,7 @@ namespace CalculatorApp
                 }
                 else
                 {
-                    this.Focus(FocusState.Programmatic);
+                    Focus(FocusState.Programmatic);
                 }
             }
 
@@ -383,7 +369,7 @@ namespace CalculatorApp
             {
                 ScrollRight();
             }
-           
+
             private void ModifyFontAndMargin(TextBlock textBox, double fontChange)
             {
                 double cur = textBox.FontSize;

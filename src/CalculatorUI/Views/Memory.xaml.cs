@@ -1,20 +1,8 @@
 ﻿using CalculatorApp.Common;
-using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -24,7 +12,7 @@ namespace CalculatorApp
     {
         public Memory()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
@@ -52,7 +40,7 @@ namespace CalculatorApp
 
         public bool IsErrorVisualState
         {
-            get => this.m_isErrorVisualState;
+            get => m_isErrorVisualState;
             set
             {
                 if (m_isErrorVisualState != value)
@@ -70,7 +58,6 @@ namespace CalculatorApp
 
         private void MemoryListItemClick(Object sender, ItemClickEventArgs e)
         {
-
             MemoryItemViewModel memorySlot = ((MemoryItemViewModel)e.ClickedItem);
 
             // In case the memory list is clicked and enter is pressed,
@@ -79,50 +66,40 @@ namespace CalculatorApp
             {
                 Model.OnMemoryItemPressed(memorySlot.Position);
             }
-
         }
 
         private void OnClearMenuItemClicked(Object sender, RoutedEventArgs e)
         {
-
             var memoryItem = GetMemoryItemForCurrentFlyout();
             if (memoryItem != null)
             {
                 memoryItem.Clear();
             }
-
         }
 
         private void OnMemoryAddMenuItemClicked(Object sender, RoutedEventArgs e)
         {
-
             var memoryItem = GetMemoryItemForCurrentFlyout();
             if (memoryItem != null)
             {
                 memoryItem.MemoryAdd();
             }
-
         }
 
         private void OnMemorySubtractMenuItemClicked(Object sender, RoutedEventArgs e)
         {
-
             var memoryItem = GetMemoryItemForCurrentFlyout();
             if (memoryItem != null)
             {
                 memoryItem.MemorySubtract();
             }
-
         }
 
         private MemoryItemViewModel GetMemoryItemForCurrentFlyout()
         {
-
             var listViewItem = MemoryContextMenu.Target;
             return (MemoryListView.ItemFromContainer(listViewItem) as MemoryItemViewModel);
-
         }
-
     }
 }
 

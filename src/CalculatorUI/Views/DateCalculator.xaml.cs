@@ -8,34 +8,20 @@
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System;
 using Windows.Globalization;
 using Windows.Globalization.DateTimeFormatting;
-using Windows.System.UserProfile;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class DateCalculator
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class DateCalculator
     {
         public DateCalculator()
         {
@@ -134,7 +120,7 @@ namespace CalculatorApp
         {
             if (e.NewDate != null)
             {
-                var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
+                var dateCalcViewModel = (DateCalculatorViewModel)DataContext;
                 dateCalcViewModel.ToDate = e.NewDate.Value;
                 TraceLogger.GetInstance().LogDateCalculationModeUsed(false);
             }
@@ -148,7 +134,7 @@ namespace CalculatorApp
         {
             if (e.NewDate != null)
             {
-                var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
+                var dateCalcViewModel = (DateCalculatorViewModel)DataContext;
                 dateCalcViewModel.StartDate = e.NewDate.Value;
                 TraceLogger.GetInstance().LogDateCalculationModeUsed(true);
             }
@@ -160,7 +146,7 @@ namespace CalculatorApp
 
         private void OffsetValue_Changed(object sender, SelectionChangedEventArgs e)
         {
-            var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
+            var dateCalcViewModel = (DateCalculatorViewModel)DataContext;
             // do not log diagnostics for no-ops and initialization of combo boxes
             if (dateCalcViewModel.DaysOffset != 0 || dateCalcViewModel.MonthsOffset != 0 || dateCalcViewModel.YearsOffset != 0)
             {
@@ -182,7 +168,7 @@ namespace CalculatorApp
         private void DateCalcOption_Changed(object sender, SelectionChangedEventArgs e)
         {
             FindName("AddSubtractDateGrid");
-            var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
+            var dateCalcViewModel = (DateCalculatorViewModel)DataContext;
 
             // From Date Field needs to persist across Date Difference and Add Substract Date Mode.
             // So when the mode dropdown changes, update the other datepicker with the latest date.
@@ -240,7 +226,7 @@ namespace CalculatorApp
 
         private void CalendarFlyoutClosed(object sender, object e)
         {
-            var dateCalcViewModel = (DateCalculatorViewModel)this.DataContext;
+            var dateCalcViewModel = (DateCalculatorViewModel)DataContext;
             RaiseLiveRegionChangedAutomationEvent(dateCalcViewModel.IsDateDiffMode);
         }
 

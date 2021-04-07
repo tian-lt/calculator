@@ -1,30 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using CalculatorApp.Common;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Data;
 using System.Diagnostics;
-
-using CalculatorApp;
-using CalculatorApp.Common;
-using TraceLogging;
-
-using Windows.ApplicationModel;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Interop;
-using Windows.UI.Xaml.Navigation;
-using System.Data;
-using System.Threading;
-using System.Runtime.CompilerServices;
 
 namespace CalculatorApp
 {
@@ -201,7 +188,6 @@ namespace CalculatorApp
         private Dictionary<string, Object> m_runtimeServicesMap = new Dictionary<string, object>();
         private List<Action> m_onWindowClosingHandlers = new List<Action>();
     }
-
 }
 
 

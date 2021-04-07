@@ -1,24 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using CalculatorApp;
 using CalculatorApp.ViewModel;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using CalculatorApp.Common;
-using Windows.UI.Xaml.Media;
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class CalculatorProgrammerRadixOperators
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class CalculatorProgrammerRadixOperators
     {
         public CalculatorProgrammerRadixOperators()
         {
@@ -29,7 +20,7 @@ namespace CalculatorApp
 
         public StandardCalculatorViewModel Model
         {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
+            get { return (StandardCalculatorViewModel)DataContext; }
         }
 
         public bool IsErrorVisualState { get; set; }
@@ -120,7 +111,7 @@ namespace CalculatorApp
 
             if (selectedButtonMode != m_selectedShiftButtonMode)
             {
-                this.BitShiftFlyout.Hide();
+                BitShiftFlyout.Hide();
                 m_selectedShiftButtonMode = selectedButtonMode;
             }
 
@@ -129,7 +120,7 @@ namespace CalculatorApp
 
         private void FlyoutButton_Clicked(object sender, RoutedEventArgs e)
         {
-            this.BitwiseFlyout.Hide();
+            BitwiseFlyout.Hide();
         }
 
         private void CollapseBitshiftButtons()

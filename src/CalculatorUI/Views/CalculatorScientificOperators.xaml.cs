@@ -6,30 +6,13 @@
 // Declaration of the CalculatorScientificOperators class
 //
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
-using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.Core;
 
 namespace CalculatorApp
 {
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class CalculatorScientificOperators
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class CalculatorScientificOperators
     {
         public CalculatorScientificOperators()
         {
@@ -40,7 +23,7 @@ namespace CalculatorApp
 
         public StandardCalculatorViewModel Model
         {
-            get { return (StandardCalculatorViewModel)this.DataContext; }
+            get { return (StandardCalculatorViewModel)DataContext; }
         }
 
         public bool IsErrorVisualState

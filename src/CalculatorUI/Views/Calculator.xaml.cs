@@ -1,32 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp;
 using CalculatorApp.Common;
-using CalculatorApp.Converters;
-using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
-
+using System;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Globalization.NumberFormatting;
-using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.System.Threading;
-using Windows.UI.ViewManagement;
 
 namespace CalculatorApp
 {
@@ -44,7 +30,8 @@ namespace CalculatorApp
 
     public delegate void FullscreenFlyoutClosedEventHandler();
 
-    [Windows.Foundation.Metadata.WebHostHidden] public sealed partial class Calculator
+    [Windows.Foundation.Metadata.WebHostHidden]
+    public sealed partial class Calculator
     {
         public event FullscreenFlyoutClosedEventHandler FullscreenFlyoutClosed;
 
@@ -69,12 +56,12 @@ namespace CalculatorApp
             CopyMenuItem.Text = resLoader.GetResourceString("copyMenuItem");
             PasteMenuItem.Text = resLoader.GetResourceString("pasteMenuItem");
 
-            this.SizeChanged += Calculator_SizeChanged;
+            SizeChanged += Calculator_SizeChanged;
         }
 
         public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
         {
-            get => (StandardCalculatorViewModel)this.DataContext;
+            get => (StandardCalculatorViewModel)DataContext;
         }
 
         public bool IsStandard
@@ -161,7 +148,7 @@ namespace CalculatorApp
                     // We are forcing the animation here
                     // It's because if last animation was in standard, then go to unit converter, then comes back to standard
                     // The state for the calculator does not change and the animation would not get run.
-                    this.OnModeVisualStateCompleted(null, null);
+                    OnModeVisualStateCompleted(null, null);
                 }
             }
         }
@@ -242,8 +229,9 @@ namespace CalculatorApp
 
             // Delay load things later when we get a chance.
             WeakReference weakThis = new WeakReference(this);
-            _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+            _ = Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
                         var refThis = weakThis.Target as Calculator;
@@ -523,7 +511,7 @@ namespace CalculatorApp
 
             if (ScientificAngleButtons == null)
             {
-                this.FindName("ScientificAngleButtons");
+                FindName("ScientificAngleButtons");
             }
         }
 
@@ -531,14 +519,14 @@ namespace CalculatorApp
         {
             if (ProgrammerOperators == null)
             {
-                this.FindName("ProgrammerOperators");
+                FindName("ProgrammerOperators");
             }
 
             // CSHARP_MIGRATION: TODO:
             // what should we do with FindName?
             if (ProgrammerDisplayPanel == null)
             {
-                this.FindName("ProgrammerDisplayPanel");
+                FindName("ProgrammerDisplayPanel");
             }
 
             OpsPanel.EnsureProgrammerRadixOps();
@@ -548,7 +536,7 @@ namespace CalculatorApp
         // Since we need different font sizes for different numeric system,
         // we use a table of optimal font sizes for each numeric system.
         private static readonly FontTable[] fontTables = new FontTable[] {
-            new FontTable { numericSystem = "Arab", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40, 
+            new FontTable { numericSystem = "Arab", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
                             fullNumPadFont = 56, snapScientificNumPadFont = 40, portraitScientificNumPadFont = 56 },
             new FontTable { numericSystem = "ArabExt", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
                             fullNumPadFont = 56, snapScientificNumPadFont = 40, portraitScientificNumPadFont = 56 },
@@ -583,7 +571,7 @@ namespace CalculatorApp
             new FontTable { numericSystem = "Default", fullFont = 104, fullFontMin = 29.333, portraitMin = 23, snapFont = 40,
                            fullNumPadFont =  56, snapScientificNumPadFont = 40, portraitScientificNumPadFont = 56 }
         };
- 
+
         private void SetFontSizeResources()
         {
             DecimalFormatter formatter = LocalizationService.GetInstance().GetRegionalSettingsAwareDecimalFormatter();
@@ -596,13 +584,13 @@ namespace CalculatorApp
             }
 
             var currentItem = fontTables[currentItemIdx];
-            this.Resources.Add("ResultFullFontSize", currentItem.fullFont);
-            this.Resources.Add("ResultFullMinFontSize", currentItem.fullFontMin);
-            this.Resources.Add("ResultPortraitMinFontSize", currentItem.portraitMin);
-            this.Resources.Add("ResultSnapFontSize", currentItem.snapFont);
-            this.Resources.Add("CalcButtonCaptionSizeOverride", currentItem.fullNumPadFont);
-            this.Resources.Add("CalcButtonScientificSnapCaptionSizeOverride", currentItem.snapScientificNumPadFont);
-            this.Resources.Add("CalcButtonScientificPortraitCaptionSizeOverride", currentItem.portraitScientificNumPadFont);
+            Resources.Add("ResultFullFontSize", currentItem.fullFont);
+            Resources.Add("ResultFullMinFontSize", currentItem.fullFontMin);
+            Resources.Add("ResultPortraitMinFontSize", currentItem.portraitMin);
+            Resources.Add("ResultSnapFontSize", currentItem.snapFont);
+            Resources.Add("CalcButtonCaptionSizeOverride", currentItem.fullNumPadFont);
+            Resources.Add("CalcButtonScientificSnapCaptionSizeOverride", currentItem.snapScientificNumPadFont);
+            Resources.Add("CalcButtonScientificPortraitCaptionSizeOverride", currentItem.portraitScientificNumPadFont);
         }
 
         private string GetCurrentLayoutState()
@@ -688,7 +676,7 @@ namespace CalculatorApp
         {
             if (!m_fIsMemoryFlyoutOpen)
             {
-                this.Focus(FocusState.Programmatic);
+                Focus(FocusState.Programmatic);
             }
 
             MemoryFlyout.Hide();
@@ -699,7 +687,7 @@ namespace CalculatorApp
             Model.SelectHistoryItem(e);
 
             CloseHistoryFlyout();
-            this.Focus(FocusState.Programmatic);
+            Focus(FocusState.Programmatic);
         }
 
         private void ToggleHistoryFlyout(object parameter)
