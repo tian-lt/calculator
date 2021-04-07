@@ -23,7 +23,7 @@ namespace CalculatorApp.Views.StateTriggers
 
         // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args) =>
+            DependencyProperty.Register(nameof(Source), typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args) =>
             {
                 var self = (ControlSizeTrigger)sender;
                 self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
@@ -37,7 +37,7 @@ namespace CalculatorApp.Views.StateTriggers
 
         // Using a DependencyProperty as the backing store for MinHeight.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinHeightProperty =
-            DependencyProperty.Register("MinHeight", typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
+            DependencyProperty.Register(nameof(MinHeight), typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
 
         public double MinWidth
         {
@@ -47,7 +47,7 @@ namespace CalculatorApp.Views.StateTriggers
 
         // Using a DependencyProperty as the backing store for MinWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinWidthProperty =
-            DependencyProperty.Register("MinWidth", typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
+            DependencyProperty.Register(nameof(MinWidth), typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
 
         ~ControlSizeTrigger()
         {

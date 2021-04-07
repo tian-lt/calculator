@@ -19,7 +19,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for ButtonId.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ButtonIdProperty =
-                DependencyProperty.Register("ButtonId", typeof(NumbersAndOperatorsEnum), typeof(FlipButtons), new PropertyMetadata(default(NumbersAndOperatorsEnum)));
+                DependencyProperty.Register(nameof(ButtonId), typeof(NumbersAndOperatorsEnum), typeof(FlipButtons), new PropertyMetadata(default(NumbersAndOperatorsEnum)));
 
             public Windows.UI.Xaml.Media.Brush HoverBackground
             {
@@ -29,7 +29,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for HoverBackground.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty HoverBackgroundProperty =
-                DependencyProperty.Register("HoverBackground", typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
+                DependencyProperty.Register(nameof(HoverBackground), typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
 
             public Windows.UI.Xaml.Media.Brush HoverForeground
             {
@@ -39,7 +39,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for HoverForeground.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty HoverForegroundProperty =
-                DependencyProperty.Register("HoverForeground", typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
+                DependencyProperty.Register(nameof(HoverForeground), typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
 
             public Windows.UI.Xaml.Media.Brush PressBackground
             {
@@ -49,7 +49,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for PressBackground.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty PressBackgroundProperty =
-                DependencyProperty.Register("PressBackground", typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
+                DependencyProperty.Register(nameof(PressBackground), typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
 
             public Windows.UI.Xaml.Media.Brush PressForeground
             {
@@ -59,7 +59,7 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for PressForeground.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty PressForegroundProperty =
-                DependencyProperty.Register("PressForeground", typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
+                DependencyProperty.Register(nameof(PressForeground), typeof(Windows.UI.Xaml.Media.Brush), typeof(FlipButtons), new PropertyMetadata(default(Windows.UI.Xaml.Media.Brush)));
 
             protected override void OnKeyDown(KeyRoutedEventArgs e)
             {
