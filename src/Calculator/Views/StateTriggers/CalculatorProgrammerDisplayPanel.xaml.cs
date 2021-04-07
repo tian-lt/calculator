@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System.Diagnostics;
 using System.Windows.Input;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,7 +14,7 @@ namespace CalculatorApp
         {
             get
             {
-                if(donotuse_BitLengthButtonPressed == null)
+                if (donotuse_BitLengthButtonPressed == null)
                 {
                     donotuse_BitLengthButtonPressed =
                         new Common.DelegateCommand<CalculatorProgrammerDisplayPanel>(this, OnBitLengthButtonPressed);
@@ -41,8 +29,8 @@ namespace CalculatorApp
         {
             get
             {
-                Debug.Assert(this.DataContext as ViewModel.StandardCalculatorViewModel != null, "static_cast result must NOT be null");
-                return this.DataContext as ViewModel.StandardCalculatorViewModel;
+                Debug.Assert(DataContext as ViewModel.StandardCalculatorViewModel != null, "static_cast result must NOT be null");
+                return DataContext as ViewModel.StandardCalculatorViewModel;
             }
         }
 
@@ -55,7 +43,7 @@ namespace CalculatorApp
 
             set
             {
-                if(m_isErrorVisualState != value)
+                if (m_isErrorVisualState != value)
                 {
                     m_isErrorVisualState = value;
                     string newState = m_isErrorVisualState ? "ErrorLayout" : "NoErrorLayout";
@@ -66,8 +54,8 @@ namespace CalculatorApp
 
         public CalculatorProgrammerDisplayPanel()
         {
-            this.m_isErrorVisualState = false;
-            this.InitializeComponent();
+            m_isErrorVisualState = false;
+            InitializeComponent();
         }
 
         private void OnBitLengthButtonPressed(object parameter)

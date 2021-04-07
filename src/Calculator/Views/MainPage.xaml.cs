@@ -1,39 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows.UI.ViewManagement;
-using Windows.Storage;
-
-using WUC = Windows.UI.Core;
-using WUXI = Windows.UI.Xaml.Input;
-using WUXD = Windows.UI.Xaml.Data;
-using WUXC = Windows.UI.Xaml.Controls;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.ComponentModel;
-
 using CalculatorApp.Common;
 using CalculatorApp.Common.Automation;
 using CalculatorApp.Converters;
 using CalculatorApp.ViewModel;
-
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace CalculatorApp
@@ -45,8 +29,8 @@ namespace CalculatorApp
     {
         public MainPage()
         {
-            this.m_model = new ViewModel.ApplicationViewModel();
-            this.InitializeComponent();
+            m_model = new ViewModel.ApplicationViewModel();
+            InitializeComponent();
 
             KeyboardShortcutManager.Initialize();
 
@@ -69,7 +53,7 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.ApplicationViewModel Model
         {
-            get => this.m_model;
+            get => m_model;
         }
 
         public void UnregisterEventHandlers()
@@ -85,7 +69,6 @@ namespace CalculatorApp
 
         public void SetDefaultFocus()
         {
-
             if (m_calculator != null && m_calculator.Visibility == Visibility.Visible)
             {
                 m_calculator.SetDefaultFocus();
@@ -103,7 +86,6 @@ namespace CalculatorApp
             //{
             //    m_converter.SetDefaultFocus();
             //}
-
         }
         public void SetHeaderAutomationName()
         {
@@ -130,7 +112,6 @@ namespace CalculatorApp
             }
 
             AutomationProperties.SetName(Header, name);
-
         }
 
         public ObservableCollection<object> CreateUIElementsForCategories(IObservableVector<NavCategoryGroup> categories)
@@ -148,12 +129,10 @@ namespace CalculatorApp
             }
 
             return menuCategories;
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
             ViewMode initialMode = ViewMode.Standard;
             if (e.Parameter != null)
             {
@@ -173,20 +152,16 @@ namespace CalculatorApp
             }
 
             m_model.Initialize(initialMode);
-
         }
 
         private void WindowSizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
         {
-
             // We don't use layout aware page's view states, we have our own
             UpdateViewState();
-
         }
 
         private void OnAppPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
             string propertyName = e.PropertyName;
             if (propertyName == ApplicationViewModel.ModePropertyName)
             {
@@ -261,7 +236,6 @@ namespace CalculatorApp
                 SetHeaderAutomationName();
                 AnnounceCategoryName();
             }
-
         }
 
         private void OnNavLoaded(object sender, RoutedEventArgs e)
@@ -291,63 +265,51 @@ namespace CalculatorApp
 
         private void OnNavPaneOpening(MUXC.NavigationView sender, object args)
         {
-
             if (AboutButton != null)
             {
-                this.FindName("AboutButton");
+                FindName("AboutButton");
             }
-
         }
 
         private void OnNavPaneOpened(MUXC.NavigationView sender, object args)
         {
-
             KeyboardShortcutManager.HonorShortcuts(false);
             TraceLogger.GetInstance().LogNavBarOpened();
-
         }
 
         private void OnNavPaneClosed(MUXC.NavigationView sender, object args)
         {
-
             if (Model.Mode != ViewMode.Graphing)
             {
                 KeyboardShortcutManager.HonorShortcuts(true);
             }
 
-            this.SetDefaultFocus();
-
+            SetDefaultFocus();
         }
 
         private void OnNavSelectionChanged(object sender, MUXC.NavigationViewSelectionChangedEventArgs e)
         {
-
             var item = (e.SelectedItemContainer as MUXC.NavigationViewItem);
             if (item != null)
             {
                 var selectedItem = ((NavCategory)item.DataContext);
                 Model.Mode = selectedItem.Mode;
             }
-
         }
 
         private void OnNavItemInvoked(MUXC.NavigationView sender, MUXC.NavigationViewItemInvokedEventArgs e)
         {
-
             NavView.IsPaneOpen = false;
-
         }
 
         private void OnAboutButtonClick(object sender, TappedRoutedEventArgs e)
         {
-
             ShowAboutPage();
-
         }
 
         private void OnAboutButtonKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if(e.Key == Windows.System.VirtualKey.Space || e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == Windows.System.VirtualKey.Space || e.Key == Windows.System.VirtualKey.Enter)
             {
                 ShowAboutPage();
             }
@@ -355,40 +317,31 @@ namespace CalculatorApp
 
         private void OnAboutFlyoutOpened(object sender, object e)
         {
-
             // Keep Ignoring Escape till the About page flyout is opened
             KeyboardShortcutManager.IgnoreEscape(false);
             KeyboardShortcutManager.HonorShortcuts(false);
-
         }
 
         private void OnAboutFlyoutClosed(object sender, object e)
         {
-
             // Start Honoring Escape once the About page flyout is closed
             KeyboardShortcutManager.HonorEscape();
             KeyboardShortcutManager.HonorShortcuts(!NavView.IsPaneOpen);
-
         }
 
         private void AlwaysOnTopButtonClick(object sender, RoutedEventArgs e)
         {
-
             Model.ToggleAlwaysOnTop(0, 0);
-
         }
 
         private void TitleBarAlwaysOnTopButtonClick(object sender, RoutedEventArgs e)
         {
-
             var bounds = Window.Current.Bounds;
             Model.ToggleAlwaysOnTop((float)bounds.Width, (float)bounds.Height);
-
         }
 
         private MUXC.NavigationViewItemHeader CreateNavViewHeaderFromGroup(NavCategoryGroup group)
         {
-
             var header = new MUXC.NavigationViewItemHeader();
             header.DataContext = group;
 
@@ -397,12 +350,10 @@ namespace CalculatorApp
             AutomationProperties.SetHeadingLevel(header, Windows.UI.Xaml.Automation.Peers.AutomationHeadingLevel.Level1);
 
             return header;
-
         }
 
         private MUXC.NavigationViewItem CreateNavViewItemFromCategory(NavCategory category)
         {
-
             var item = new MUXC.NavigationViewItem();
             item.DataContext = category;
 
@@ -420,12 +371,10 @@ namespace CalculatorApp
             AutomationProperties.SetAutomationId(item, category.AutomationId);
 
             return item;
-
         }
 
         private void ShowHideControls(ViewMode mode)
         {
-
             var isCalcViewMode = NavCategory.IsCalculatorViewMode(mode);
             var isDateCalcViewMode = NavCategory.IsDateCalculatorViewMode(mode);
             var isGraphingCalcViewMode = NavCategory.IsGraphingCalculatorViewMode(mode);
@@ -455,45 +404,37 @@ namespace CalculatorApp
             //    m_converter.Visibility = BooleanToVisibilityConverter.Convert(isConverterViewMode);
             //    m_converter.IsEnabled = isConverterViewMode;
             //}
-
         }
 
         private void UpdateViewState()
         {
-
             // All layout related view states are now handled only inside individual controls (standard, scientific, programmer, date, converter)
             if (NavCategory.IsConverterViewMode(m_model.Mode))
             {
                 int modeIndex = NavCategory.GetIndexInGroup(m_model.Mode, CategoryGroupType.Converter);
                 m_model.ConverterViewModel.CurrentCategory = m_model.ConverterViewModel.Categories[modeIndex];
             }
-
         }
 
         private void UpdatePanelViewState()
         {
-
             if (m_calculator != null)
             {
                 m_calculator.UpdatePanelViewState();
             }
-
         }
 
         private void OnHighContrastChanged(AccessibilitySettings sender, object args)
         {
-
-            if (Model.IsAlwaysOnTop && this.ActualHeight < 394)
+            if (Model.IsAlwaysOnTop && ActualHeight < 394)
             {
                 // Sets to default always-on-top size to force re-layout
                 ApplicationView.GetForCurrentView().TryResizeView(new Size(320, 394));
             }
-
         }
 
         private void OnPageLoaded(object sender, RoutedEventArgs args)
         {
-
             // CSHARP_MIGRATION: TODO:
             //if (!m_converter && !m_calculator && !m_dateCalculator && !m_graphingCalculator)
             if (m_calculator == null && m_dateCalculator == null && m_graphingCalculator == null)
@@ -511,29 +452,27 @@ namespace CalculatorApp
             SetDefaultFocus();
 
             // Delay load things later when we get a chance.
-            _ = this.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, new DispatchedHandler(() => {
+            _ = Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                {
                     if (TraceLogger.GetInstance().IsWindowIdInLog(ApplicationView.GetApplicationViewIdForWindow(CoreWindow.GetForCurrentThread())))
                     {
                         AppLifecycleLogger.GetInstance().LaunchUIResponsive();
                         AppLifecycleLogger.GetInstance().LaunchVisibleComplete();
                     }
 
-                    this.FindName("NavView");
+                    FindName("NavView");
                 }));
-
         }
 
         private void App_Suspending(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
         {
-
             if (m_model.IsAlwaysOnTop)
             {
                 ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-                localSettings.Values.Add(ApplicationViewModel.WidthLocalSettings, this.ActualWidth);
-                localSettings.Values.Add(ApplicationViewModel.HeightLocalSettings, this.ActualHeight);
+                localSettings.Values.Add(ApplicationViewModel.WidthLocalSettings, ActualWidth);
+                localSettings.Values.Add(ApplicationViewModel.HeightLocalSettings, ActualHeight);
             }
-
         }
 
         private void EnsureCalculator()
@@ -563,7 +502,7 @@ namespace CalculatorApp
                 // Calculator's "default" state is visible, but if we get delay loaded
                 // when in converter, we should not be visible. This is not a problem for converter
                 // since its default state is hidden.
-                ShowHideControls(this.Model.Mode);
+                ShowHideControls(Model.Mode);
             }
 
             if (m_dateCalculator != null)
@@ -574,7 +513,6 @@ namespace CalculatorApp
 
         private void EnsureDateCalculator()
         {
-
             if (m_dateCalculator == null)
             {
                 // delay loading converter
@@ -590,12 +528,10 @@ namespace CalculatorApp
                 m_calculator.CloseHistoryFlyout();
                 m_calculator.CloseMemoryFlyout();
             }
-
         }
 
         private void EnsureGraphingCalculator()
         {
-
             if (m_graphingCalculator == null)
             {
                 m_graphingCalculator = new GraphingCalculator();
@@ -604,13 +540,11 @@ namespace CalculatorApp
 
                 GraphingCalcHolder.Child = m_graphingCalculator;
             }
-
         }
 
         // CSHARP_MIGRATION: TODO:
         //private void EnsureConverter()
         //{
-
         //    if (!m_converter)
         //    {
         //        // delay loading converter
@@ -625,23 +559,19 @@ namespace CalculatorApp
 
         private void ShowAboutPage()
         {
-
             if (AboutPage != null)
             {
-                this.FindName("AboutPage");
+                FindName("AboutPage");
             }
 
             FlyoutBase.ShowAttachedFlyout(AboutButton);
-
         }
 
         private void AnnounceCategoryName()
         {
-
             string categoryName = AutomationProperties.GetName(Header);
             NarratorAnnouncement announcement = CalculatorAnnouncement.GetCategoryNameChangedAnnouncement(categoryName);
             NarratorNotifier.Announce(announcement);
-
         }
 
         private CalculatorApp.Calculator m_calculator;
@@ -651,6 +581,5 @@ namespace CalculatorApp
         private CalculatorApp.DateCalculator m_dateCalculator;
         private CalculatorApp.ViewModel.ApplicationViewModel m_model;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
-
     }
 }

@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CalculatorApp.Views.StateTriggers;
 
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -14,12 +10,9 @@ namespace CalculatorApp.Views.StateTriggers
 {
     public sealed class ControlSizeTrigger : Windows.UI.Xaml.StateTriggerBase
     {
-
         public ControlSizeTrigger()
         {
-
             SetActive(false);
-
         }
 
 
@@ -31,7 +24,7 @@ namespace CalculatorApp.Views.StateTriggers
 
         // Using a DependencyProperty as the backing store for Source.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args)=>
+            DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(ControlSizeTrigger), new PropertyMetadata(default(FrameworkElement), (sender, args) =>
             {
                 var self = (ControlSizeTrigger)sender;
                 self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
@@ -60,7 +53,6 @@ namespace CalculatorApp.Views.StateTriggers
             DependencyProperty.Register("MinWidth", typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
 
 
-
         ~ControlSizeTrigger()
         {
             // CSHARP_MIGRATION: TODO:
@@ -78,15 +70,12 @@ namespace CalculatorApp.Views.StateTriggers
 
         private void OnSourcePropertyChanged(FrameworkElement oldValue, FrameworkElement newValue)
         {
-
             UnregisterSizeChanged(oldValue);
             RegisterSizeChanged(newValue);
-
         }
 
         private void RegisterSizeChanged(FrameworkElement element)
         {
-
             if (element == null)
             {
                 return;
@@ -99,12 +88,11 @@ namespace CalculatorApp.Views.StateTriggers
 
             element.SizeChanged += OnSizeChanged;
             UpdateIsActive(element.RenderSize);
-
         }
 
         private void UnregisterSizeChanged(FrameworkElement element)
         {
-            if(element != null)
+            if (element != null)
             {
                 element.SizeChanged -= OnSizeChanged;
             }
@@ -112,14 +100,11 @@ namespace CalculatorApp.Views.StateTriggers
 
         private void OnSizeChanged(Object sender, SizeChangedEventArgs e)
         {
-
             UpdateIsActive(e.NewSize);
-
         }
 
         private void UpdateIsActive(Size sourceSize)
         {
-
             if (MinHeight >= 0)
             {
                 SetActive(sourceSize.Height >= MinHeight && (MinWidth < 0 || sourceSize.Width >= MinWidth));
@@ -128,8 +113,7 @@ namespace CalculatorApp.Views.StateTriggers
             {
                 SetActive(MinWidth >= 0 && sourceSize.Width >= MinWidth);
             }
-
         }
     }
-
 }
+

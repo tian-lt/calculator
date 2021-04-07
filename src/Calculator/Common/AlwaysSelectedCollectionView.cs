@@ -4,12 +4,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Interop;
 
 namespace CalculatorApp
 {
@@ -48,7 +45,7 @@ namespace CalculatorApp
                 // restore the selection to the way we wanted it to begin with
                 if (m_currentPosition >= 0 && m_currentPosition < m_source.Count)
                 {
-                    this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
                     {
                         CurrentChanged(this, null);
                     })).AsTask().Wait();

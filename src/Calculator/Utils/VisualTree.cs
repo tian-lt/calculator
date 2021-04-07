@@ -129,8 +129,6 @@ namespace Calculator.Utils
 
             return FindAscendant(parent, typeName);
         }
-
     }
-
 }
 

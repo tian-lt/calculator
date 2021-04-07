@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.UI.Xaml;
 
 namespace CalculatorApp.Common
 {
@@ -28,7 +22,7 @@ namespace CalculatorApp.Common
         public void Execute(object parameter)
         {
             object target = m_weakTarget.Target;
-            if(target != null && target is TTarget)
+            if (target != null && target is TTarget)
             {
                 m_function(parameter);
             }

@@ -7,15 +7,9 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using CalculatorApp.Controls;
 using Windows.Foundation;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
-using System.Linq;
 
 namespace CalculatorApp
 {
@@ -25,11 +19,10 @@ namespace CalculatorApp
         {
             // Prioritize the last item over all other items (except the first one)
             internal HorizontalNoOverflowStackPanel()
-            {}
+            { }
 
             protected override Size MeasureOverride(Size availableSize)
             {
-
                 float maxHeight = 0;
                 float width = 0;
                 foreach (var child in Children)
@@ -84,9 +77,7 @@ namespace CalculatorApp
             {
                 return false;
             }
-
         }
-
     }
 }
 

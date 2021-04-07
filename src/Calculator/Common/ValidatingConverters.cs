@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using Windows.UI.Xaml.Data;
 
 namespace CalculatorApp
 {
@@ -35,7 +31,6 @@ namespace CalculatorApp
 
         public sealed class ValidSelectedIndexConverter : Windows.UI.Xaml.Data.IValueConverter
         {
-
             public ValidSelectedIndexConverter()
             { }
 

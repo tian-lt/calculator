@@ -1,15 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using Windows.Foundation;
-using Windows.UI.Xaml.Interop;
-using Windows.ApplicationModel.Resources;
 using CalculatorApp.Common;
+using System;
 
 namespace CalculatorApp
 {
@@ -55,7 +48,7 @@ namespace CalculatorApp
                 return convertedValue;
             }
 
-            public object ConvertBack(object  value, Type targetType, object  parameter, string  language)
+            public object ConvertBack(object value, Type targetType, object parameter, string language)
             {
                 throw new NotImplementedException();
             }

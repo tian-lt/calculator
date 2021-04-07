@@ -2,25 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using CalculatorApp;
-using CalculatorApp.Common;
-using CalculatorApp.Controls;
-
-using Windows.ApplicationModel;
+using System.Runtime.InteropServices;
+using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Text;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.System;
-using System.Security.Cryptography.X509Certificates;
-using System.Runtime.InteropServices;
 //using Microsoft.WRL;
 
 namespace CalculatorApp
@@ -53,15 +40,14 @@ namespace CalculatorApp
 
         public sealed class MathRichEditBoxSubmission
         {
-
             public bool HasTextChanged
             {
-                get => this.m_HasTextChanged;
+                get => m_HasTextChanged;
             }
 
             public EquationSubmissionSource Source
             {
-                get => this.m_Source;
+                get => m_Source;
             }
 
 
@@ -69,7 +55,6 @@ namespace CalculatorApp
             {
                 m_HasTextChanged = hasTextChanged;
                 m_Source = source;
-
             }
             private bool m_HasTextChanged;
             private EquationSubmissionSource m_Source;
@@ -79,19 +64,18 @@ namespace CalculatorApp
         {
             public string OriginalText
             {
-                get => this.m_OriginalText;
+                get => m_OriginalText;
             }
 
             public string FormattedText
             {
-                get => this.m_FormattedText;
-                set => this.m_FormattedText = value;
+                get => m_FormattedText;
+                set => m_FormattedText = value;
             }
 
             public MathRichEditBoxFormatRequest(string originalText)
             {
                 m_OriginalText = originalText;
-
             }
             private string m_OriginalText;
             private string m_FormattedText;
@@ -99,12 +83,11 @@ namespace CalculatorApp
 
         public sealed class MathRichEditBox : Windows.UI.Xaml.Controls.RichEditBox
         {
-
             public MathRichEditBox()
             {
-                this.TextDocument.SetMathMode(RichEditMathMode.MathOnly);
-                this.LosingFocus += OnLosingFocus;
-                this.KeyUp += OnKeyUp;
+                TextDocument.SetMathMode(RichEditMathMode.MathOnly);
+                LosingFocus += OnLosingFocus;
+                KeyUp += OnKeyUp;
             }
 
 
@@ -116,14 +99,15 @@ namespace CalculatorApp
 
             // Using a DependencyProperty as the backing store for MathText.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MathTextProperty =
-                DependencyProperty.Register(nameof(MathText), typeof(string), typeof(MathRichEditBox), new PropertyMetadata(string.Empty, (sender, args)=> {
+                DependencyProperty.Register(nameof(MathText), typeof(string), typeof(MathRichEditBox), new PropertyMetadata(string.Empty, (sender, args) =>
+                {
                     var self = (MathRichEditBox)sender;
                     self.OnMathTextPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
 
 
             public event EventHandler<MathRichEditBoxFormatRequest> FormatRequest;
-            public event EventHandler<MathRichEditBoxSubmission>  EquationSubmitted;
+            public event EventHandler<MathRichEditBoxSubmission> EquationSubmitted;
 
             public void OnMathTextPropertyChanged(string oldValue, string newValue)
             {
@@ -157,7 +141,7 @@ namespace CalculatorApp
             public void SubmitEquation(EquationSubmissionSource source)
             {
                 // Clear formatting since the graph control doesn't work with bold/underlines
-                var range = this.TextDocument.GetRange(0, this.TextDocument.Selection.EndPosition);
+                var range = TextDocument.GetRange(0, TextDocument.Selection.EndPosition);
 
                 if (range != null)
                 {
@@ -171,7 +155,7 @@ namespace CalculatorApp
                     var formatRequest = new MathRichEditBoxFormatRequest(newVal);
                     FormatRequest(this, formatRequest);
 
-                    if(!string.IsNullOrEmpty(formatRequest.FormattedText))
+                    if (!string.IsNullOrEmpty(formatRequest.FormattedText))
                     {
                         newVal = formatRequest.FormattedText;
                     }
@@ -225,23 +209,23 @@ namespace CalculatorApp
 
             private string GetMathTextProperty()
             {
-                this.TextDocument.GetMath(out string math);
+                TextDocument.GetMath(out string math);
                 return math;
             }
 
             private void SetMathTextProperty(string newValue)
             {
-                bool readOnlyState = this.IsReadOnly;
-                this.IsReadOnly = false;
+                bool readOnlyState = IsReadOnly;
+                IsReadOnly = false;
 
-                this.TextDocument.SetMath(newValue);
+                TextDocument.SetMath(newValue);
 
-                this.IsReadOnly = readOnlyState;
+                IsReadOnly = readOnlyState;
             }
 
             private void OnLosingFocus(UIElement sender, LosingFocusEventArgs args)
             {
-                if (this.IsReadOnly || this.ContextFlyout.IsOpen)
+                if (IsReadOnly || ContextFlyout.IsOpen)
                 {
                     return;
                 }
@@ -251,7 +235,7 @@ namespace CalculatorApp
 
             private void OnKeyUp(object sender, KeyRoutedEventArgs e)
             {
-                if (!this.IsReadOnly && e.Key == VirtualKey.Enter)
+                if (!IsReadOnly && e.Key == VirtualKey.Enter)
                 {
                     SubmitEquation(EquationSubmissionSource.ENTER_KEY);
                 }

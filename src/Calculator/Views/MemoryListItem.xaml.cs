@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -22,9 +11,8 @@ namespace CalculatorApp
     {
         public MemoryListItem()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
-
 
 
         public CalculatorApp.ViewModel.MemoryItemViewModel Model
@@ -39,7 +27,6 @@ namespace CalculatorApp
 
         protected override void OnPointerEntered(Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-
             base.OnPointerEntered(e);
 
             // Only show hover buttons when the user is using mouse or pen.
@@ -48,61 +35,43 @@ namespace CalculatorApp
             {
                 VisualStateManager.GoToState(this, "MemoryButtonsVisible", true);
             }
-
         }
 
         protected override void OnPointerExited(Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-
             base.OnPointerExited(e);
 
             VisualStateManager.GoToState(this, "MemoryButtonsHidden", true);
-
         }
 
         private void OnMemoryAddButtonClicked(Object sender, RoutedEventArgs e)
         {
-
             Model.MemoryAdd();
-
         }
 
         private void OnClearButtonClicked(Object sender, RoutedEventArgs e)
         {
-
             Model.Clear();
-
         }
         private void OnMemorySubtractButtonClicked(Object sender, RoutedEventArgs e)
         {
-
             Model.MemorySubtract();
-
         }
 
         private void OnClearSwipeInvoked(Microsoft.UI.Xaml.Controls.SwipeItem sender, Microsoft.UI.Xaml.Controls.SwipeItemInvokedEventArgs e)
         {
-
             Model.Clear();
-
-
         }
 
         private void OnMemoryAddSwipeInvoked(Microsoft.UI.Xaml.Controls.SwipeItem sender, Microsoft.UI.Xaml.Controls.SwipeItemInvokedEventArgs e)
         {
-
             Model.MemoryAdd();
-
         }
 
         private void OnMemorySubtractSwipeInvoked(Microsoft.UI.Xaml.Controls.SwipeItem sender, Microsoft.UI.Xaml.Controls.SwipeItemInvokedEventArgs e)
         {
-
             Model.MemorySubtract();
-
         }
-
-
     }
 }
 

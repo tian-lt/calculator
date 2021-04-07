@@ -43,5 +43,4 @@ namespace CalculatorApp
 
         private DispatcherTimer m_timer;
     }
-
 }
