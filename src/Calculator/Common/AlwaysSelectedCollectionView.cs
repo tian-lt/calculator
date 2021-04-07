@@ -111,7 +111,6 @@ namespace CalculatorApp
                 throw new NotImplementedException();
             }
 
-
             public bool Contains(object item)
             {
                 throw new NotImplementedException();
@@ -126,7 +125,6 @@ namespace CalculatorApp
             {
                 throw new NotImplementedException();
             }
-
 
             public bool IsReadOnly => throw new NotImplementedException();
 
@@ -228,7 +226,6 @@ namespace CalculatorApp
             public event CurrentChangingEventHandler CurrentChanging; // CSHARP_MIGRATION: TODO: check why this member is never being used.
             public event VectorChangedEventHandler<object> VectorChanged;
 
-
             IList m_source;
             int m_currentPosition;
         }
@@ -256,5 +253,4 @@ namespace CalculatorApp
         }
     }
 }
-
 

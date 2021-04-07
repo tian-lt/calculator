@@ -48,9 +48,7 @@ namespace CalculatorApp
                 self.OnIsAlwaysOnTopModePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
             }));
 
-
         public event Windows.UI.Xaml.RoutedEventHandler AlwaysOnTopClick;
-
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {

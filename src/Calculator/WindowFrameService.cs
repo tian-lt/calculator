@@ -107,7 +107,6 @@ namespace CalculatorApp
             }
         }
 
-
         public Frame GetFrame()
         {
             return m_frame;
@@ -188,5 +187,4 @@ namespace CalculatorApp
         private List<Action> m_onWindowClosingHandlers = new List<Action>();
     }
 }
-
 

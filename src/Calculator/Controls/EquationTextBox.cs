@@ -20,7 +20,6 @@ namespace CalculatorApp
             {
             }
 
-
             public Windows.UI.Xaml.Media.SolidColorBrush EquationColor
             {
                 get { return (Windows.UI.Xaml.Media.SolidColorBrush)GetValue(EquationColorProperty); }
@@ -30,7 +29,6 @@ namespace CalculatorApp
             // Using a DependencyProperty as the backing store for EquationColor.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty EquationColorProperty =
                 DependencyProperty.Register(nameof(EquationColor), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(EquationTextBox), new PropertyMetadata(default(Windows.UI.Xaml.Media.SolidColorBrush)));
-
 
             public Windows.UI.Xaml.Media.SolidColorBrush EquationButtonForegroundColor
             {
@@ -42,7 +40,6 @@ namespace CalculatorApp
             public static readonly DependencyProperty EquationButtonForegroundColorProperty =
                 DependencyProperty.Register(nameof(EquationButtonForegroundColor), typeof(Windows.UI.Xaml.Media.SolidColorBrush), typeof(EquationTextBox), new PropertyMetadata(default(Windows.UI.Xaml.Media.SolidColorBrush)));
 
-
             public Windows.UI.Xaml.Controls.Flyout ColorChooserFlyout
             {
                 get { return (Windows.UI.Xaml.Controls.Flyout)GetValue(ColorChooserFlyoutProperty); }
@@ -52,7 +49,6 @@ namespace CalculatorApp
             // Using a DependencyProperty as the backing store for ColorChooserFlyout.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty ColorChooserFlyoutProperty =
                 DependencyProperty.Register(nameof(ColorChooserFlyout), typeof(Windows.UI.Xaml.Controls.Flyout), typeof(EquationTextBox), new PropertyMetadata(default(Windows.UI.Xaml.Controls.Flyout)));
-
 
             public string EquationButtonContentIndex
             {
@@ -68,7 +64,6 @@ namespace CalculatorApp
                     self.OnEquationButtonContentIndexPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
 
-
             public string MathEquation
             {
                 get { return (string)GetValue(MathEquationProperty); }
@@ -78,7 +73,6 @@ namespace CalculatorApp
             // Using a DependencyProperty as the backing store for MathEquation.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty MathEquationProperty =
                 DependencyProperty.Register(nameof(MathEquation), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty));
-
 
             public bool HasError
             {
@@ -94,7 +88,6 @@ namespace CalculatorApp
                     self.OnHasErrorPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
                 }));
 
-
             public bool IsAddEquationMode
             {
                 get { return (bool)GetValue(IsAddEquationModeProperty); }
@@ -109,7 +102,6 @@ namespace CalculatorApp
                     self.OnIsAddEquationModePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
                 }));
 
-
             public string ErrorText
             {
                 get { return (string)GetValue(ErrorTextProperty); }
@@ -120,7 +112,6 @@ namespace CalculatorApp
             public static readonly DependencyProperty ErrorTextProperty =
                 DependencyProperty.Register(nameof(ErrorText), typeof(string), typeof(EquationTextBox), new PropertyMetadata(string.Empty));
 
-
             public bool IsEquationLineDisabled
             {
                 get { return (bool)GetValue(IsEquationLineDisabledProperty); }
@@ -130,7 +121,6 @@ namespace CalculatorApp
             // Using a DependencyProperty as the backing store for IsEquationLineDisabled.  This enables animation, styling, binding, etc...
             public static readonly DependencyProperty IsEquationLineDisabledProperty =
                 DependencyProperty.Register(nameof(IsEquationLineDisabled), typeof(bool), typeof(EquationTextBox), new PropertyMetadata(default(bool)));
-
 
             public bool HasFocus
             {

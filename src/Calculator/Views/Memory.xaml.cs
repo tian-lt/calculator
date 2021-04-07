@@ -17,7 +17,6 @@ namespace CalculatorApp
             MemoryPaneEmpty.FlowDirection = LocalizationService.GetInstance().GetFlowDirection();
         }
 
-
         public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
         {
             get { return (CalculatorApp.ViewModel.StandardCalculatorViewModel)GetValue(ModelProperty); }

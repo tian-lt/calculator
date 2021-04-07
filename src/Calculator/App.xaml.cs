@@ -398,7 +398,6 @@ namespace CalculatorApp
             private App m_parent;
         };
 
-
         // CSHARP_MIGRATION: TODO: check what is the pragma used for???
         //#pragma optimize("", off) // Turn off optimizations to work around coroutine optimization bug
         private async Task SetupJumpList()
@@ -451,7 +450,6 @@ namespace CalculatorApp
                 that.RemoveWindowFromMap(frameService.GetViewId());
             }).ConfigureAwait(false /* task_continuation_context::use_arbitrary() */);
         }
-
 
         private void AddWindowToMap(WindowFrameService frameService)
         {

@@ -88,7 +88,6 @@ namespace CalculatorApp
                 }
             }
 
-
             static public void RunButtonCommand(ButtonBase button)
             {
                 if (button.IsEnabled)
@@ -123,7 +122,6 @@ namespace CalculatorApp
             {
             }
 
-
             public static readonly DependencyProperty CharacterProperty =
                 DependencyProperty.RegisterAttached(
                     "Character",
@@ -143,7 +141,6 @@ namespace CalculatorApp
             {
                 target.SetValue(CharacterProperty, value);
             }
-
 
             public static readonly DependencyProperty VirtualKeyProperty =
                 DependencyProperty.RegisterAttached(
@@ -165,7 +162,6 @@ namespace CalculatorApp
                 target.SetValue(VirtualKeyProperty, value);
             }
 
-
             public static readonly DependencyProperty VirtualKeyControlChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
@@ -185,7 +181,6 @@ namespace CalculatorApp
             {
                 target.SetValue(VirtualKeyControlChordProperty, value);
             }
-
 
             public static readonly DependencyProperty VirtualKeyShiftChordProperty =
                 DependencyProperty.RegisterAttached(
@@ -207,7 +202,6 @@ namespace CalculatorApp
                 target.SetValue(VirtualKeyShiftChordProperty, value);
             }
 
-
             public static readonly DependencyProperty VirtualKeyAltChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
@@ -228,7 +222,6 @@ namespace CalculatorApp
                 target.SetValue(VirtualKeyAltChordProperty, value);
             }
 
-
             public static readonly DependencyProperty VirtualKeyControlShiftChordProperty =
                 DependencyProperty.RegisterAttached(
                     "VirtualKey",
@@ -248,7 +241,6 @@ namespace CalculatorApp
             {
                 target.SetValue(VirtualKeyControlShiftChordProperty, value);
             }
-
 
             internal static void Initialize()
             {
@@ -827,7 +819,6 @@ namespace CalculatorApp
             private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
             private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyAltChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
             private static SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>> s_VirtualKeyControlShiftChordsForButtons = new SortedDictionary<int, SortedDictionary<MyVirtualKey, List<WeakReference>>>();
-
 
             private static SortedDictionary<int, bool> s_IsDropDownOpen = new SortedDictionary<int, bool>();
             private static SortedDictionary<int, bool> s_ignoreNextEscape = new SortedDictionary<int, bool>();

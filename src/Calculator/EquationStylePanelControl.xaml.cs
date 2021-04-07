@@ -18,7 +18,6 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-
         public Windows.UI.Color SelectedColor
         {
             get { return (Windows.UI.Color)GetValue(SelectedColorProperty); }
@@ -32,7 +31,6 @@ namespace CalculatorApp
                 var self = (EquationStylePanelControl)sender;
                 self.OnSelectedColorPropertyChanged((Windows.UI.Color)args.OldValue, (Windows.UI.Color)args.NewValue);
             }));
-
 
         public GraphControl.EquationLineStyle SelectedStyle
         {
@@ -48,7 +46,6 @@ namespace CalculatorApp
                 self.OnSelectedStylePropertyChanged((GraphControl.EquationLineStyle)args.OldValue, (GraphControl.EquationLineStyle)args.NewValue);
             }));
 
-
         public int SelectedColorIndex
         {
             get { return (int)GetValue(SelectedColorIndexProperty); }
@@ -58,7 +55,6 @@ namespace CalculatorApp
         // Using a DependencyProperty as the backing store for SelectedColorIndex.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedColorIndexProperty =
             DependencyProperty.Register(nameof(SelectedColorIndex), typeof(int), typeof(EquationStylePanelControl), new PropertyMetadata(default(int)));
-
 
         public IList<Windows.UI.Xaml.Media.SolidColorBrush> AvailableColors
         {
@@ -70,7 +66,6 @@ namespace CalculatorApp
         public static readonly DependencyProperty AvailableColorsProperty =
             DependencyProperty.Register(nameof(AvailableColors), typeof(IList<Windows.UI.Xaml.Media.SolidColorBrush>), typeof(EquationStylePanelControl), new PropertyMetadata(null));
 
-
         public bool EnableLineStylePicker
         {
             get { return (bool)GetValue(EnableLineStylePickerProperty); }
@@ -80,7 +75,6 @@ namespace CalculatorApp
         // Using a DependencyProperty as the backing store for EnableLineStylePicker.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EnableLineStylePickerProperty =
             DependencyProperty.Register(nameof(EnableLineStylePicker), typeof(bool), typeof(EquationStylePanelControl), new PropertyMetadata(default(bool)));
-
 
         public static Windows.UI.Xaml.Media.DoubleCollection GetLinePattern(object line)
         {
@@ -250,7 +244,6 @@ namespace CalculatorApp
         {
             SelectColor(SelectedColor);
         }
-
 
         private void SelectColor(Color selectedColor)
         {

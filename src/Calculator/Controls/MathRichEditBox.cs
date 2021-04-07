@@ -50,7 +50,6 @@ namespace CalculatorApp
                 get => m_Source;
             }
 
-
             public MathRichEditBoxSubmission(bool hasTextChanged, EquationSubmissionSource source)
             {
                 m_HasTextChanged = hasTextChanged;
@@ -90,7 +89,6 @@ namespace CalculatorApp
                 KeyUp += OnKeyUp;
             }
 
-
             public string MathText
             {
                 get { return (string)GetValue(MathTextProperty); }
@@ -104,7 +102,6 @@ namespace CalculatorApp
                     var self = (MathRichEditBox)sender;
                     self.OnMathTextPropertyChanged((string)args.OldValue, (string)args.NewValue);
                 }));
-
 
             public event EventHandler<MathRichEditBoxFormatRequest> FormatRequest;
             public event EventHandler<MathRichEditBoxSubmission> EquationSubmitted;

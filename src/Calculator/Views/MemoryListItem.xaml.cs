@@ -14,7 +14,6 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-
         public CalculatorApp.ViewModel.MemoryItemViewModel Model
         {
             get { return (CalculatorApp.ViewModel.MemoryItemViewModel)GetValue(ModelProperty); }

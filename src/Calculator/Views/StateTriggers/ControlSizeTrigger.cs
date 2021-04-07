@@ -15,7 +15,6 @@ namespace CalculatorApp.Views.StateTriggers
             SetActive(false);
         }
 
-
         public FrameworkElement Source
         {
             get { return (FrameworkElement)GetValue(SourceProperty); }
@@ -30,7 +29,6 @@ namespace CalculatorApp.Views.StateTriggers
                 self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
             }));
 
-
         public double MinHeight
         {
             get { return (double)GetValue(MinHeightProperty); }
@@ -41,7 +39,6 @@ namespace CalculatorApp.Views.StateTriggers
         public static readonly DependencyProperty MinHeightProperty =
             DependencyProperty.Register("MinHeight", typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
 
-
         public double MinWidth
         {
             get { return (double)GetValue(MinWidthProperty); }
@@ -51,7 +48,6 @@ namespace CalculatorApp.Views.StateTriggers
         // Using a DependencyProperty as the backing store for MinWidth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinWidthProperty =
             DependencyProperty.Register("MinWidth", typeof(double), typeof(ControlSizeTrigger), new PropertyMetadata(-1));
-
 
         ~ControlSizeTrigger()
         {

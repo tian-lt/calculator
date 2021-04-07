@@ -34,7 +34,6 @@ namespace CalculatorApp
             m_timer.Stop();
         }
 
-
         private void Timer_Tick(object sender, object e)
         {
             m_timer.Stop();

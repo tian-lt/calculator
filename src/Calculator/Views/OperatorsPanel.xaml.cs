@@ -18,7 +18,6 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-
         public bool IsBitFlipChecked
         {
             get { return (bool)GetValue(IsBitFlipCheckedProperty); }
@@ -33,7 +32,6 @@ namespace CalculatorApp
                 self.OnIsBitFlipCheckedPropertyChanged((bool)args.OldValue, (bool)args.NewValue);
             }));
 
-
         public bool IsErrorVisualState
         {
             get { return (bool)GetValue(IsErrorVisualStateProperty); }
@@ -47,7 +45,6 @@ namespace CalculatorApp
                 var self = (OperatorsPanel)sender;
                 self.OnIsErrorVisualStatePropertyChanged((bool)args.OldValue, (bool)args.NewValue);
             }));
-
 
         void OnIsBitFlipCheckedPropertyChanged(bool oldValue, bool newValue)
         {

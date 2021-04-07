@@ -42,7 +42,6 @@ namespace CalculatorApp.Views.StateTriggers
                 self.OnSourcePropertyChanged((FrameworkElement)args.OldValue, (FrameworkElement)args.NewValue);
             }));
 
-
         /* Either Height or Width. The property will determine which aspect is used as the numerator when calculating
            the aspect ratio. */
         public Aspect NumeratorAspect
@@ -55,7 +54,6 @@ namespace CalculatorApp.Views.StateTriggers
         public static readonly DependencyProperty NumeratorAspectProperty =
             DependencyProperty.Register("NumeratorAspect", typeof(Aspect), typeof(AspectRatioTrigger), new PropertyMetadata(default(Aspect)));
 
-
         /* The threshold that will cause the trigger to fire when the aspect ratio exceeds this value. */
         public double Threshold
         {
@@ -67,7 +65,6 @@ namespace CalculatorApp.Views.StateTriggers
         public static readonly DependencyProperty ThresholdProperty =
             DependencyProperty.Register("Threshold", typeof(double), typeof(AspectRatioTrigger), new PropertyMetadata(0.0));
 
-
         /* If true, the trigger will fire if the aspect ratio is greater than or equal to the threshold. */
         public bool ActiveIfEqual
         {
@@ -78,7 +75,6 @@ namespace CalculatorApp.Views.StateTriggers
         // Using a DependencyProperty as the backing store for ActiveEqual.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ActiveIfEqualProperty =
             DependencyProperty.Register("ActiveIfEqual", typeof(bool), typeof(AspectRatioTrigger), new PropertyMetadata(false));
-
 
         ~AspectRatioTrigger()
         {
@@ -146,5 +142,4 @@ namespace CalculatorApp.Views.StateTriggers
         }
     }
 }
-
 

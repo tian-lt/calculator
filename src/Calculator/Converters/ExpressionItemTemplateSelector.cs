@@ -35,7 +35,6 @@ namespace CalculatorApp
                 return m_separatorTemplate;
             }
 
-
             public Windows.UI.Xaml.DataTemplate OperatorTemplate
             {
                 get
