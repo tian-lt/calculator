@@ -59,18 +59,18 @@ namespace CalculatorApp
 
         private void OnIsErrorVisualStatePropertyChanged(bool oldValue, bool newValue)
         {
-            //if (Model.IsStandard)
-            //{
-            //    StandardOperators.IsErrorVisualState = newValue;
-            //}
-            //else if (Model.IsScientific)
-            //{
-            //    ScientificOperators.IsErrorVisualState = newValue;
-            //}
-            //else if (Model.IsProgrammer)
-            //{
-            //    ProgrammerRadixOperators.IsErrorVisualState = newValue;
-            //}
+            if (Model.IsStandard)
+            {
+                StandardOperators.IsErrorVisualState = newValue;
+            }
+            else if (Model.IsScientific)
+            {
+                ScientificOperators.IsErrorVisualState = newValue;
+            }
+            else if (Model.IsProgrammer)
+            {
+                ProgrammerRadixOperators.IsErrorVisualState = newValue;
+            }
         }
 
         public void EnsureScientificOps()
@@ -93,10 +93,10 @@ namespace CalculatorApp
 
         private void EnsureProgrammerBitFlipPanel()
         {
-            //if (!BitFlipPanel)
-            //{
-            //    this.FindName("BitFlipPanel");
-            //}
+            if (BitFlipPanel == null)
+            {
+                this.FindName("BitFlipPanel");
+            }
         }
     }
 }
