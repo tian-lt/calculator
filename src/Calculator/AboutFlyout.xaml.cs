@@ -12,6 +12,8 @@ namespace CalculatorApp
 {
     public sealed partial class AboutFlyout
     {
+        // CSHARP_MIGRATION: TODO:
+        // BUILD_YEAR was a C++/CX macro and may update the value from the pipeline
         private const string BUILD_YEAR = "2021";
 
         public AboutFlyout()

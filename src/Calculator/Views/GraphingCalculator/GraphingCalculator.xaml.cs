@@ -500,7 +500,7 @@ namespace CalculatorApp
             }
         }
 
-        private void GraphingControl_LostFocus(Object sender, RoutedEventArgs e)
+        private void GraphingControl_LostFocus(object sender, RoutedEventArgs e)
         {
             // If the graph is losing focus while we are in active tracing we need to turn it off so we don't try to eat keys in other controls.
             if (GraphingControl.ActiveTracing)
