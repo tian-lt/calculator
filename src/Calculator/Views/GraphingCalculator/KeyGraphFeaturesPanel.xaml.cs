@@ -27,7 +27,7 @@ namespace CalculatorApp
         internal void RaisePropertyChanged(string p)
         {
 #if !UNIT_TESTS
-            PropertyChanged(this, new PropertyChangedEventArgs(p));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
 #endif
         }
 
@@ -59,7 +59,7 @@ namespace CalculatorApp
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            KeyGraphFeaturesClosed(this, new RoutedEventArgs());
+            KeyGraphFeaturesClosed?.Invoke(this, new RoutedEventArgs());
         }
 
         private CalculatorApp.ViewModel.EquationViewModel m_viewModel;

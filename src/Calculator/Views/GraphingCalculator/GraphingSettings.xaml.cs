@@ -129,7 +129,7 @@ namespace CalculatorApp
             string propertyName = isMatchAppTheme ? "IsMatchAppTheme" : "IsAlwaysLightTheme";
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             localSettings.Values.Add("IsGraphThemeMatchApp", isMatchAppTheme);
-            GraphThemeSettingChanged(this, isMatchAppTheme);
+            GraphThemeSettingChanged?.Invoke(this, isMatchAppTheme);
             TraceLogger.GetInstance().LogGraphSettingsChanged(GraphSettingsType.Theme, propertyName);
         }
 

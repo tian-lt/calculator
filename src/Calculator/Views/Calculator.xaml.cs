@@ -673,7 +673,7 @@ namespace CalculatorApp
                 HistoryButton.Focus(FocusState.Programmatic);
             }
 
-            FullscreenFlyoutClosed();
+            FullscreenFlyoutClosed?.Invoke();
         }
 
         private void OnHideHistoryClicked()
@@ -768,7 +768,7 @@ namespace CalculatorApp
                 MemoryButton.Focus(FocusState.Programmatic);
             }
 
-            FullscreenFlyoutClosed();
+            FullscreenFlyoutClosed?.Invoke();
         }
 
         private void SetChildAsMemory()

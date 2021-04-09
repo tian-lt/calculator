@@ -262,8 +262,6 @@ namespace CalculatorApp
             }
         }
 
-        // CSHARP_MIGRATION: TODO:
-        // c++ const method. c# readonly method is available for c# 8.0+
         private int GetIndexOfLastBit(BitLength length)
         {
             switch (length)
