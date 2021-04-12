@@ -1,27 +1,17 @@
-﻿using System;
-using CalculatorApp;
 using CalculatorApp.Common;
 using CalculatorApp.Controls;
 using CalculatorApp.ViewModel;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using System.ComponentModel;
-using System.Diagnostics;
 using Windows.UI.Xaml.Automation;
-using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -100,7 +90,6 @@ namespace CalculatorApp
 
         private void OnContextRequested(UIElement sender, ContextRequestedEventArgs e)
         {
-
             OnValueSelected(sender);
             var requestedElement = ((FrameworkElement)sender);
 
@@ -118,29 +107,23 @@ namespace CalculatorApp
             }
 
             e.Handled = true;
-
         }
 
         private void OnContextCanceled(UIElement sender, RoutedEventArgs e)
         {
-
             m_resultsFlyout.Hide();
-
         }
 
         private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
-
             var calcResult = ((CalculationResult)m_resultsFlyout.Target);
             CopyPasteManager.CopyToClipboard(calcResult.GetRawDisplayValue());
-
         }
 
         void OnPasteMenuItemClicked(object sender, RoutedEventArgs e)
         {
-
             UnitConverter that = this;
-            _ = Task.Run(async() =>
+            _ = Task.Run(async () =>
             {
                 string pastedString = await CopyPasteManager.GetStringToPaste(Model.Mode, CategoryGroupType.Converter, NumberBase.Unknown, BitLength.BitLengthUnknown);
                 that.Model.OnPaste(pastedString);
@@ -157,10 +140,8 @@ namespace CalculatorApp
 
         private void UpdateDropDownState(object sender, object e)
         {
-
             ((UnitConverterViewModel)this.DataContext).IsDropDownOpen = (Units1.IsDropDownOpen) || (Units2.IsDropDownOpen);
             KeyboardShortcutManager.UpdateDropDownState((Units1.IsDropDownOpen) || (Units2.IsDropDownOpen));
-
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -169,7 +150,6 @@ namespace CalculatorApp
 
         private void CurrencyRefreshButton_Click(object sender, RoutedEventArgs e)
         {
-
             // If IsCurrencyLoadingVisible is true that means CurrencyRefreshButton_Click was recently called
             // and is still executing. In this case there is no reason to process the click.
             if (!Model.IsCurrencyLoadingVisible)
@@ -181,12 +161,10 @@ namespace CalculatorApp
 
                 Model.RefreshCurrencyRatios();
             }
-
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
             string propertyName = e.PropertyName;
             if (propertyName == UnitConverterViewModel.NetworkBehaviorPropertyName || propertyName == UnitConverterViewModel.CurrencyDataLoadFailedPropertyName)
             {
@@ -202,9 +180,7 @@ namespace CalculatorApp
             {
                 OnIsDisplayVisibleChanged();
             }
-
         }
-
 
         private void OnDataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
@@ -217,7 +193,6 @@ namespace CalculatorApp
 
         private void OnIsDisplayVisibleChanged()
         {
-
             if (!Model.IsCurrencyCurrentCategory)
             {
                 VisualStateManager.GoToState(this, UnitLoadedState.Name, false);
@@ -235,7 +210,6 @@ namespace CalculatorApp
                     VisualStateManager.GoToState(this, !string.IsNullOrEmpty(Model.CurrencyTimestamp) ? UnitLoadedState.Name : UnitNotLoadedState.Name, true);
                 }
             }
-
         }
 
         private void Units1_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -248,7 +222,6 @@ namespace CalculatorApp
 
         private void OnNetworkBehaviorChanged()
         {
-
             switch (Model.NetworkBehavior)
             {
                 case NetworkAccessBehavior.Normal:
@@ -261,12 +234,10 @@ namespace CalculatorApp
                     OnOfflineNetworkAccess();
                     break;
             }
-
         }
 
         private void OnNormalNetworkAccess()
         {
-
             CurrencyRefreshBlockControl.Visibility = Visibility.Visible;
             OfflineBlock.Visibility = Visibility.Collapsed;
 
@@ -278,12 +249,10 @@ namespace CalculatorApp
             {
                 SetNormalCurrencyStatus();
             }
-
         }
 
         void OnOptInNetworkAccess()
         {
-
             CurrencyRefreshBlockControl.Visibility = Visibility.Visible;
             OfflineBlock.Visibility = Visibility.Collapsed;
 
@@ -295,22 +264,16 @@ namespace CalculatorApp
             {
                 SetChargesMayApplyStatus();
             }
-
         }
 
         void OnOfflineNetworkAccess()
         {
-
             CurrencyRefreshBlockControl.Visibility = Visibility.Collapsed;
             OfflineBlock.Visibility = Visibility.Visible;
-
         }
-
-
 
         private void InitializeOfflineStatusTextBlock()
         {
-
             var resProvider = AppResourceProvider.GetInstance();
             string offlineStatusHyperlinkText = resProvider.GetResourceString("OfflineStatusHyperlinkText");
 
@@ -336,35 +299,27 @@ namespace CalculatorApp
             OfflineRunAfterLink.Text = offlineStatusTextAfterHyperlink;
 
             AutomationProperties.SetName(OfflineBlock, offlineStatusTextBeforeHyperlink + " " + offlineStatusTextLink + " " + offlineStatusTextAfterHyperlink);
-
         }
 
         private void SetNormalCurrencyStatus()
         {
-
             CurrencySecondaryStatus.Text = "";
-
         }
 
         private void SetChargesMayApplyStatus()
         {
-
             VisualStateManager.GoToState(this, "ChargesMayApplyCurrencyStatus", false);
             CurrencySecondaryStatus.Text = m_chargesMayApplyText;
-
         }
 
         private void SetFailedToRefreshStatus()
         {
-
             VisualStateManager.GoToState(this, "FailedCurrencyStatus", false);
             CurrencySecondaryStatus.Text = m_failedToRefreshText;
-
         }
 
         private void SetCurrencyTimestampFontWeight()
         {
-
             if (Model.CurrencyDataIsWeekOld)
             {
                 VisualStateManager.GoToState(this, "WeekOldTimestamp", false);
@@ -373,7 +328,6 @@ namespace CalculatorApp
             {
                 VisualStateManager.GoToState(this, "DefaultTimestamp", false);
             }
-
         }
 
         private void StartProgressRingWithDelay()
@@ -391,40 +345,31 @@ namespace CalculatorApp
 
         private void OnDelayTimerTick(object sender, object e)
         {
-
             CurrencyLoadingProgressRing.IsActive = true;
             m_delayTimer.Stop();
-
         }
 
         private void HideProgressRing()
         {
-
             if (m_delayTimer != null)
             {
                 m_delayTimer.Stop();
             }
 
             CurrencyLoadingProgressRing.IsActive = false;
-
         }
 
         private void SupplementaryResultsPanelInGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
         {
-
             // We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation
             RowDltrUnits.MinHeight = Math.Max(48.0, e.NewSize.Height + 0.01);
-
         }
 
         private void OnVisualStateChanged(object sender, Windows.UI.Xaml.VisualStateChangedEventArgs e)
         {
-
             var mode = NavCategory.Deserialize(Model.CurrentCategory.GetModelCategoryId());
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, false);
-
         }
-
 
         private static Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
         private Windows.UI.Xaml.FlowDirection m_layoutDirection;
@@ -438,3 +383,4 @@ namespace CalculatorApp
         private Windows.UI.Xaml.DispatcherTimer m_delayTimer;
     }
 }
+
