@@ -85,6 +85,7 @@ namespace CalculatorApp
                 m_converter.SetDefaultFocus();
             }
         }
+
         public void SetHeaderAutomationName()
         {
             ViewMode mode = m_model.Mode;
