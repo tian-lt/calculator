@@ -38,7 +38,6 @@ namespace CalculatorApp
             m_model.PropertyChanged += OnAppPropertyChanged;
             m_accessibilitySettings = new AccessibilitySettings();
 
-
             // CSHARP_MIGRAION: TODO: find another implementation for C#
             //double sizeInInches = 0.0;
 
