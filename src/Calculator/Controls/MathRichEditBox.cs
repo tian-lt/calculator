@@ -93,7 +93,7 @@ namespace CalculatorApp
                                 "BeDD/jxKhz/yfVNA11t4uA==", // Microsoft.WindowsCalculator.Dev
                                 "8wekyb3d8bbwe has registered their use of com.microsoft.windows.richeditmath with Microsoft and agrees to the terms of use.");
                 }
-                else if(packageName == "Microsoft.WindowsCalculator.Dev")
+                else if(packageName == "Microsoft.WindowsCalculator")
                 {
                     LimitedAccessFeatures.TryUnlockFeature(
                                 "com.microsoft.windows.richeditmath",
