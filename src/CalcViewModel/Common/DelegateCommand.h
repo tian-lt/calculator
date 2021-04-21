@@ -51,6 +51,21 @@ namespace CalculatorApp
 
             event Windows::Foundation::EventHandler<Platform::Object^>^ m_canExecuteChanged;
         };
+
+        template <typename TTarget, typename TFuncPtr>
+        DelegateCommandHandler ^ MakeDelegateCommandHandler(TTarget ^ target, TFuncPtr&& function)
+        {
+            Platform::WeakReference weakTarget(target);
+            return ref new DelegateCommandHandler([weakTarget, function=std::forward<TFuncPtr>(function)](Platform::Object^ param)
+                {
+                    TTarget ^ thatTarget = weakTarget.Resolve<TTarget>();
+                    if (nullptr != thatTarget)
+                    {
+                        (thatTarget->*function)(param);
+                    }
+                }
+            );
+        }
     }
 }
 

@@ -175,7 +175,8 @@ public:
             if (!donotuse_##p)                                                                                                                                 \
             {                                                                                                                                                  \
                 donotuse_##p = ref new CalculatorApp::Common::DelegateCommand(                                                                                 \
-                    ref new CalculatorApp::Common::DelegateCommandHandler(this, &m));                                                                          \
+                    CalculatorApp::Common::MakeDelegateCommandHandler(this, &m) \
+                ); \
             }                                                                                                                                                  \
             return donotuse_##p;                                                                                                                               \
         }                                                                                                                                                      \
