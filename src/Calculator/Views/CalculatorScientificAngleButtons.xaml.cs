@@ -47,7 +47,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ButtonPressed == null)
                 {
-                    donotuse_ButtonPressed = new CalculatorApp.Common.DelegateCommand<CalculatorScientificAngleButtons>(this, OnAngleButtonPressed);
+                    donotuse_ButtonPressed = new CalculatorApp.Common.DelegateCommand(OnAngleButtonPressed);
                 }
                 return donotuse_ButtonPressed;
             }

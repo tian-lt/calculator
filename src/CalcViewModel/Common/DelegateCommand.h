@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
@@ -7,18 +7,14 @@ namespace CalculatorApp
 {
     namespace Common
     {
-        template <typename TTarget>
-        ref class DelegateCommand : public Windows::UI::Xaml::Input::ICommand
+        public delegate void DelegateCommandHandler(Platform::Object^ parameter);
+
+        public ref class DelegateCommand sealed : public Windows::UI::Xaml::Input::ICommand
         {
-            internal :
-
-                typedef void (TTarget::*CommandHandlerFunc)(Platform::Object ^);
-
-            DelegateCommand(TTarget ^ target, CommandHandlerFunc func)
-                : m_weakTarget(target)
-                , m_function(func)
-            {
-            }
+        public:
+            DelegateCommand(DelegateCommandHandler^ handler)
+                : m_handler(handler)
+            {}
 
         private:
             // Explicit, and private, implementation of ICommand, this way of programming makes it so
@@ -27,10 +23,9 @@ namespace CalculatorApp
             // code in the app calling Execute.
             virtual void ExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
             {
-                TTarget ^ target = m_weakTarget.Resolve<TTarget>();
-                if (target)
+                if (nullptr != m_handler)
                 {
-                    (target->*m_function)(parameter);
+                    m_handler->Invoke(parameter);
                 }
             }
 
@@ -52,17 +47,10 @@ namespace CalculatorApp
             }
 
         private:
+            DelegateCommandHandler^ m_handler;
 
             event Windows::Foundation::EventHandler<Platform::Object^>^ m_canExecuteChanged;
-
-            CommandHandlerFunc m_function;
-            Platform::WeakReference m_weakTarget;
         };
-
-        template <typename TTarget, typename TFuncPtr>
-            DelegateCommand<TTarget> ^ MakeDelegate(TTarget ^ target, TFuncPtr&& function) {
-                return ref new DelegateCommand<TTarget>(target, std::forward<TFuncPtr>(function));
-            }
-
     }
 }
+

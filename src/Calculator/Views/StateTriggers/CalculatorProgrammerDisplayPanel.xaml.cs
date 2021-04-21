@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,7 +17,7 @@ namespace CalculatorApp
                 if (donotuse_BitLengthButtonPressed == null)
                 {
                     donotuse_BitLengthButtonPressed =
-                        new Common.DelegateCommand<CalculatorProgrammerDisplayPanel>(this, OnBitLengthButtonPressed);
+                        new Common.DelegateCommand(OnBitLengthButtonPressed);
                 }
                 return donotuse_BitLengthButtonPressed;
             }

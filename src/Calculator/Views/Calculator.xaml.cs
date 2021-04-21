@@ -140,7 +140,7 @@ namespace CalculatorApp
             {
                 if (donotuse_HistoryButtonPressed == null)
                 {
-                    donotuse_HistoryButtonPressed = new DelegateCommand<Calculator>(this, ToggleHistoryFlyout);
+                    donotuse_HistoryButtonPressed = new DelegateCommand(ToggleHistoryFlyout);
                 }
                 return donotuse_HistoryButtonPressed;
             }

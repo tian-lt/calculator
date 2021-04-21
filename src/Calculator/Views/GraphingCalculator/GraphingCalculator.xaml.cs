@@ -114,7 +114,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomOutButtonPressed == null)
                 {
-                    donotuse_ZoomOutButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomOutCommand);
+                    donotuse_ZoomOutButtonPressed = new DelegateCommand(OnZoomOutCommand);
                 }
                 return donotuse_ZoomOutButtonPressed;
             }
@@ -127,7 +127,7 @@ namespace CalculatorApp
             {
                 if (donotuse_ZoomInButtonPressed == null)
                 {
-                    donotuse_ZoomInButtonPressed = new DelegateCommand<GraphingCalculator>(this, OnZoomInCommand);
+                    donotuse_ZoomInButtonPressed = new DelegateCommand(OnZoomInCommand);
                 }
                 return donotuse_ZoomInButtonPressed;
             }
