@@ -46,7 +46,7 @@ namespace CalculatorApp
         private:
             DelegateCommandHandler ^ m_handler;
 
-            event Windows::Foundation::EventHandler<Platform::Object^> ^ m_canExecuteChanged;
+            event Windows::Foundation::EventHandler<Platform::Object ^> ^ m_canExecuteChanged;
         };
 
         template <typename TTarget, typename TFuncPtr>
