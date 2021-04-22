@@ -155,6 +155,7 @@
       <DependentUpon>EquationStylePanelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="KeyGraphFeaturesTemplateSelector.cs" />
+    <Compile Include="Utils\DelegateCommandHelper.cs" />
     <Compile Include="Views\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
