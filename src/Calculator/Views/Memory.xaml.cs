@@ -1,4 +1,4 @@
-﻿using CalculatorApp.Common;
+using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
 using System;
 using Windows.UI.Xaml;
@@ -19,13 +19,11 @@ namespace CalculatorApp
 
         public CalculatorApp.ViewModel.StandardCalculatorViewModel Model
         {
-            get { return (CalculatorApp.ViewModel.StandardCalculatorViewModel)GetValue(ModelProperty); }
-            set { SetValue(ModelProperty, value); }
+            get
+            {
+                return (CalculatorApp.ViewModel.StandardCalculatorViewModel)this.DataContext;
+            }
         }
-
-        // Using a DependencyProperty as the backing store for Model.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ModelProperty =
-            DependencyProperty.Register(nameof(Model), typeof(CalculatorApp.ViewModel.StandardCalculatorViewModel), typeof(Memory), new PropertyMetadata(default(CalculatorApp.ViewModel.StandardCalculatorViewModel)));
 
         public GridLength RowHeight
         {
