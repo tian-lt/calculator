@@ -7,12 +7,12 @@ namespace CalculatorApp
 {
     namespace Common
     {
-        public delegate void DelegateCommandHandler(Platform::Object^ parameter);
+        public delegate void DelegateCommandHandler(Platform::Object ^ parameter);
 
         public ref class DelegateCommand sealed : public Windows::UI::Xaml::Input::ICommand
         {
         public:
-            DelegateCommand(DelegateCommandHandler^ handler)
+            DelegateCommand(DelegateCommandHandler ^ handler)
                 : m_handler(handler)
             {}
 
@@ -23,10 +23,7 @@ namespace CalculatorApp
             // code in the app calling Execute.
             virtual void ExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
             {
-                if (nullptr != m_handler)
-                {
-                    m_handler->Invoke(parameter);
-                }
+                m_handler->Invoke(parameter);
             }
 
             virtual bool CanExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::CanExecute
@@ -34,9 +31,9 @@ namespace CalculatorApp
                 return true;
             }
 
-            virtual event Windows::Foundation::EventHandler<Platform::Object^>^ CanExecuteChangedImpl
+            virtual event Windows::Foundation::EventHandler<Platform::Object ^> ^ CanExecuteChangedImpl
             {
-                virtual Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<Platform::Object^>^ handler) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::add
+                virtual Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<Platform::Object ^> ^ handler) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::add
                 {
                     return m_canExecuteChanged += handler;
                 }
@@ -47,16 +44,16 @@ namespace CalculatorApp
             }
 
         private:
-            DelegateCommandHandler^ m_handler;
+            DelegateCommandHandler ^ m_handler;
 
-            event Windows::Foundation::EventHandler<Platform::Object^>^ m_canExecuteChanged;
+            event Windows::Foundation::EventHandler<Platform::Object ^> ^ m_canExecuteChanged;
         };
 
         template <typename TTarget, typename TFuncPtr>
         DelegateCommandHandler ^ MakeDelegateCommandHandler(TTarget ^ target, TFuncPtr&& function)
         {
             Platform::WeakReference weakTarget(target);
-            return ref new DelegateCommandHandler([weakTarget, function=std::forward<TFuncPtr>(function)](Platform::Object^ param)
+            return ref new DelegateCommandHandler([weakTarget, function=std::forward<TFuncPtr>(function)](Platform::Object ^ param)
                 {
                     TTarget ^ thatTarget = weakTarget.Resolve<TTarget>();
                     if (nullptr != thatTarget)
