@@ -1,4 +1,4 @@
-using CalculatorApp.Common;
+﻿using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
 using System;
 using Windows.UI.Xaml;
