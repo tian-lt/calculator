@@ -17,7 +17,7 @@ namespace CalculatorApp.Utils
                 TTarget thatTarget = weakTarget.Target as TTarget;
                 if(null != thatTarget)
                 {
-                    handler?.Invoke(param);
+                    handler.Invoke(param);
                 }
             });
         }
