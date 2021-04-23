@@ -65,11 +65,10 @@ bool IsGraphingModeEnabled()
     // CSHARP_MIGRATION: TODO: merge PR ##1471 to fix below bug before we release to PROD
 #ifdef _DEBUG
     _isGraphingModeEnabledCached = true;
+    return _isGraphingModeEnabledCached->Value;
 #else
     throw "CSHARP_MIGRATION: EXCEPTION";
 #endif // _DEBUG
-
-    return _isGraphingModeEnabledCached->Value;
 }
 
 // The order of items in this list determines the order of items in the menu.
