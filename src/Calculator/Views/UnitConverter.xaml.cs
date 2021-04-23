@@ -62,7 +62,7 @@ namespace CalculatorApp
 
         public Windows.UI.Xaml.FlowDirection LayoutDirection
         {
-            get => this.m_layoutDirection;
+            get => default(FlowDirection);
         }
 
         public void SetDefaultFocus()
@@ -307,13 +307,13 @@ namespace CalculatorApp
         private void SetChargesMayApplyStatus()
         {
             VisualStateManager.GoToState(this, "ChargesMayApplyCurrencyStatus", false);
-            CurrencySecondaryStatus.Text = m_chargesMayApplyText;
+            CurrencySecondaryStatus.Text = string.Empty;
         }
 
         private void SetFailedToRefreshStatus()
         {
             VisualStateManager.GoToState(this, "FailedCurrencyStatus", false);
-            CurrencySecondaryStatus.Text = m_failedToRefreshText;
+            CurrencySecondaryStatus.Text = string.Empty;
         }
 
         private void SetCurrencyTimestampFontWeight()
@@ -370,11 +370,7 @@ namespace CalculatorApp
         }
 
         private static Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
-        private Windows.UI.Xaml.FlowDirection m_layoutDirection;
-        private Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout;
-
-        private string m_chargesMayApplyText;
-        private string m_failedToRefreshText;
+        private Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout = new MenuFlyout();
 
         private bool m_meteredConnectionOverride;
 

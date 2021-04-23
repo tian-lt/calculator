@@ -23,7 +23,6 @@ namespace CalculatorApp
     {
         public CalculatorProgrammerRadixOperators()
         {
-            m_isErrorVisualState = false;
             InitializeComponent();
             LoadResourceStrings();
         }
@@ -185,8 +184,6 @@ namespace CalculatorApp
             return RolButton == null || RorButton == null || RolCarryButton == null || RorCarryButton == null || LshLogicalButton == null
                    || RshLogicalButton == null;
         }
-
-        private bool m_isErrorVisualState;
 
         private void OpenParenthesisButton_GotFocus(object sender, RoutedEventArgs e)
         {
