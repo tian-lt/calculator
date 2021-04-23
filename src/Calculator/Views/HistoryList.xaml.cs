@@ -1,4 +1,4 @@
-﻿using CalculatorApp.Common;
+using CalculatorApp.Common;
 using CalculatorApp.ViewModel;
 using System;
 using Windows.UI.Xaml;
@@ -42,9 +42,6 @@ namespace CalculatorApp
         // Using a DependencyProperty as the backing store for RowHeight.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty RowHeightProperty =
             DependencyProperty.Register(nameof(RowHeight), typeof(Windows.UI.Xaml.GridLength), typeof(HistoryList), new PropertyMetadata(default(Windows.UI.Xaml.GridLength)));
-
-        private Windows.Foundation.Rect m_visibleBounds;
-        private Windows.Foundation.Rect m_coreBounds;
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {

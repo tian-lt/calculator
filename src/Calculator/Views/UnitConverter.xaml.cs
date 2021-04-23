@@ -44,10 +44,8 @@ namespace CalculatorApp
 
         public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment
         {
-            get => this.m_FlowDirectionHorizontalAlignment;
+            get => default(HorizontalAlignment);
         }
-
-        private Windows.UI.Xaml.HorizontalAlignment m_FlowDirectionHorizontalAlignment;
 
         public void AnimateConverter()
         {
