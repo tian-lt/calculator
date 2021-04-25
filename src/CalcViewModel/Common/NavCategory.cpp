@@ -64,12 +64,7 @@ Box<bool> ^ _isGraphingModeEnabledCached = nullptr;
 bool IsGraphingModeEnabled()
 {
     // CSHARP_MIGRATION: TODO: merge PR ##1471 to fix below bug before we release to PROD
-#ifdef _DEBUG
     _isGraphingModeEnabledCached = true;
-#else
-    throw "CSHARP_MIGRATION: EXCEPTION";
-#endif // _DEBUG
-
     return _isGraphingModeEnabledCached->Value;
 }
 
