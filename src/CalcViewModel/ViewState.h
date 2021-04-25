@@ -5,11 +5,14 @@
 
 namespace CalculatorApp
 {
-    namespace ViewState
+    namespace ViewModel
     {
-        extern Platform::StringReference Snap;
-        extern Platform::StringReference DockedView;
+        namespace ViewState
+        {
+            extern Platform::StringReference Snap;
+            extern Platform::StringReference DockedView;
 
-        bool IsValidViewState(Platform::String ^ viewState);
+            bool IsValidViewState(Platform::String ^ viewState);
+        }
     }
 }

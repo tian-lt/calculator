@@ -11,11 +11,11 @@
 #include "UnitConverterDataConstants.h"
 
 using namespace CalculatorApp;
-using namespace CalculatorApp::Common;
-using namespace CalculatorApp::Common::LocalizationServiceProperties;
-using namespace CalculatorApp::DataLoaders;
+using namespace CalculatorApp::ViewModel::Common;
+using namespace CalculatorApp::ViewModel::Common::LocalizationServiceProperties;
+using namespace CalculatorApp::ViewModel::DataLoaders;
 using namespace CalculatorApp::ViewModel;
-using namespace CalculatorApp::ViewModel::CurrencyDataLoaderConstants;
+using namespace CalculatorApp::ViewModel::DataLoaders::CurrencyDataLoaderConstants;
 using namespace concurrency;
 using namespace Platform;
 using namespace std;
@@ -67,25 +67,22 @@ static constexpr auto TO_KEY = L"to";
 static constexpr auto DEFAULT_FROM_CURRENCY = DefaultCurrencyCode.data();
 static constexpr auto DEFAULT_TO_CURRENCY = L"EUR";
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::DataLoaders
 {
-    namespace ViewModel
+    namespace UnitConverterResourceKeys
     {
-        namespace UnitConverterResourceKeys
-        {
-            StringReference CurrencyUnitFromKey(CURRENCY_UNIT_FROM_KEY);
-            StringReference CurrencyUnitToKey(CURRENCY_UNIT_TO_KEY);
-        }
+        StringReference CurrencyUnitFromKey(CURRENCY_UNIT_FROM_KEY);
+        StringReference CurrencyUnitToKey(CURRENCY_UNIT_TO_KEY);
+    }
 
-        namespace CurrencyDataLoaderConstants
-        {
-            StringReference CacheTimestampKey(CACHE_TIMESTAMP_KEY);
-            StringReference CacheLangcodeKey(CACHE_LANGCODE_KEY);
-            StringReference CacheDelimiter(CACHE_DELIMITER);
-            StringReference StaticDataFilename(STATIC_DATA_FILENAME);
-            StringReference AllRatiosDataFilename(ALL_RATIOS_DATA_FILENAME);
-            long long DayDuration = DAY_DURATION;
-        }
+    namespace CurrencyDataLoaderConstants
+    {
+        StringReference CacheTimestampKey(CACHE_TIMESTAMP_KEY);
+        StringReference CacheLangcodeKey(CACHE_LANGCODE_KEY);
+        StringReference CacheDelimiter(CACHE_DELIMITER);
+        StringReference StaticDataFilename(STATIC_DATA_FILENAME);
+        StringReference AllRatiosDataFilename(ALL_RATIOS_DATA_FILENAME);
+        long long DayDuration = DAY_DURATION;
     }
 }
 

@@ -8,25 +8,27 @@
 #include "StandardCalculatorViewModel.h"
 
 using namespace CalculatorApp;
+using namespace CalculatorApp::ViewModel;
+using namespace CalculatorApp::ViewModel::Common;
 using namespace CalculationManager;
 using namespace Platform;
 using namespace std;
 
-CalculatorDisplay::CalculatorDisplay()
+CalculatorApp::ViewModel::Common::CalculatorDisplay::CalculatorDisplay()
 {
 }
 
-void CalculatorDisplay::SetCallback(Platform::WeakReference callbackReference)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetCallback(Platform::WeakReference callbackReference)
 {
     m_callbackReference = callbackReference;
 }
 
-void CalculatorDisplay::SetHistoryCallback(Platform::WeakReference callbackReference)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetHistoryCallback(Platform::WeakReference callbackReference)
 {
     m_historyCallbackReference = callbackReference;
 }
 
-void CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue, _In_ bool isError)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue, _In_ bool isError)
 {
     if (m_callbackReference)
     {
@@ -37,7 +39,7 @@ void CalculatorDisplay::SetPrimaryDisplay(_In_ const wstring& displayStringValue
     }
 }
 
-void CalculatorDisplay::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
 {
     if (m_callbackReference != nullptr)
     {
@@ -48,7 +50,7 @@ void CalculatorDisplay::SetParenthesisNumber(_In_ unsigned int parenthesisCount)
     }
 }
 
-void CalculatorDisplay::OnNoRightParenAdded()
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::OnNoRightParenAdded()
 {
     if (m_callbackReference != nullptr)
     {
@@ -59,7 +61,7 @@ void CalculatorDisplay::OnNoRightParenAdded()
     }
 }
 
-void CalculatorDisplay::SetIsInError(bool isError)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetIsInError(bool isError)
 {
     if (m_callbackReference != nullptr)
     {
@@ -70,7 +72,7 @@ void CalculatorDisplay::SetIsInError(bool isError)
     }
 }
 
-void CalculatorDisplay::SetExpressionDisplay(
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetExpressionDisplay(
     _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
     _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands)
 {
@@ -83,7 +85,7 @@ void CalculatorDisplay::SetExpressionDisplay(
     }
 }
 
-void CalculatorDisplay::SetMemorizedNumbers(_In_ const vector<std::wstring>& newMemorizedNumbers)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::SetMemorizedNumbers(_In_ const vector<std::wstring>& newMemorizedNumbers)
 {
     if (m_callbackReference != nullptr)
     {
@@ -94,7 +96,7 @@ void CalculatorDisplay::SetMemorizedNumbers(_In_ const vector<std::wstring>& new
     }
 }
 
-void CalculatorDisplay::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
 {
     if (m_historyCallbackReference != nullptr)
     {
@@ -105,7 +107,7 @@ void CalculatorDisplay::OnHistoryItemAdded(_In_ unsigned int addedItemIndex)
     }
 }
 
-void CalculatorDisplay::MaxDigitsReached()
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::MaxDigitsReached()
 {
     if (m_callbackReference != nullptr)
     {
@@ -116,7 +118,7 @@ void CalculatorDisplay::MaxDigitsReached()
     }
 }
 
-void CalculatorDisplay::BinaryOperatorReceived()
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::BinaryOperatorReceived()
 {
     if (m_callbackReference != nullptr)
     {
@@ -127,7 +129,7 @@ void CalculatorDisplay::BinaryOperatorReceived()
     }
 }
 
-void CalculatorDisplay::MemoryItemChanged(unsigned int indexOfMemory)
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::MemoryItemChanged(unsigned int indexOfMemory)
 {
     if (m_callbackReference != nullptr)
     {
@@ -138,7 +140,7 @@ void CalculatorDisplay::MemoryItemChanged(unsigned int indexOfMemory)
     }
 }
 
-void CalculatorDisplay::InputChanged()
+void CalculatorApp::ViewModel::Common::CalculatorDisplay::InputChanged()
 {
     if (m_callbackReference != nullptr)
     {

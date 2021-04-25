@@ -5,63 +5,66 @@
 
 namespace CalculatorApp
 {
-    namespace Common
+    namespace ViewModel
     {
-        public delegate void DelegateCommandHandler(Platform::Object ^ parameter);
-
-        public ref class DelegateCommand sealed : public Windows::UI::Xaml::Input::ICommand
+        namespace Common
         {
-        public:
-            DelegateCommand(DelegateCommandHandler ^ handler)
-                : m_handler(handler)
-            {}
+            public delegate void DelegateCommandHandler(Platform::Object ^ parameter);
 
-        private:
-            // Explicit, and private, implementation of ICommand, this way of programming makes it so
-            // the ICommand methods will only be available if the ICommand interface is requested via a dynamic_cast
-            // The ICommand interface is meant to be consumed by Xaml and not by the app, this is a defensive measure against
-            // code in the app calling Execute.
-            virtual void ExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
+            public ref class DelegateCommand sealed : public Windows::UI::Xaml::Input::ICommand
             {
-                m_handler->Invoke(parameter);
-            }
+            public:
+                DelegateCommand(DelegateCommandHandler ^ handler)
+                    : m_handler(handler)
+                {}
 
-            virtual bool CanExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::CanExecute
-            {
-                return true;
-            }
-
-            virtual event Windows::Foundation::EventHandler<Platform::Object ^> ^ CanExecuteChangedImpl
-            {
-                virtual Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<Platform::Object ^> ^ handler) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::add
+            private:
+                // Explicit, and private, implementation of ICommand, this way of programming makes it so
+                // the ICommand methods will only be available if the ICommand interface is requested via a dynamic_cast
+                // The ICommand interface is meant to be consumed by Xaml and not by the app, this is a defensive measure against
+                // code in the app calling Execute.
+                virtual void ExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::Execute
                 {
-                    return m_canExecuteChanged += handler;
+                    m_handler->Invoke(parameter);
                 }
-                virtual void remove(Windows::Foundation::EventRegistrationToken token) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::remove
+
+                virtual bool CanExecuteImpl(Platform::Object ^ parameter) sealed = Windows::UI::Xaml::Input::ICommand::CanExecute
                 {
-                    m_canExecuteChanged -= token;
+                    return true;
                 }
-            }
 
-        private:
-            DelegateCommandHandler ^ m_handler;
-
-            event Windows::Foundation::EventHandler<Platform::Object ^> ^ m_canExecuteChanged;
-        };
-
-        template <typename TTarget, typename TFuncPtr>
-        DelegateCommandHandler ^ MakeDelegateCommandHandler(TTarget ^ target, TFuncPtr&& function)
-        {
-            Platform::WeakReference weakTarget(target);
-            return ref new DelegateCommandHandler([weakTarget, function=std::forward<TFuncPtr>(function)](Platform::Object ^ param)
+                virtual event Windows::Foundation::EventHandler<Platform::Object ^> ^ CanExecuteChangedImpl
                 {
-                    TTarget ^ thatTarget = weakTarget.Resolve<TTarget>();
-                    if (nullptr != thatTarget)
+                    virtual Windows::Foundation::EventRegistrationToken add(Windows::Foundation::EventHandler<Platform::Object ^> ^ handler) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::add
                     {
-                        (thatTarget->*function)(param);
+                        return m_canExecuteChanged += handler;
+                    }
+                    virtual void remove(Windows::Foundation::EventRegistrationToken token) sealed = Windows::UI::Xaml::Input::ICommand::CanExecuteChanged::remove
+                    {
+                        m_canExecuteChanged -= token;
                     }
                 }
-            );
+
+            private:
+                DelegateCommandHandler ^ m_handler;
+
+                event Windows::Foundation::EventHandler<Platform::Object ^> ^ m_canExecuteChanged;
+            };
+
+            template <typename TTarget, typename TFuncPtr>
+            DelegateCommandHandler ^ MakeDelegateCommandHandler(TTarget ^ target, TFuncPtr&& function)
+            {
+                Platform::WeakReference weakTarget(target);
+                return ref new DelegateCommandHandler([weakTarget, function=std::forward<TFuncPtr>(function)](Platform::Object ^ param)
+                    {
+                        TTarget ^ thatTarget = weakTarget.Resolve<TTarget>();
+                        if (nullptr != thatTarget)
+                        {
+                            (thatTarget->*function)(param);
+                        }
+                    }
+                );
+            }
         }
     }
 }

@@ -2,16 +2,19 @@
 
 namespace CalculatorApp
 {
-    namespace Common
+    namespace ViewModel
     {
-    public
-        enum class BitLength : int
+        namespace Common
         {
-            BitLengthUnknown = -1,
-            BitLengthByte = 8,
-            BitLengthWord = 16,
-            BitLengthDWord = 32,
-            BitLengthQWord = 64,
-        };
+        public
+            enum class BitLength : int
+            {
+                BitLengthUnknown = -1,
+                BitLengthByte = 8,
+                BitLengthWord = 16,
+                BitLengthDWord = 32,
+                BitLengthQWord = 64,
+            };
+        }
     }
 }

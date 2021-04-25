@@ -5,16 +5,22 @@
 
 namespace CalculatorApp
 {
-    public ref class AppResourceProvider sealed
+    namespace ViewModel
     {
-    public:
-        static AppResourceProvider ^ GetInstance();
-        Platform::String ^ GetResourceString(_In_ Platform::String ^ key);
-        Platform::String ^ GetCEngineString(_In_ Platform::String ^ key);
+        namespace Common
+        {
+            public ref class AppResourceProvider sealed
+            {
+            public:
+                static AppResourceProvider ^ GetInstance();
+                Platform::String ^ GetResourceString(_In_ Platform::String ^ key);
+                Platform::String ^ GetCEngineString(_In_ Platform::String ^ key);
 
-    private:
-        AppResourceProvider();
-        Windows::ApplicationModel::Resources::ResourceLoader ^ m_stringResLoader;
-        Windows::ApplicationModel::Resources::ResourceLoader ^ m_cEngineStringResLoader;
-    };
+            private:
+                AppResourceProvider();
+                Windows::ApplicationModel::Resources::ResourceLoader ^ m_stringResLoader;
+                Windows::ApplicationModel::Resources::ResourceLoader ^ m_cEngineStringResLoader;
+            };
+        }
+    }
 }
