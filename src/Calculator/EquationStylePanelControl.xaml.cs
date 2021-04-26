@@ -107,14 +107,13 @@ namespace CalculatorApp
             {
                 case EquationLineStyle.Dot:
                     return resourceLoader.GetResourceString("dotLineStyleAutomationName");
-                    break;
+
                 case EquationLineStyle.Dash:
                     return resourceLoader.GetResourceString("dashLineStyleAutomationName");
-                    break;
+
                 case EquationLineStyle.Solid:
                 default:
                     return resourceLoader.GetResourceString("solidLineStyleAutomationName");
-                    break;
             }
         }
 

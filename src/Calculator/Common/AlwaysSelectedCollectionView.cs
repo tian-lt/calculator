@@ -223,11 +223,23 @@ namespace CalculatorApp
             }
 
             public event EventHandler<object> CurrentChanged;
-            public event CurrentChangingEventHandler CurrentChanging; // CSHARP_MIGRATION: TODO: check why this member is never being used.
             public event VectorChangedEventHandler<object> VectorChanged;
 
             IList m_source;
             int m_currentPosition;
+
+            event CurrentChangingEventHandler ICollectionView.CurrentChanging
+            {
+                add
+                {
+                    throw new NotImplementedException();
+                }
+
+                remove
+                {
+                    throw new NotImplementedException();
+                }
+            }
         }
 
         public sealed class AlwaysSelectedCollectionViewConverter : Windows.UI.Xaml.Data.IValueConverter

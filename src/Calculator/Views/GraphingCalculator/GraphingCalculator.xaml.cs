@@ -494,7 +494,7 @@ namespace CalculatorApp
                 // Set the thumbnail image (in case the share target can't handle HTML)
                 requestData.Properties.Thumbnail = bitmapStream;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ShowShareError();
 

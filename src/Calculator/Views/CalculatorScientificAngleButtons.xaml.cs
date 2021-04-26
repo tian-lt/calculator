@@ -34,7 +34,6 @@ namespace CalculatorApp
     {
         public CalculatorScientificAngleButtons()
         {
-            m_isErrorVisualState = false;
             InitializeComponent();
         }
 
@@ -91,7 +90,5 @@ namespace CalculatorApp
             var viewModel = (StandardCalculatorViewModel)this.DataContext;
             viewModel.FtoEButtonToggled();
         }
-
-        private bool m_isErrorVisualState;
     }
 }

@@ -85,10 +85,9 @@ namespace CalculatorApp::ViewModel::Common
         void LogGraphTheme(Platform::String ^ graphTheme);
 
         internal:
-        // CSHARP_MIGRATION: TODO:
-        void LogPlatformException(CalculatorApp::ViewModel::Common::ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e);
-        void LogStandardException(CalculatorApp::ViewModel::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
-        void LogInputPasted(CalculatorApp::ViewModel::Common::ViewMode mode);
+        void LogStandardException(CalculatorApp::Common::ViewMode mode, std::wstring_view functionName, _In_ const std::exception& e);
+        void LogPlatformException(CalculatorApp::Common::ViewMode mode, Platform::String ^ functionName, Platform::Exception ^ e);
+        void LogInputPasted(CalculatorApp::Common::ViewMode mode);
 
     private:
         // Create an instance of TraceLogger
