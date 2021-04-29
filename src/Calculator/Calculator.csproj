@@ -390,7 +390,6 @@
     <Content Include="Assets\CalculatorSplashScreen.scale-200_altform-colorful.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-200_contrast-black.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-200_contrast-white.png" />
-    <Content Include="Assets\CalculatorSplashScreen.scale-400.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-400_altform-colorful.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-400_contrast-black.png" />
     <Content Include="Assets\CalculatorSplashScreen.scale-400_contrast-white.png" />
