@@ -49,7 +49,11 @@ namespace CalculatorApp
             {
                 if (donotuse_ButtonPressed == null)
                 {
-                    donotuse_ButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnAngleButtonPressed);
+                    donotuse_ButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param)=>
+                        {
+                            that.OnAngleButtonPressed(param);
+                        });
                 }
                 return donotuse_ButtonPressed;
             }

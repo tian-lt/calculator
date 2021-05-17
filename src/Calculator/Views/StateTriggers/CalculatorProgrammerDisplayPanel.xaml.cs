@@ -18,7 +18,11 @@ namespace CalculatorApp
             {
                 if (donotuse_BitLengthButtonPressed == null)
                 {
-                    donotuse_BitLengthButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this, OnBitLengthButtonPressed);
+                    donotuse_BitLengthButtonPressed = DelegateCommandUtils.MakeDelegateCommand(this,
+                        (that, param) =>
+                        {
+                            that.OnBitLengthButtonPressed(param);
+                        });
                 }
                 return donotuse_BitLengthButtonPressed;
             }
