@@ -6,28 +6,25 @@
 #include "CalculatorButtonUser.h"
 #include "Utils.h"
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
-    namespace ViewModel
+    namespace Common
     {
-        namespace Common
+    public
+        ref class CalculatorButtonPressedEventArgs sealed
         {
-        public
-            ref class CalculatorButtonPressedEventArgs sealed
+        public:
+            PROPERTY_R(Platform::String ^, AuditoryFeedback);
+            PROPERTY_R(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum, Operation);
+
+            CalculatorButtonPressedEventArgs(Platform::String ^ feedback, CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum operation)
+                : m_AuditoryFeedback(feedback)
+                , m_Operation(operation)
             {
-            public:
-                PROPERTY_R(Platform::String ^, AuditoryFeedback);
-                PROPERTY_R(CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum, Operation);
+            }
 
-                CalculatorButtonPressedEventArgs(Platform::String ^ feedback, CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum operation)
-                    : m_AuditoryFeedback(feedback)
-                    , m_Operation(operation)
-                {
-                }
-
-                static CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum GetOperationFromCommandParameter(_In_ Platform::Object ^ commandParameter);
-                static Platform::String ^ GetAuditoryFeedbackFromCommandParameter(_In_ Platform::Object ^ commandParameter);
-            };
-        }
+            static CalculatorApp::ViewModel::Common::NumbersAndOperatorsEnum GetOperationFromCommandParameter(_In_ Platform::Object ^ commandParameter);
+            static Platform::String ^ GetAuditoryFeedbackFromCommandParameter(_In_ Platform::Object ^ commandParameter);
+        };
     }
 }

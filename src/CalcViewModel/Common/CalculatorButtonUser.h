@@ -13,8 +13,7 @@ namespace CalculatorApp
     {
         namespace Common
         {
-        public
-            enum class NumbersAndOperatorsEnum
+            public enum class NumbersAndOperatorsEnum
             {
                 Zero = (int)CM::Command::Command0,
                 One = (int)CM::Command::Command1,

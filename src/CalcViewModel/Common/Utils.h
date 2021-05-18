@@ -706,21 +706,18 @@ namespace CalculatorApp
         return to;
     }
 
-    namespace ViewModel
+    namespace ViewModel::Common
     {
-        namespace Common
+        // CSHARP_MIGRATION: TODO: Review below utils
+        public ref class Utilities sealed
         {
-            // CSHARP_MIGRATION: TODO: Review below utils
-            public ref class Utilities sealed
-            {
-            public:
-                static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
-                static Platform::String^ TrimTrailingZeros(Platform::String^ input);
-                static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
-                static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
-                static int GetWindowId();
-            };
-        }
+        public:
+            static Platform::String ^ EscapeHtmlSpecialCharacters(Platform::String ^ originalString);
+            static Platform::String^ TrimTrailingZeros(Platform::String^ input);
+            static bool AreColorsEqual(Windows::UI::Color color1, Windows::UI::Color color2);
+            static Windows::UI::Xaml::Media::SolidColorBrush ^ GetContrastColor(Windows::UI::Color backgroundColor);
+            static int GetWindowId();
+        };
     }
 }
 

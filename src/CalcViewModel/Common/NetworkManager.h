@@ -1,44 +1,41 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma once
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
-    namespace ViewModel
+    namespace Common
     {
-        namespace Common
+    public
+        enum class NetworkAccessBehavior
         {
-        public
-            enum class NetworkAccessBehavior
-            {
-                Normal = 0,
-                OptIn = 1,
-                Offline = 2
-            };
+            Normal = 0,
+            OptIn = 1,
+            Offline = 2
+        };
 
-        public
-            delegate void NetworkBehaviorChangedHandler(NetworkAccessBehavior behavior);
+    public
+        delegate void NetworkBehaviorChangedHandler(NetworkAccessBehavior behavior);
 
-        public
-            ref class NetworkManager sealed
-            {
-            public:
-                NetworkManager();
+    public
+        ref class NetworkManager sealed
+        {
+        public:
+            NetworkManager();
 
-                static NetworkAccessBehavior GetNetworkAccessBehavior();
+            static NetworkAccessBehavior GetNetworkAccessBehavior();
 
-                event NetworkBehaviorChangedHandler ^ NetworkBehaviorChanged;
+            event NetworkBehaviorChangedHandler ^ NetworkBehaviorChanged;
 
-            private:
-                ~NetworkManager();
+        private:
+            ~NetworkManager();
 
-                void OnNetworkStatusChange(_In_ Platform::Object ^ sender);
-                static NetworkAccessBehavior ConvertCostInfoToBehavior(_In_ Windows::Networking::Connectivity::ConnectionCost ^ connectionCost);
+            void OnNetworkStatusChange(_In_ Platform::Object ^ sender);
+            static NetworkAccessBehavior ConvertCostInfoToBehavior(_In_ Windows::Networking::Connectivity::ConnectionCost ^ connectionCost);
 
-            private:
-                Windows::Foundation::EventRegistrationToken m_NetworkStatusChangedToken;
-            };
-        }
+        private:
+            Windows::Foundation::EventRegistrationToken m_NetworkStatusChangedToken;
+        };
     }
 }

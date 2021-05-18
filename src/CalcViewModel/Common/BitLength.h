@@ -1,20 +1,17 @@
 #pragma once
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel
 {
-    namespace ViewModel
+    namespace Common
     {
-        namespace Common
+    public
+        enum class BitLength : int
         {
-        public
-            enum class BitLength : int
-            {
-                BitLengthUnknown = -1,
-                BitLengthByte = 8,
-                BitLengthWord = 16,
-                BitLengthDWord = 32,
-                BitLengthQWord = 64,
-            };
-        }
+            BitLengthUnknown = -1,
+            BitLengthByte = 8,
+            BitLengthWord = 16,
+            BitLengthDWord = 32,
+            BitLengthQWord = 64,
+        };
     }
 }

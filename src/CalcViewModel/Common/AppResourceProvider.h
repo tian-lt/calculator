@@ -3,24 +3,18 @@
 
 #pragma once
 
-namespace CalculatorApp
+namespace CalculatorApp::ViewModel::Common
 {
-    namespace ViewModel
+    public ref class AppResourceProvider sealed
     {
-        namespace Common
-        {
-            public ref class AppResourceProvider sealed
-            {
-            public:
-                static AppResourceProvider ^ GetInstance();
-                Platform::String ^ GetResourceString(_In_ Platform::String ^ key);
-                Platform::String ^ GetCEngineString(_In_ Platform::String ^ key);
+    public:
+        static AppResourceProvider ^ GetInstance();
+        Platform::String ^ GetResourceString(_In_ Platform::String ^ key);
+        Platform::String ^ GetCEngineString(_In_ Platform::String ^ key);
 
-            private:
-                AppResourceProvider();
-                Windows::ApplicationModel::Resources::ResourceLoader ^ m_stringResLoader;
-                Windows::ApplicationModel::Resources::ResourceLoader ^ m_cEngineStringResLoader;
-            };
-        }
-    }
+    private:
+        AppResourceProvider();
+        Windows::ApplicationModel::Resources::ResourceLoader ^ m_stringResLoader;
+        Windows::ApplicationModel::Resources::ResourceLoader ^ m_cEngineStringResLoader;
+    };
 }

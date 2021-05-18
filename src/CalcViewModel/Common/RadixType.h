@@ -3,14 +3,17 @@
 
 #pragma once
 
-namespace CalculatorApp::ViewModel::Common
+namespace CalculatorApp::ViewModel
 {
-    // This is expected to be in same order as IDM_HEX, IDM_DEC, IDM_OCT, IDM_BIN
-    public enum class RadixType
+    namespace Common
     {
-        Hex,
-        Decimal,
-        Octal,
-        Binary
-    };
+        // This is expected to be in same order as IDM_HEX, IDM_DEC, IDM_OCT, IDM_BIN
+        public enum class RadixType
+        {
+            Hex,
+            Decimal,
+            Octal,
+            Binary
+        };
+    }
 }

@@ -67,22 +67,25 @@ static constexpr auto TO_KEY = L"to";
 static constexpr auto DEFAULT_FROM_CURRENCY = DefaultCurrencyCode.data();
 static constexpr auto DEFAULT_TO_CURRENCY = L"EUR";
 
-namespace CalculatorApp::ViewModel::DataLoaders
+namespace CalculatorApp
 {
-    namespace UnitConverterResourceKeys
+    namespace ViewModel::DataLoaders
     {
-        StringReference CurrencyUnitFromKey(CURRENCY_UNIT_FROM_KEY);
-        StringReference CurrencyUnitToKey(CURRENCY_UNIT_TO_KEY);
-    }
+        namespace UnitConverterResourceKeys
+        {
+            StringReference CurrencyUnitFromKey(CURRENCY_UNIT_FROM_KEY);
+            StringReference CurrencyUnitToKey(CURRENCY_UNIT_TO_KEY);
+        }
 
-    namespace CurrencyDataLoaderConstants
-    {
-        StringReference CacheTimestampKey(CACHE_TIMESTAMP_KEY);
-        StringReference CacheLangcodeKey(CACHE_LANGCODE_KEY);
-        StringReference CacheDelimiter(CACHE_DELIMITER);
-        StringReference StaticDataFilename(STATIC_DATA_FILENAME);
-        StringReference AllRatiosDataFilename(ALL_RATIOS_DATA_FILENAME);
-        long long DayDuration = DAY_DURATION;
+        namespace CurrencyDataLoaderConstants
+        {
+            StringReference CacheTimestampKey(CACHE_TIMESTAMP_KEY);
+            StringReference CacheLangcodeKey(CACHE_LANGCODE_KEY);
+            StringReference CacheDelimiter(CACHE_DELIMITER);
+            StringReference StaticDataFilename(STATIC_DATA_FILENAME);
+            StringReference AllRatiosDataFilename(ALL_RATIOS_DATA_FILENAME);
+            long long DayDuration = DAY_DURATION;
+        }
     }
 }
 
