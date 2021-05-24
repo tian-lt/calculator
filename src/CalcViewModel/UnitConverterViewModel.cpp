@@ -33,7 +33,6 @@ using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::ApplicationModel::Resources;
 using namespace Windows::Storage;
 
-namespace UCM = UnitConversionManager;
 constexpr int EXPECTEDVIEWMODELDATATOKENS = 8;
 
 // interval is in 100 nanosecond units
