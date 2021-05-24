@@ -154,14 +154,14 @@ namespace CalculatorApp::ViewModel
             static void GetCategoryAcceleratorKeys(Windows::Foundation::Collections::IVector<MyVirtualKey> ^ resutls);
 
             internal : NavCategory(
-                     Platform::String ^ name,
-                     Platform::String ^ automationName,
-                     Platform::String ^ glyph,
-                     Platform::String ^ accessKey,
-                     Platform::String ^ mode,
-                     ViewMode viewMode,
-                     bool supportsNegative,
-                     bool isEnabled)
+                           Platform::String ^ name,
+                           Platform::String ^ automationName,
+                           Platform::String ^ glyph,
+                           Platform::String ^ accessKey,
+                           Platform::String ^ mode,
+                           ViewMode viewMode,
+                           bool supportsNegative,
+                           bool isEnabled)
                 : m_Name(name)
                 , m_AutomationName(automationName)
                 , m_Glyph(glyph)
