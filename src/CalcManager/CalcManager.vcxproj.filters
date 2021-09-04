@@ -10,6 +10,15 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{5149465e-c5c9-48a2-b676-f11380b733a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mep">
+      <UniqueIdentifier>{9fc3bfba-db47-49de-ac9c-fd885d11ebe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mep\inc">
+      <UniqueIdentifier>{98159ad4-ce01-47f1-aa70-e9b2bdbc56f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mep\src">
+      <UniqueIdentifier>{31745917-c54a-4873-aed4-777a84f0a6ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -90,6 +99,12 @@
       <Filter>CEngine</Filter>
     </ClCompile>
     <ClCompile Include="NumberFormattingUtils.cpp" />
+    <ClCompile Include="mep\src\lexer.cpp">
+      <Filter>mep\src</Filter>
+    </ClCompile>
+    <ClCompile Include="mep\src\parser.cpp">
+      <Filter>mep\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h" />
@@ -161,5 +176,17 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NumberFormattingUtils.h" />
+    <ClInclude Include="mep\inc\ast.hpp">
+      <Filter>mep\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="mep\inc\lexer.hpp">
+      <Filter>mep\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="mep\inc\parser.hpp">
+      <Filter>mep\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="mep\inc\visitor.hpp">
+      <Filter>mep\inc</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -166,6 +166,7 @@ private:
 
 private:
     void ProcessCommandWorker(OpCode wParam);
+    void ProcessCommandWorkerOld(OpCode wParam);
     void ResolveHighestPrecedenceOperation();
     void HandleErrorCommand(OpCode idc);
     void HandleMaxDigitsReached();
