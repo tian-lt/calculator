@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
@@ -30,10 +31,14 @@ namespace CalculatorApp
     {
         public MainPage()
         {
+            _perfWatch.Start();
             m_model = new ViewModel.ApplicationViewModel();
+            var t1 = _perfWatch.ElapsedMilliseconds;
             InitializeComponent();
+            var t2 = _perfWatch.ElapsedMilliseconds - t1;
 
             KeyboardShortcutManager.Initialize();
+            var t3 = _perfWatch.ElapsedMilliseconds - t2;
 
             Application.Current.Suspending += App_Suspending;
             m_model.PropertyChanged += OnAppPropertyChanged;
@@ -46,6 +51,8 @@ namespace CalculatorApp
                     DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait | DisplayOrientations.PortraitFlipped;
                 }
             }
+            var t4 = _perfWatch.ElapsedMilliseconds - t3;
+            Trace.WriteLine($"################ mainpage.xaml.cs t1|t2|t3|t4: {t1}|{t2}|{t3}|{t4}");
         }
 
         public CalculatorApp.ViewModel.ApplicationViewModel Model
@@ -604,5 +611,6 @@ namespace CalculatorApp
         private CalculatorApp.DateCalculator m_dateCalculator;
         private CalculatorApp.ViewModel.ApplicationViewModel m_model;
         private Windows.UI.ViewManagement.AccessibilitySettings m_accessibilitySettings;
+        private static Stopwatch _perfWatch = new Stopwatch();
     }
 }

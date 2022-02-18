@@ -47,11 +47,14 @@ namespace CalculatorApp
         /// </summary>
         public App()
         {
+            _perfWatch.Start();
             InitializeComponent();
+            var t1 = _perfWatch.ElapsedMilliseconds;
 
             m_preLaunched = false;
 
             RegisterDependencyProperties();
+            var t2 = _perfWatch.ElapsedMilliseconds - t1;
 
             // TODO: MSFT 14645325: Set this directly from XAML.
             // Currently this is bugged so the property is only respected from code-behind.
@@ -70,6 +73,7 @@ namespace CalculatorApp
                 }
             };
 #endif
+            Trace.WriteLine($"################# app.xaml.cs t1|t2: {t1}|{t2}");
         }
 
         /// <summary>
@@ -85,8 +89,12 @@ namespace CalculatorApp
                 // If the app got pre-launch activated, then save that state in a flag
                 m_preLaunched = true;
             }
+            var t3 = _perfWatch.ElapsedMilliseconds;
             NavCategory.InitializeCategoryManifest(args.User);
+            t3 = _perfWatch.ElapsedMilliseconds - t3;
             OnAppLaunch(args, args.Arguments);
+            var t4 = _perfWatch.ElapsedMilliseconds - t3;
+            Trace.WriteLine($"################# app.xaml.cs t3|t4: {t3}|{t4}");
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
@@ -500,6 +508,8 @@ namespace CalculatorApp
         private Dictionary<int, WindowFrameService> m_secondaryWindows = new Dictionary<int, WindowFrameService>();
         private int m_mainViewId;
         private bool m_preLaunched;
+
+        private static Stopwatch _perfWatch = new Stopwatch();
     }
 }
 
