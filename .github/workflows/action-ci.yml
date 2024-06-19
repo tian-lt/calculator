@@ -21,7 +21,7 @@ jobs:
         $hashedRunId = ${{ github.run_id }} % 0x7fffffff
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
-          -Version 0.$hashedRunId.${{ github.run_number }}.${{ github.run_attempt }}
+          -Version 0.($hashedRunId).${{ github.run_number }}.${{ github.run_attempt }}
       shell: pwsh
       name: Set version number in AppxManifest
 #  testCalc:
