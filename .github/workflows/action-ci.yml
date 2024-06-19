@@ -32,7 +32,7 @@ jobs:
         $hashedRunId = ${{ github.run_id }} % 0x7fffffff
         $version = "0.$hashedRunId.${{ github.run_number }}.${{ github.run_attempt }}"
         msbuild ./src/Calculator.sln `
-          -bl ./output/x64/Calculator.binlog `
+          -bl:./output/x64/Calculator.binlog `
           -p:OutDir=./output/x64/ `
           -p:GenerateProjectSpecificOutputFolder=true `
           -p:Version=$version `
