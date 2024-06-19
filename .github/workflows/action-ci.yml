@@ -21,6 +21,8 @@ jobs:
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
           -Version 0.${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
+      shell: pwsh
+      name: Set version number in AppxManifest
 #  testCalc:
 #    needs: buildWinCalc
 #    runs-on: windows-latest
