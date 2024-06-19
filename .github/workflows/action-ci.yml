@@ -4,7 +4,8 @@ on:
     branches: [main, release/**, feature/**]
   pull_request:
     branches: [main, release/**, feature/**]
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
 jobs:
   buildWinCalc:
     runs-on: windows-latest
