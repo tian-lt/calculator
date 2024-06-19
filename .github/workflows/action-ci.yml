@@ -26,7 +26,7 @@ jobs:
           -Version $version
       shell: pwsh
       name: Set version number in AppxManifest
-    - run: microsoft/setup-msbuild@v2
+    - uses: microsoft/setup-msbuild@v2
       name: Add MSBuild to PATH
     - run: |
         $hashedRunId = ${{ github.run_id }} % 0x7fffffff
