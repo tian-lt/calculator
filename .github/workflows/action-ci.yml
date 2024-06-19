@@ -19,7 +19,7 @@ jobs:
     # - run: nuget restore ./src/Calculator.sln
     - run: |
         $hashedRunId = ${{ github.run_id }} % 0x7fffffff
-        $version = "0.($hashedRunId).${{ github.run_number }}.${{ github.run_attempt }}"
+        $version = "0.$hashedRunId.${{ github.run_number }}.${{ github.run_attempt }}"
         echo $version
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
