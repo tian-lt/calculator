@@ -8,6 +8,7 @@ on:
     inputs:
 jobs:
   buildWinCalc:
+    name: Build
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
@@ -15,7 +16,11 @@ jobs:
       name: Use NuGet 6.x
       with:
         nuget-version: '6.x'
-    - run: nuget restore ./src/Calculator.sln
+    # - run: nuget restore ./src/Calculator.sln
+    - run: |
+        ./build/scripts/UpdateAppxManifestVersion.ps1 `
+          -AppxManifest ./src/Calculator/Package.appxmanifest `
+          -Version 0.${{ github.run_id }}.${{ github.run_number }}.${{ github.run_attempt }}
 #  testCalc:
 #    needs: buildWinCalc
 #    runs-on: windows-latest
