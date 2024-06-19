@@ -39,6 +39,7 @@ jobs:
           -t:Publish `
           -p:PublishDir=./output/x64/publish
       shell: pwsh
+      name: Build Calculator.sln
 #  testCalc:
 #    needs: buildWinCalc
 #    runs-on: windows-latest
