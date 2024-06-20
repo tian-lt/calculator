@@ -41,7 +41,7 @@ jobs:
     - run: nuget restore ./src/Calculator.sln
       name: Restore Nuget dependencies
     - run: |
-        $version = ${{ ${{ fromJSON(needs.defineBuilds.outputs.version) }} }}
+        $version = ${{ fromJSON(needs.defineBuilds.outputs.version) }}
         echo 'version = $version'
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -51,7 +51,7 @@ jobs:
     - uses: microsoft/setup-msbuild@v2
       name: Add MSBuild to PATH
     - run: |
-        $version = ${{ ${{ fromJSON(needs.defineBuilds.outputs.version) }} }}
+        $version = ${{ fromJSON(needs.defineBuilds.outputs.version) }}
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
           -p:OutDir=./output/${{ matrix.platform }}/ `
