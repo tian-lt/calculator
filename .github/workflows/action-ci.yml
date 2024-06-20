@@ -31,7 +31,6 @@ jobs:
             'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
             echo 'Run x64 only.'
           }
-          cat $env:GITHUB_OUTPUT
         shell: pwsh
         env:
           RunAll: ${{ github.event_name != 'pull_request' }}
@@ -43,6 +42,8 @@ jobs:
     strategy:
       matrix:
         platform: ${{ fromJSON(needs.defineBuilds.outputs.platformList) }}
+    env:
+      version: ${{ fromJSON(needs.defineBuilds.outputs.version) }}
     steps:
     - uses: actions/checkout@v4
     - uses: nuget/setup-nuget@v2
@@ -52,7 +53,7 @@ jobs:
     - run: nuget restore ./src/Calculator.sln
       name: Restore Nuget dependencies
     - run: |
-        $version = ${{ fromJSON(needs.defineBuilds.outputs.version) }}
+        $version = ${{ env.version }}
         echo 'version = $version'
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -62,7 +63,7 @@ jobs:
     - uses: microsoft/setup-msbuild@v2
       name: Add MSBuild to PATH
     - run: |
-        $version = ${{ fromJSON(needs.defineBuilds.outputs.version) }}
+        $version = ${{ env.version }}
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
           -p:OutDir=./output/${{ matrix.platform }}/ `
