@@ -126,7 +126,7 @@ jobs:
           -Force
         ${{ env.appDir }}/Add-AppDevPackage.ps1 `
           -Force
-      shell: pwsh
+      shell: powershell
       name: Install app
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
