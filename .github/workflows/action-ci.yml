@@ -23,7 +23,7 @@ jobs:
       - name: Choose platforms
         id: platformList
         run: |
-          if ($RunAll -eq $true) {
+          if ($RunAll -eq "true") {
             echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
             echo 'Run all.'
           }
