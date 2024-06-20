@@ -33,6 +33,7 @@ jobs:
             'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
             echo 'Run x64 only.'
           }
+          cat $env:GITHUB_OUTPUT
         shell: pwsh
         env:
           RunAll: ${{ github.event_name != 'pull_request' }}
@@ -55,24 +56,21 @@ jobs:
     - run: nuget restore ./src/Calculator.sln
       name: Restore Nuget dependencies
     - run: |
-        $version = ${{ env.buildVersion }}
-        echo 'version = $version'
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
-          -Version $version
+          -Version ${{ env.buildVersion }}
       shell: pwsh
       name: Set version number in AppxManifest
     - uses: microsoft/setup-msbuild@v2
       name: Add MSBuild to PATH
     - run: |
-        $version = ${{ env.buildVersion }}
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
           -p:OutDir=./output/${{ matrix.platform }}/ `
           -p:Platform=${{ matrix.platform }} `
           -p:Configuration=Release `
           -p:GenerateProjectSpecificOutputFolder=true `
-          -p:Version=$version `
+          -p:Version=${{ env.buildVersion }} `
           -maxCpuCount `
           -t:Publish `
           -p:PublishDir=./output/${{ matrix.platform }}/publish
