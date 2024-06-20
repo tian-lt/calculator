@@ -101,6 +101,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
     - run: vstest.console.exe ${{ env.testDir }}/CalculatorUnitTests.msix /Platform:x64
+      name: Run unit tests
         
   uiTests:
     needs: build
