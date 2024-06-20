@@ -106,20 +106,27 @@ jobs:
     needs: build
     runs-on: windows-latest
     name: Run UI tests
+    env:
+      appDir: ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test
+      pubDir: ${{ github.workspace }}/download/publish
     steps:
     - uses: actions/download-artifact@v4
+      name: Download build outputs
       with:
         name: Build-x64
         path: ${{ github.workspace }}/download
     - run: |
         Set-DisplayResolution -Width 1920 -Height 1080 -Force
-        ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test/Add-AppDevPackages.ps1 `
-          -CertificatePath ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test/Calculator*.cer `
+      shell: pwsh
+      name: Set screen resolution
+    - run: |
+        ${{ env.appDir }}/Add-AppDevPackage.ps1 `
+          -CertificatePath ${{ env.appDir }}/Calculator*.cer `
           -Force
-        ${{ github.workspace }}/download/Calculator/AppPackages/Calculator*_Test/Add-AppDevPackages.ps1 `
+        ${{ env.appDir }}/Add-AppDevPackage.ps1 `
           -Force
       shell: pwsh
-      name: Setup pre-requisites
+      name: Install app
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
     - run: |
@@ -127,3 +134,4 @@ jobs:
           /Platform:x64 `
           /Settings:${{ github.workspace }}/download/publish/CalculatorUITests.ci.runsettings
       shell: pwsh
+      name: Run UI tests
