@@ -10,7 +10,7 @@ jobs:
   buildWinCalc:
     name: Build
     runs-on: windows-latest
-    stretegy:
+    strategy:
       matrix:
         include:
         - platform: x64
