@@ -19,7 +19,6 @@ jobs:
         run: |
           $version = "0.${{ github.run_number }}.${{ github.run_attempt }}.0"
           "version=`"$version`"" | Out-File $env:GITHUB_OUTPUT -Append
-          cat $env:GITHUB_OUTPUT
         shell: pwsh
       - name: Choose platforms
         id: platformList
@@ -33,7 +32,6 @@ jobs:
             'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
             echo 'Run x64 only.'
           }
-          cat $env:GITHUB_OUTPUT
         shell: pwsh
         env:
           RunAll: ${{ github.event_name != 'pull_request' }}
@@ -87,12 +85,13 @@ jobs:
     runs-on: windows-latest
     name: Run unit tests
     env:
-      testDir: ${{ github.workspace }}/download/CalculatorUnitTests_Test/AppPackages/CalculatorUnitTests_Test
+      testDir: ${{ github.workspace }}/download/CalculatorUnitTestsTests/AppPackages/CalculatorUnitTests_Test
     steps:
     - uses: actions/download-artifact@v4
       with:
         name: Build-x64
         path: ${{ github.workspace }}/download
+        pattern: CalculatorUnitTestsTests/AppPackages/CalculatorUnitTests_Test/**
     - run: |
         tree ${{ github.workspace }} /F
         ${{ env.testDir }}/Add-AppDevPackage.ps1 `
