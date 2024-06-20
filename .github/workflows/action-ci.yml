@@ -66,23 +66,23 @@ jobs:
       name: Add msbuild to path
     - run: |
         msbuild ./src/Calculator.sln `
-          -bl:./output/${{ matrix.platform }}/Calculator.binlog `
-          -p:OutDir=.\output\${{ matrix.platform }}\ `
+          -bl:${{ github.workspace }}/output/Calculator.binlog `
+          -p:OutDir=${{ github.workspace }}\output\ `
           -p:Platform=${{ matrix.platform }} `
           -p:Configuration=Release `
           -p:GenerateProjectSpecificOutputFolder=true `
           -p:Version=${{ env.buildVersion }} `
           -maxCpuCount `
           -t:Publish `
-          -p:PublishDir=./output/${{ matrix.platform }}/publish
-        tree ./output /F
+          -p:PublishDir=${{ github.workspace }}\output\publish\
+        tree ${{ github.workspace }}\output\ /F
       shell: pwsh
       name: Build calculator.sln
     - uses: actions/upload-artifact@v4
       name: Upload build outputs
       with:
-        name: Build-${{ matrix.platform }}-${{ github.run_attempt }}
-        path: ./output/${{ matrix.platform }}
+        name: Build-${{ matrix.platform }}
+        path: ${{ github.workspace }}/output
   unitTests:
     needs: build
     runs-on: windows-latest
@@ -92,7 +92,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v4
       with:
-        name: Build-x64-${{ github.run_attempt }}
+        name: Build-x64
         path: ./download
         pattern: 'CalculatorUnitTests_Test/**'
         
