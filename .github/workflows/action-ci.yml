@@ -10,9 +10,12 @@ jobs:
   defineBuilds:
     name: Define builds
     runs-on: windows-latest 
+    env:
+      isPR: ${{ github.event_name == 'pull_request' }}
     outputs:
       version: ${{ steps.version.outputs.version }}
       platformList: ${{ steps.platformList.outputs.platformList }}
+      unitTestPlatformList: ${{ steps.unitTestPlatformList.outputs.unitTestPlatformList }}
     steps:
       - name: Generate version number
         id: version
@@ -20,21 +23,31 @@ jobs:
           $version = "0.${{ github.run_number }}.${{ github.run_attempt }}.0"
           "version=`"$version`"" | Out-File $env:GITHUB_OUTPUT -Append
         shell: pwsh
-      - name: Choose platforms
+      - name: Choose platforms to build
         id: platformList
         run: |
-          if ($env:RunAll) {
+          if ($env:isPR -eq $false) {
             #'platformList=["x64", "x86", "ARM64", "ARM"]' | Out-File $env:GITHUB_OUTPUT -Append
             'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
-            echo 'Run all.'
+            echo 'Build all platforms.'
           }
           else {
             'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
-            echo 'Run x64 only.'
+            echo 'Build x64 only.'
           }
         shell: pwsh
-        env:
-          RunAll: ${{ github.event_name != 'pull_request' }}
+      - name: Choose platforms for unit test
+        id: unitTestPlatformList
+        run: |
+          if ($env:isPR -eq $false){
+            'unitTestPlatformList=["x64", "x86"]' | Out-File $env:GITHUB_OUTPUT -Append
+            echo 'Test x64, x86'
+          }
+          else{
+            'unitTestPlatformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
+            echo 'Test x64'
+          }
+        shell: pwsh
 
   build:
     needs: defineBuilds
@@ -81,16 +94,19 @@ jobs:
         path: ${{ github.workspace }}/output
 
   unitTests:
-    needs: build
+    needs: [defineBuilds, build]
     runs-on: windows-latest
     name: Run unit tests
+    strategy:
+      matrix:
+        platform: ${{ fromJSON(needs.defineBuilds.outputs.unitTestPlatformList) }}
     env:
       testDir: ${{ github.workspace }}/download/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test
     steps:
     - uses: actions/download-artifact@v4
       name: Download build outputs
       with:
-        name: Build-x64
+        name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/download
     - run: |
         ${{ env.testDir }}/Add-AppDevPackage.ps1 `
@@ -100,7 +116,7 @@ jobs:
       name: Install test certificate
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
-    - run: vstest.console.exe ${{ env.testDir }}/CalculatorUnitTests.msix /Platform:x64
+    - run: vstest.console.exe ${{ env.testDir }}/CalculatorUnitTests.msix /Platform:${{ matrix.platform }}
       name: Run unit tests
         
   uiTests:
