@@ -50,11 +50,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: nuget/setup-nuget@v2
-      name: Use NuGet 6.x
+      name: Use nuget 6.x
       with:
         nuget-version: '6.x'
     - run: nuget restore ./src/Calculator.sln
-      name: Restore Nuget dependencies
+      name: Restore nuget dependencies
     - run: |
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -62,7 +62,7 @@ jobs:
       shell: pwsh
       name: Set version number in AppxManifest
     - uses: microsoft/setup-msbuild@v2
-      name: Add MSBuild to PATH
+      name: Add msbuild to path
     - run: |
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
@@ -75,12 +75,19 @@ jobs:
           -t:Publish `
           -p:PublishDir=./output/${{ matrix.platform }}/publish
       shell: pwsh
-      name: Build Calculator.sln
+      name: Build calculator.sln
     - uses: actions/upload-artifact@v4
       name: Upload build outputs
       with:
-        name: Build-${{ matrix.platform }}-${{ github.run_attempt}}
-        path: ./output/${{ matrix.platform }}/publish
-#  testCalc:
-#    needs: buildWinCalc
-#    runs-on: windows-latest
+        name: Build-${{ matrix.platform }}-${{ github.run_attempt }}
+        path: ./output/${{ matrix.platform }}
+  unitTests:
+    needs: build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: Build-x64-${{ github.run_attempt }}
+        path: ./download
+        pattern: '**/CalculatorUnitTests_Test/**'
+
