@@ -19,14 +19,17 @@ jobs:
         run: |
           $hashedRunId = ${{ github.run_id }} % 100000
           echo 'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' >> "$GITHUB_OUTPUT"
-      - name: Build x64 only for PR
+        shell: pwsh
+      - name: Choose platforms
         id: platformList
         run: |
           if ($RunAll) {
             echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
+            echo 'Run all.'
           }
           else {
             echo 'platformList=["x64"]' >> "$GITHUB_OUTPUT"
+            echo 'Run x64 only.'
           }
         shell: pwsh
         env:
