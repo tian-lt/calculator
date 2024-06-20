@@ -43,7 +43,7 @@ jobs:
       matrix:
         platform: ${{ fromJSON(needs.defineBuilds.outputs.platformList) }}
     env:
-      version: ${{ fromJSON(needs.defineBuilds.outputs.version) }}
+      buildVersion: ${{ fromJSON(needs.defineBuilds.outputs.version) }}
     steps:
     - uses: actions/checkout@v4
     - uses: nuget/setup-nuget@v2
@@ -53,7 +53,7 @@ jobs:
     - run: nuget restore ./src/Calculator.sln
       name: Restore Nuget dependencies
     - run: |
-        $version = ${{ env.version }}
+        $version = ${{ env.buildVersion }}
         echo 'version = $version'
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -63,7 +63,7 @@ jobs:
     - uses: microsoft/setup-msbuild@v2
       name: Add MSBuild to PATH
     - run: |
-        $version = ${{ env.version }}
+        $version = ${{ env.buildVersion }}
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
           -p:OutDir=./output/${{ matrix.platform }}/ `
