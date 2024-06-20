@@ -11,8 +11,8 @@ jobs:
     name: Define builds
     runs-on: windows-latest 
     outputs:
-      version: $
-      platformList: $
+      version: ${{ steps.version.outputs.version }}
+      platformList: ${{ steps.platformList.outputs.platformList }}
     steps:
       - name: Generate version number
         id: version
@@ -24,7 +24,6 @@ jobs:
         id: platformList
         run: |
           if ($env:RunAll) {
-            echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> $env:GITHUB_OUTPUT
             'platformList=["x64", "x86", "ARM64", "ARM"]' | Out-File $env:GITHUB_OUTPUT -Append
             echo 'Run all.'
           }
@@ -32,7 +31,6 @@ jobs:
             'platformList=["x64"]' | Out-File $env:GITHUB_OUTPUT -Append
             echo 'Run x64 only.'
           }
-          echo "$env:GITHUB_OUTPUT"
           cat $env:GITHUB_OUTPUT
         shell: pwsh
         env:
