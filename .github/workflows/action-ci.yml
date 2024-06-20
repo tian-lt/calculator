@@ -13,14 +13,8 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        include:
-        - platform: x64
-        - platform: x86
-          if: ${{ github.event_name == 'pull_request' }}
-        - platform: ARM64
-          if: ${{ github.event_name != 'pull_request' }}
-        - platform: ARM
-          if: ${{ github.event_name != 'pull_request' }}
+        platform: [x64, x86, ARM64, ARM]
+    if: matrix.platform != x64 && github.event_name != 'pull_request'
     steps:
     - uses: actions/checkout@v4
     - uses: nuget/setup-nuget@v2
