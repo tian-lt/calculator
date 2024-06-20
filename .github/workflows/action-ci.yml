@@ -17,8 +17,7 @@ jobs:
       - name: Generate version number
         id: version
         run: |
-          $hashedRunId = ${{ github.run_id }} % 10000
-          $version = "0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"
+          $version = "0.${{ github.run_number }}.${{ github.run_attempt }}.0"
           "version=`"$version`"" | Out-File $env:GITHUB_OUTPUT -Append
           cat $env:GITHUB_OUTPUT
         shell: pwsh
@@ -82,21 +81,22 @@ jobs:
       with:
         name: Build-${{ matrix.platform }}
         path: ${{ github.workspace }}/output
+
   unitTests:
     needs: build
     runs-on: windows-latest
     name: Run unit tests
     env:
-      testDir: ./download/CalculatorUnitTests_Test/AppPackages/CalculatorUnitTests_Test
+      testDir: ${{ github.workspace }}/download/CalculatorUnitTests_Test/AppPackages/CalculatorUnitTests_Test
     steps:
     - uses: actions/download-artifact@v4
       with:
         name: Build-x64
-        path: ./download
-        pattern: 'CalculatorUnitTests_Test/**'
+        path: ${{ github.workspace }}/download
     - run: |
+        tree ${{ github.workspace }} /F
         ${{ env.testDir }}/Add-AppDevPackage.ps1 `
-          -CertificatePath $env:testDir/CalculatorUnitTests.cer `
+          -CertificatePath ${{ env.testDir }}/CalculatorUnitTests.cer `
           -Force
     - uses: microsoft/vstest-action@v1.0.0
       with:
