@@ -146,8 +146,9 @@ jobs:
       name: Install app
     - run: |
         Invoke-WebRequest 'https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi' `
-          -OutFile (New-Item -Path ./download2/wad.msi -Force)
-        msiexec.exe /i .\download2\wad.msi /quiet
+          -OutFile (New-Item -Path '${{ github.workspace }}/download2/wad.msi' -Force)
+        cd ${{ github.workspace }}/download2
+        msiexec.exe /i wad.msi /quiet /passive
       shell: pwsh
       name: Install WindowsApplicationDriver
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
