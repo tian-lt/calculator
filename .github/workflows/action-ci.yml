@@ -149,7 +149,7 @@ jobs:
           -OutFile (New-Item -Path '${{ github.workspace }}/download2/wad.msi' -Force)
         cd ${{ github.workspace }}/download2
         msiexec.exe /i wad.msi /quiet /passive
-      shell: pwsh
+      shell: powershell
       name: Install WindowsApplicationDriver
     - uses: ilammy/msvc-dev-cmd@v1  # this is a workaround because microsoft/vstest-action is broken.
       name: Setup dev tools
@@ -157,5 +157,5 @@ jobs:
         vstest.console.exe ${{ github.workspace }}/download/publish/CalculatorUITests.dll `
           /Platform:x64 `
           /Settings:${{ github.workspace }}/download/publish/CalculatorUITests.ci.runsettings
-      shell: pwsh
+      shell: powershell
       name: Run UI tests
