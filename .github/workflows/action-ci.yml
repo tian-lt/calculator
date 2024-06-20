@@ -6,22 +6,25 @@ on:
   pull_request:
     branches: [main, release/**, feature/**]
   workflow_dispatch:
-    inputs:
 jobs:
   defineBuilds:
+    name: Define builds
     runs-on: windows-latest 
     outputs:
       version: $
       platformList: $
     steps:
       - name: Generate version number
+        id: version
         run: |
           $hashedRunId = ${{ github.run_id }} % 100000
           echo 'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' >> "$GITHUB_OUTPUT"
       - name: Build x64 only for PR
+        id: platformList
         run: echo 'platformList=["x64"]' >> "$GITHUB_OUTPUT"
         if: ${{ github.event_name == 'pull_request' }}
       - name: Build all platforms
+        id: platformList
         run: echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
         if: ${{ github.event_name != 'pull_request' }}
 
