@@ -47,6 +47,11 @@ jobs:
       buildVersion: ${{ fromJSON(needs.defineBuilds.outputs.version) }}
     steps:
     - uses: actions/checkout@v4
+    - uses: microsoft/setup-msbuild@v2
+      name: Setup msbuild
+    - uses: ilammy/msvc-dev-cmd@v1
+      name: Setup dev tools
+    - run: vstest.console.exe
     - uses: nuget/setup-nuget@v2
       name: Use nuget 6.x
       with:
@@ -59,10 +64,6 @@ jobs:
           -Version ${{ env.buildVersion }}
       shell: pwsh
       name: Set version number in AppxManifest
-    - uses: microsoft/setup-msbuild@v2
-      name: Add msbuild to path
-    - run: |
-        vstest.console.exe
     - run: |
         msbuild ./src/Calculator.sln `
           -bl:${{ github.workspace }}/output/Calculator.binlog `
