@@ -31,6 +31,8 @@ jobs:
             echo 'platformList=["x64"]' >> $env:GITHUB_OUTPUT
             echo 'Run x64 only.'
           }
+          echo '$env:GITHUB_OUTPUT'
+          cat $env:GITHUB_OUTPUT
         shell: pwsh
         env:
           RunAll: ${{ github.event_name != 'pull_request' }}
