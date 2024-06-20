@@ -10,6 +10,12 @@ jobs:
   buildWinCalc:
     name: Build
     runs-on: windows-latest
+    stretegy:
+      matrix:
+        include:
+        - platform: x64
+        - platform: x86
+          if: ${{ github.event_name != 'pull_request' }}
     steps:
     - uses: actions/checkout@v4
     - uses: nuget/setup-nuget@v2
@@ -32,12 +38,15 @@ jobs:
         $hashedRunId = ${{ github.run_id }} % 0x7fffffff
         $version = "0.$hashedRunId.${{ github.run_number }}.${{ github.run_attempt }}"
         msbuild ./src/Calculator.sln `
-          -bl:./output/x64/Calculator.binlog `
-          -p:OutDir=./output/x64/ `
+          -bl:./output/${{ matrix.platform }}/Calculator.binlog `
+          -p:OutDir=./output/${{ matrix.platform }}/ `
+          -p:Platform=${{ matrix.platform }} `
+          -p:Configuration=Release `
           -p:GenerateProjectSpecificOutputFolder=true `
           -p:Version=$version `
+          -maxCpuCount `
           -t:Publish `
-          -p:PublishDir=./output/x64/publish
+          -p:PublishDir=./output/${{ matrix.platform }}/publish
       shell: pwsh
       name: Build Calculator.sln
 #  testCalc:
