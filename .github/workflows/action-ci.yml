@@ -18,17 +18,17 @@ jobs:
         id: version
         run: |
           $hashedRunId = ${{ github.run_id }} % 100000
-          echo 'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' >> "$GITHUB_OUTPUT"
+          echo 'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' >> "$env:GITHUB_OUTPUT"
         shell: pwsh
       - name: Choose platforms
         id: platformList
         run: |
           if ($env:RunAll) {
-            echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
+            echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$env:GITHUB_OUTPUT"
             echo 'Run all.'
           }
           else {
-            echo 'platformList=["x64"]' >> "$GITHUB_OUTPUT"
+            echo 'platformList=["x64"]' >> "$env:GITHUB_OUTPUT"
             echo 'Run x64 only.'
           }
         shell: pwsh
