@@ -85,15 +85,13 @@ jobs:
     runs-on: windows-latest
     name: Run unit tests
     env:
-      testDir: ${{ github.workspace }}/download/CalculatorUnitTestsTests/AppPackages/CalculatorUnitTests_Test
+      testDir: ${{ github.workspace }}/download/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test
     steps:
     - uses: actions/download-artifact@v4
       with:
         name: Build-x64
         path: ${{ github.workspace }}/download
-        pattern: CalculatorUnitTestsTests/AppPackages/CalculatorUnitTests_Test/**
     - run: |
-        tree ${{ github.workspace }} /F
         ${{ env.testDir }}/Add-AppDevPackage.ps1 `
           -CertificatePath ${{ env.testDir }}/CalculatorUnitTests.cer `
           -Force
