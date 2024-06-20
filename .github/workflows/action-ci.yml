@@ -21,12 +21,16 @@ jobs:
           echo 'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' >> "$GITHUB_OUTPUT"
       - name: Build x64 only for PR
         id: platformList
-        run: echo 'platformList=["x64"]' >> "$GITHUB_OUTPUT"
-        if: ${{ github.event_name == 'pull_request' }}
-      - name: Build all platforms
-        id: platformList
-        run: echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
-        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          if ($RunAll) {
+            echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
+          }
+          else {
+            echo 'platformList=["x64"]' >> "$GITHUB_OUTPUT"
+          }
+        shell: pwsh
+        env:
+          RunAll: ${{ github.event_name != 'pull_request' }}
 
   build:
     needs: defineBuilds
