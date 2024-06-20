@@ -62,6 +62,8 @@ jobs:
     - uses: microsoft/setup-msbuild@v2
       name: Add msbuild to path
     - run: |
+        vstest.console.exe
+    - run: |
         msbuild ./src/Calculator.sln `
           -bl:${{ github.workspace }}/output/Calculator.binlog `
           -p:OutDir=${{ github.workspace }}\output\ `
@@ -88,6 +90,7 @@ jobs:
       testDir: ${{ github.workspace }}/download/CalculatorUnitTests/AppPackages/CalculatorUnitTests_Test
     steps:
     - uses: actions/download-artifact@v4
+      name: Download build outputs
       with:
         name: Build-x64
         path: ${{ github.workspace }}/download
@@ -95,7 +98,10 @@ jobs:
         ${{ env.testDir }}/Add-AppDevPackage.ps1 `
           -CertificatePath ${{ env.testDir }}/CalculatorUnitTests.cer `
           -Force
+      shell: pwsh
+      name: Install test certificate
     - uses: microsoft/vstest-action@v1.0.0
+      name: Run unit tests
       with:
         testAssembly: ${{ env.testDir }}/CalculatorUnitTests.msix
         otherConsoleOptions: /Platform:x64
@@ -107,7 +113,9 @@ jobs:
 #    steps:
 #    - uses: actions/download-artifact@v4
 #      with:
-#        name: Build-x64-${{ github.run_attempt }}
-#        path: ./download
-#        pattern: '**/CalculatorUnitTests_Test/**'
+#        name: Build-x64
+#        path: ${{ github.workspace }}/download
+#    - run: |
+#        Set-DisplayResolution -Width 1920 -Height 1080 -Force
+#      shell: pwsh
 
