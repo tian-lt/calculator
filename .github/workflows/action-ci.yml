@@ -8,13 +8,30 @@ on:
   workflow_dispatch:
     inputs:
 jobs:
-  buildWinCalc:
+  defineBuilds:
+    runs-on: windows-latest 
+    outputs:
+      version: $
+      platformList: $
+    steps:
+      - name: Generate version number
+        run: |
+          $hashedRunId = ${{ github.run_id }} % 100000
+          echo 'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' >> "$GITHUB_OUTPUT"
+      - name: Build x64 only for PR
+        run: echo 'platformList=["x64"]' >> "$GITHUB_OUTPUT"
+        if: ${{ github.event_name == 'pull_request' }}
+      - name: Build all platforms
+        run: echo 'platformList=["x64", "x86", "ARM64", "ARM"]' >> "$GITHUB_OUTPUT"
+        if: ${{ github.event_name != 'pull_request' }}
+
+  build:
+    needs: defineBuilds
     name: Build
     runs-on: windows-latest
     strategy:
       matrix:
-        platform: [x64, x86, ARM64, ARM]
-    if: matrix.platform != x64 && github.event_name != 'pull_request'
+        platform: ${{ fromJSON(needs.defineBuilds.outputs.platformList) }}
     steps:
     - uses: actions/checkout@v4
     - uses: nuget/setup-nuget@v2
@@ -22,10 +39,10 @@ jobs:
       with:
         nuget-version: '6.x'
     - run: nuget restore ./src/Calculator.sln
+      name: Restore Nuget dependencies
     - run: |
-        $hashedRunId = ${{ github.run_id }} % 20000
-        $version = "0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"
-        echo $version
+        $version = ${{ ${{ fromJSON(needs.defineBuilds.outputs.version) }} }}
+        echo 'version = $version'
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
           -Version $version
@@ -34,8 +51,7 @@ jobs:
     - uses: microsoft/setup-msbuild@v2
       name: Add MSBuild to PATH
     - run: |
-        $hashedRunId = ${{ github.run_id }} % 20000
-        $version = "0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"
+        $version = ${{ ${{ fromJSON(needs.defineBuilds.outputs.version) }} }}
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
           -p:OutDir=./output/${{ matrix.platform }}/ `
