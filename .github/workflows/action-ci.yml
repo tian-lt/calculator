@@ -67,7 +67,7 @@ jobs:
     - run: |
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
-          -p:OutDir=./output/${{ matrix.platform }} `
+          -p:OutDir=.\output\${{ matrix.platform }}\ `
           -p:Platform=${{ matrix.platform }} `
           -p:Configuration=Release `
           -p:GenerateProjectSpecificOutputFolder=true `
@@ -75,23 +75,27 @@ jobs:
           -maxCpuCount `
           -t:Publish `
           -p:PublishDir=./output/${{ matrix.platform }}/publish
+        tree ./output /F
       shell: pwsh
       name: Build calculator.sln
     - uses: actions/upload-artifact@v4
       name: Upload build outputs
       with:
         name: Build-${{ matrix.platform }}-${{ github.run_attempt }}
-        path: ./output/${{ matrix.platform }}/**
+        path: ./output/${{ matrix.platform }}
   unitTests:
     needs: build
     runs-on: windows-latest
     name: Run unit tests
+    env:
+      testDir: ./download/CalculatorUnitTests_Test/AppPackages/CalculatorUnitTests_Test
     steps:
     - uses: actions/download-artifact@v4
       with:
         name: Build-x64-${{ github.run_attempt }}
         path: ./download
-        pattern: '**/CalculatorUnitTests_Test/**'
+        pattern: 'CalculatorUnitTests_Test/**'
+        
 #  uiTests:
 #    needs: build
 #    runs-on: windows-latest
