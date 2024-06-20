@@ -1,4 +1,5 @@
 name: Windows Calculator Continuous Integration Pipeline
+run-name: WinCalc-CI-0.${{ github.run_number }}.x.x
 on:
   push:
     branches: [main, release/**, feature/**]
@@ -15,7 +16,7 @@ jobs:
         include:
         - platform: x64
         - platform: x86
-          if: ${{ github.event_name != 'pull_request' }}
+          if: ${{ github.event_name == 'pull_request' }}
         - platform: ARM64
           if: ${{ github.event_name != 'pull_request' }}
         - platform: ARM
@@ -29,7 +30,7 @@ jobs:
     - run: nuget restore ./src/Calculator.sln
     - run: |
         $hashedRunId = ${{ github.run_id }} % 20000
-        $version = "0.$hashedRunId.${{ github.run_number }}.${{ github.run_attempt }}"
+        $version = "0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"
         echo $version
         ./build/scripts/UpdateAppxManifestVersion.ps1 `
           -AppxManifest ./src/Calculator/Package.appxmanifest `
@@ -40,7 +41,7 @@ jobs:
       name: Add MSBuild to PATH
     - run: |
         $hashedRunId = ${{ github.run_id }} % 20000
-        $version = "0.$hashedRunId.${{ github.run_number }}.${{ github.run_attempt }}"
+        $version = "0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"
         msbuild ./src/Calculator.sln `
           -bl:./output/${{ matrix.platform }}/Calculator.binlog `
           -p:OutDir=./output/${{ matrix.platform }}/ `
