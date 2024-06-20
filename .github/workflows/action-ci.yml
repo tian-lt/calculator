@@ -1,5 +1,5 @@
 name: Windows Calculator Continuous Integration Pipeline
-run-name: WinCalc-CI-0.${{ github.run_number }}.x.x
+run-name: WinCalc-CI-0.${{ github.run_number }}
 on:
   push:
     branches: [main, release/**, feature/**]
@@ -75,7 +75,6 @@ jobs:
           -maxCpuCount `
           -t:Publish `
           -p:PublishDir=${{ github.workspace }}\output\publish\
-        tree ${{ github.workspace }}\output\ /F
       shell: pwsh
       name: Build calculator.sln
     - uses: actions/upload-artifact@v4
@@ -95,6 +94,14 @@ jobs:
         name: Build-x64
         path: ./download
         pattern: 'CalculatorUnitTests_Test/**'
+    - run: |
+        ${{ env.testDir }}/Add-AppDevPackage.ps1 `
+          -CertificatePath $env:testDir/CalculatorUnitTests.cer `
+          -Force
+    - uses: microsoft-approved-actions/vstest@master
+      with:
+        testAssembly: ${{ env.testDir }}/CalculatorUnitTests.msix
+        otherConsoleOptions: /Platform:x64
         
 #  uiTests:
 #    needs: build
