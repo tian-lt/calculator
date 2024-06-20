@@ -18,7 +18,8 @@ jobs:
         id: version
         run: |
           $hashedRunId = ${{ github.run_id }} % 100000
-          'version="0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}"' | Out-File $env:GITHUB_OUTPUT -Append
+          $version = 0.${{ github.run_number }}.$hashedRunId.${{ github.run_attempt }}
+          "version=$version" | Out-File $env:GITHUB_OUTPUT -Append
         shell: pwsh
       - name: Choose platforms
         id: platformList
