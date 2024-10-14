@@ -13,6 +13,7 @@ class ISerializeCommandVisitor;
 class IExpressionCommand
 {
 public:
+    virtual ~IExpressionCommand() = 0;
     virtual CalculationManager::CommandType GetCommandType() const = 0;
     virtual void Accept(_In_ ISerializeCommandVisitor& commandVisitor) = 0;
 };
@@ -20,12 +21,14 @@ public:
 class IOperatorCommand : public IExpressionCommand
 {
 public:
+    virtual ~IOperatorCommand() = 0;
     virtual void SetCommand(int command) = 0;
 };
 
 class IUnaryCommand : public IOperatorCommand
 {
 public:
+    virtual ~IUnaryCommand() = 0;
     virtual const std::shared_ptr<std::vector<int>>& GetCommands() const = 0;
     virtual void SetCommands(int command1, int command2) = 0;
 };
@@ -33,6 +36,7 @@ public:
 class IBinaryCommand : public IOperatorCommand
 {
 public:
+    virtual ~IBinaryCommand() = 0;
     virtual void SetCommand(int command) override = 0;
     virtual int GetCommand() const = 0;
 };
@@ -40,6 +44,7 @@ public:
 class IOpndCommand : public IExpressionCommand
 {
 public:
+    virtual ~IOpndCommand() = 0;
     virtual const std::shared_ptr<std::vector<int>>& GetCommands() const = 0;
     virtual void AppendCommand(int command) = 0;
     virtual void ToggleSign() = 0;
@@ -54,5 +59,6 @@ public:
 class IParenthesisCommand : public IExpressionCommand
 {
 public:
+    virtual ~IParenthesisCommand() = 0;
     virtual int GetCommand() const = 0;
 };

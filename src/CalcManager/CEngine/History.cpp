@@ -31,14 +31,8 @@ void CHistoryCollector::ReinitHistory()
     m_lastBinOpStartIndex = -1;
     m_curOperandIndex = 0;
     m_bLastOpndBrace = false;
-    if (m_spTokens != nullptr)
-    {
-        m_spTokens->clear();
-    }
-    if (m_spCommands != nullptr)
-    {
-        m_spCommands->clear();
-    }
+    m_tokens = {};
+    m_commands = {};
 }
 
 // Constructor
@@ -50,17 +44,6 @@ CHistoryCollector::CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr
     , m_decimalSymbol(decimalSymbol)
 {
     ReinitHistory();
-}
-
-CHistoryCollector::~CHistoryCollector()
-{
-    m_pHistoryDisplay = nullptr;
-    m_pCalcDisplay = nullptr;
-
-    if (m_spTokens != nullptr)
-    {
-        m_spTokens->clear();
-    }
 }
 
 void CHistoryCollector::AddOpndToHistory(wstring_view numStr, Rational const& rat, bool fRepetition)
@@ -291,12 +274,10 @@ void CHistoryCollector::CompleteHistoryLine(wstring_view numStr)
 {
     if (nullptr != m_pHistoryDisplay)
     {
-        unsigned int addedItemIndex = m_pHistoryDisplay->AddToHistory(m_spTokens, m_spCommands, numStr);
-        m_pCalcDisplay->OnHistoryItemAdded(addedItemIndex);
+        auto addedItemIndex = m_pHistoryDisplay->AddToHistory(std::move(m_tokens), std::move(m_commands), std::wstring{ numStr });
+        m_pCalcDisplay->OnHistoryItemAdded(static_cast<unsigned>(addedItemIndex));
     }
 
-    m_spTokens = nullptr;
-    m_spCommands = nullptr;
     m_iCurLineHistStart = -1; // It will get recomputed at the first Opnd
     ReinitHistory();
 }
@@ -329,19 +310,14 @@ void CHistoryCollector::ClearHistoryLine(wstring_view errStr)
 //  Also returns the 0 based index in the string just added. Can throw out of memory error
 int CHistoryCollector::IchAddSzToEquationSz(wstring_view str, int icommandIndex)
 {
-    if (m_spTokens == nullptr)
-    {
-        m_spTokens = std::make_shared<std::vector<std::pair<std::wstring, int>>>();
-    }
-
-    m_spTokens->push_back(std::pair(wstring(str), icommandIndex));
-    return static_cast<int>(m_spTokens->size() - 1);
+    m_tokens.emplace_back(std::wstring{ str }, icommandIndex);
+    return static_cast<int>(m_tokens.size() - 1);
 }
 
 // Inserts a given string into the global m_pszEquation at the given index ich taking care of reallocations etc.
 void CHistoryCollector::InsertSzInEquationSz(wstring_view str, int icommandIndex, int ich)
 {
-    m_spTokens->emplace(m_spTokens->begin() + ich, wstring(str), icommandIndex);
+    m_tokens.emplace(m_tokens.begin() + ich, std::wstring{ str }, icommandIndex);
 }
 
 // Chops off the current equation string from the given index
@@ -349,23 +325,22 @@ void CHistoryCollector::TruncateEquationSzFromIch(int ich)
 {
     // Truncate commands
     int minIdx = -1;
-    unsigned int nTokens = static_cast<unsigned int>(m_spTokens->size());
+    unsigned int nTokens = static_cast<unsigned int>(m_tokens.size());
 
     for (unsigned int i = ich; i < nTokens; i++)
     {
-        const auto& currentPair = (*m_spTokens)[i];
-        int curTokenId = currentPair.second;
+        const auto& [_, curTokenId] = m_tokens[i];
         if (curTokenId != -1)
         {
             if ((minIdx != -1) || (curTokenId < minIdx))
             {
                 minIdx = curTokenId;
-                Truncate(*m_spCommands, minIdx);
+                Truncate(m_tokens, minIdx);
             }
         }
     }
 
-    Truncate(*m_spTokens, ich);
+    Truncate(m_tokens, ich);
 }
 
 // Adds the m_pszEquation into the running history text
@@ -377,39 +352,29 @@ void CHistoryCollector::SetExpressionDisplay()
     }
 }
 
-int CHistoryCollector::AddCommand(_In_ const std::shared_ptr<IExpressionCommand>& spCommand)
+int CHistoryCollector::AddCommand(std::unique_ptr<IExpressionCommand> spCommand)
 {
-    if (m_spCommands == nullptr)
-    {
-        m_spCommands = std::make_shared<std::vector<std::shared_ptr<IExpressionCommand>>>();
-    }
-
-    m_spCommands->push_back(spCommand);
-    return static_cast<int>(m_spCommands->size() - 1);
+    m_commands.push_back(std::move(spCommand));
+    return static_cast<int>(m_commands.size() - 1);
 }
 
 // To Update the operands in the Expression according to the current Radix
 void CHistoryCollector::UpdateHistoryExpression(uint32_t radix, int32_t precision)
 {
-    if (m_spTokens == nullptr)
+    for (auto& token : m_tokens)
     {
-        return;
-    }
-
-    for (auto& token : *m_spTokens)
-    {
-        int commandPosition = token.second;
+        auto commandPosition = token.CommandIndex;
         if (commandPosition != -1)
         {
-            const std::shared_ptr<IExpressionCommand>& expCommand = m_spCommands->at(commandPosition);
+            const auto& expCommand = m_commands.at(commandPosition);
 
             if (expCommand != nullptr && CalculationManager::CommandType::OperandCommand == expCommand->GetCommandType())
             {
-                const std::shared_ptr<COpndCommand>& opndCommand = std::static_pointer_cast<COpndCommand>(expCommand);
+                auto opndCommand = static_cast<COpndCommand*>(expCommand.get());
                 if (opndCommand != nullptr)
                 {
-                    token.first = opndCommand->GetString(radix, precision);
-                    opndCommand->SetCommands(GetOperandCommandsFromString(token.first));
+                    token.OpCodeString = opndCommand->GetString(radix, precision);
+                    opndCommand->SetCommands(GetOperandCommandsFromString(token.OpCodeString));
                 }
             }
         }

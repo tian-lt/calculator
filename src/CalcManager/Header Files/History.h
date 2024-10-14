@@ -4,6 +4,8 @@
 #pragma once
 
 #include <array>
+
+#include "CalculatorHistory.h"
 #include "ExpressionCommand.h"
 #include "ICalcDisplay.h"
 #include "IHistoryDisplay.h"
@@ -21,7 +23,6 @@ class CHistoryCollector
 {
 public:
     CHistoryCollector(ICalcDisplay* pCalcDisplay, std::shared_ptr<IHistoryDisplay> pHistoryDisplay, wchar_t decimalSymbol); // Can throw errors
-    ~CHistoryCollector();
     void AddOpndToHistory(std::wstring_view numStr, CalcEngine::Rational const& rat, bool fRepetition = false);
     void RemoveLastOpndFromHistory();
     void AddBinOpToHistory(int nOpCode, bool isIntegerMode, bool fNoRepetition = true);
@@ -36,11 +37,11 @@ public:
     void CompleteHistoryLine(std::wstring_view numStr);
     void CompleteEquation(std::wstring_view numStr);
     void ClearHistoryLine(std::wstring_view errStr);
-    int AddCommand(_In_ const std::shared_ptr<IExpressionCommand>& spCommand);
+    int AddCommand(std::unique_ptr<IExpressionCommand> spCommand);
     void UpdateHistoryExpression(uint32_t radix, int32_t precision);
     void SetDecimalSymbol(wchar_t decimalSymbol);
     std::shared_ptr<COpndCommand> GetOperandCommandsFromString(std::wstring_view numStr, CalcEngine::Rational const& rat) const;
-    std::vector<std::shared_ptr<IExpressionCommand>> GetCommands() const;
+    const std::vector<std::unique_ptr<IExpressionCommand>>& GetCommands() const;
 
 private:
     std::shared_ptr<IHistoryDisplay> m_pHistoryDisplay;
@@ -56,8 +57,8 @@ private:
     int m_curOperandIndex; // Stack index for the above stack
     bool m_bLastOpndBrace; // iff the last opnd in history is already braced so we can avoid putting another one for unary operator
     wchar_t m_decimalSymbol;
-    std::shared_ptr<std::vector<std::pair<std::wstring, int>>> m_spTokens;
-    std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> m_spCommands;
+    std::vector<HistoryToken> m_tokens;
+    std::vector<std::unique_ptr<IExpressionCommand>> m_commands;
 
 private:
     void ReinitHistory();

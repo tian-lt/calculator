@@ -477,17 +477,17 @@ namespace CalculationManager
         }
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems() const
+    vector<shared_ptr<HistoryItem>> const& CalculatorManager::GetHistoryItems() const
     {
         return m_pHistory->GetHistory();
     }
 
-    vector<shared_ptr<HISTORYITEM>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode) const
+    vector<shared_ptr<HistoryItem>> const& CalculatorManager::GetHistoryItems(_In_ CalculatorMode mode) const
     {
         return (mode == CalculatorMode::Standard) ? m_pStdHistory->GetHistory() : m_pSciHistory->GetHistory();
     }
 
-    void CalculatorManager::SetHistoryItems(_In_ std::vector<std::shared_ptr<HISTORYITEM>> const& historyItems)
+    void CalculatorManager::SetHistoryItems(_In_ std::vector<std::shared_ptr<HistoryItem>> const& historyItems)
     {
         for (auto const& historyItem : historyItems)
         {
@@ -496,7 +496,7 @@ namespace CalculationManager
         }
     }
 
-    shared_ptr<HISTORYITEM> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)
+    shared_ptr<HistoryItem> const& CalculatorManager::GetHistoryItem(_In_ unsigned int uIdx)
     {
         return m_pHistory->GetHistoryItem(uIdx);
     }

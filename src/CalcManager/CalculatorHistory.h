@@ -2,44 +2,38 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <vector>
+
 #include "ExpressionCommandInterface.h"
 #include "Header Files/IHistoryDisplay.h"
 
 namespace CalculationManager
 {
-    struct HISTORYITEMVECTOR
+    struct HistoryItem
     {
-        std::shared_ptr<std::vector<std::pair<std::wstring, int>>> spTokens;
-        std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> spCommands;
-        std::wstring expression;
-        std::wstring result;
-    };
-
-    struct HISTORYITEM
-    {
-        HISTORYITEMVECTOR historyItemVector;
+        std::vector<HistoryToken> Tokens;
+        std::vector<std::unique_ptr<IExpressionCommand>> Commands;
+        std::wstring Expression;
+        std::wstring Result;
     };
 
     class CalculatorHistory : public IHistoryDisplay
     {
     public:
-        CalculatorHistory(const size_t maxSize);
-        unsigned int AddToHistory(
-            _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& spTokens,
-            _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& spCommands,
-            std::wstring_view result);
-        std::vector<std::shared_ptr<HISTORYITEM>> const& GetHistory();
-        std::shared_ptr<HISTORYITEM> const& GetHistoryItem(unsigned int uIdx);
+        CalculatorHistory(size_t maxSize);
+        size_t AddToHistory(std::vector<HistoryToken> tokens, std::vector<std::unique_ptr<IExpressionCommand>> commands, std::wstring result) override;
+        const std::vector<HistoryItem>& GetHistory() const;
+        const HistoryItem& GetHistoryItem(size_t idx) const;
         void ClearHistory();
-        unsigned int AddItem(_In_ std::shared_ptr<HISTORYITEM> const& spHistoryItem);
-        bool RemoveItem(unsigned int uIdx);
+        size_t AddItem(HistoryItem item);
+        bool RemoveItem(size_t idx);
         size_t MaxHistorySize() const
         {
             return m_maxHistorySize;
         }
 
     private:
-        std::vector<std::shared_ptr<HISTORYITEM>> m_historyItems;
+        std::vector<HistoryItem> m_historyItems;
         const size_t m_maxHistorySize;
     };
 }

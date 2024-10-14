@@ -3,15 +3,22 @@
 
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "../ExpressionCommandInterface.h"
 
 // Callback interface to be implemented by the clients of CCalcEngine if they require equation history
+
+struct HistoryToken
+{
+    std::wstring OpCodeString;
+    int CommandIndex;
+};
+
 class IHistoryDisplay
 {
 public:
-    virtual ~IHistoryDisplay(){};
-    virtual unsigned int AddToHistory(
-        _In_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-        _In_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands,
-        _In_ std::wstring_view result) = 0;
+    virtual ~IHistoryDisplay() = default;
+    virtual size_t AddToHistory(std::vector<HistoryToken> tokens, std::vector<std::unique_ptr<IExpressionCommand>> commands, std::wstring result) = 0;
 };

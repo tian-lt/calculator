@@ -9,7 +9,7 @@ using namespace CalculationManager;
 
 namespace
 {
-    static wstring GetGeneratedExpression(const vector<pair<wstring, int>>& tokens)
+    wstring GetGeneratedExpression(const std::vector<HistoryToken>& tokens)
     {
         wstring expression;
         bool isFirst = true;
@@ -24,63 +24,53 @@ namespace
             {
                 expression += L' ';
             }
-            expression.append(token.first);
+            expression.append(token.OpCodeString);
         }
 
         return expression;
     }
-}
+} // namespace
 
 CalculatorHistory::CalculatorHistory(size_t maxSize)
     : m_maxHistorySize(maxSize)
 {
 }
 
-unsigned int CalculatorHistory::AddToHistory(
-    _In_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
-    _In_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands,
-    wstring_view result)
+size_t CalculatorHistory::AddToHistory(std::vector<HistoryToken> tokens, std::vector<std::unique_ptr<IExpressionCommand>> commands, std::wstring result)
 {
-    shared_ptr<HISTORYITEM> spHistoryItem = make_shared<HISTORYITEM>();
-
-    spHistoryItem->historyItemVector.spTokens = tokens;
-    spHistoryItem->historyItemVector.spCommands = commands;
-    spHistoryItem->historyItemVector.expression = GetGeneratedExpression(*tokens);
-    spHistoryItem->historyItemVector.result = wstring(result);
-    return AddItem(spHistoryItem);
+    auto expr = GetGeneratedExpression(tokens);
+    return AddItem(HistoryItem{ std::move(tokens), std::move(commands), std::move(expr), std::move(result) });
 }
 
-unsigned int CalculatorHistory::AddItem(_In_ shared_ptr<HISTORYITEM> const& spHistoryItem)
+size_t CalculatorHistory::AddItem(HistoryItem item)
 {
     if (m_historyItems.size() >= m_maxHistorySize)
     {
         m_historyItems.erase(m_historyItems.begin());
     }
-
-    m_historyItems.push_back(spHistoryItem);
+    m_historyItems.push_back(std::move(item));
     return static_cast<unsigned>(m_historyItems.size() - 1);
 }
 
-bool CalculatorHistory::RemoveItem(unsigned int uIdx)
+bool CalculatorHistory::RemoveItem(size_t idx)
 {
-    if (uIdx < m_historyItems.size())
+    if (idx < m_historyItems.size())
     {
-        m_historyItems.erase(m_historyItems.begin() + uIdx);
+        m_historyItems.erase(m_historyItems.begin() + idx);
         return true;
     }
-
     return false;
 }
 
-vector<shared_ptr<HISTORYITEM>> const& CalculatorHistory::GetHistory()
+const std::vector<HistoryItem>& CalculatorHistory::GetHistory() const
 {
     return m_historyItems;
 }
 
-shared_ptr<HISTORYITEM> const& CalculatorHistory::GetHistoryItem(unsigned int uIdx)
+const HistoryItem& CalculatorHistory::GetHistoryItem(size_t idx) const
 {
-    assert(uIdx < m_historyItems.size());
-    return m_historyItems.at(uIdx);
+    assert(idx < m_historyItems.size());
+    return m_historyItems.at(idx);
 }
 
 void CalculatorHistory::ClearHistory()

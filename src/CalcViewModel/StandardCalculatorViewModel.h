@@ -35,7 +35,7 @@ namespace CalculatorApp
 
         struct CalculatorManagerSnapshot
         {
-            std::optional<std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>>> HistoryItems;
+            std::optional<std::vector<std::shared_ptr<CalculationManager::HistoryItem>>> HistoryItems;
         };
 
         struct PrimaryDisplaySnapshot

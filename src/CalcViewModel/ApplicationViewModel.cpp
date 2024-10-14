@@ -118,7 +118,7 @@ namespace
             return jsonObject;
         }
 
-        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculationManager::HISTORYITEM& value)
+        static Windows::Data::Json::JsonObject ^ SaveSnapshotToJson(const CalculationManager::HistoryItem& value)
         {
             auto jsonObject = ref new Windows::Data::Json::JsonObject();
             jsonObject->SetNamedValue(L"Expression", Windows::Data::Json::JsonValue::CreateStringValue(ref new Platform::String(value.historyItemVector.expression.c_str())));
@@ -306,15 +306,15 @@ namespace
             CalculatorManagerSnapshot calcManagerSnapshot;
             if (jsonObject->HasKey(L"HistoryItems"))
             {
-                std::vector<std::shared_ptr<CalculationManager::HISTORYITEM>> historyItems;
+                std::vector<std::shared_ptr<CalculationManager::HistoryItem>> historyItems;
                 auto historyJsonArray = jsonObject->GetNamedArray(L"HistoryItems");
                 for (uint32_t i = 0; i < historyJsonArray->Size; ++i)
                 {
-                    std::optional<CalculationManager::HISTORYITEM> historyItem;
+                    std::optional<CalculationManager::HistoryItem> historyItem;
                     RestoreJsonToSnapshot(historyJsonArray->GetObjectAt(i), historyItem);
                     if (historyItem.has_value())
                     {
-                        historyItems.push_back(std::make_shared<CalculationManager::HISTORYITEM>(*historyItem));
+                        historyItems.push_back(std::make_shared<CalculationManager::HistoryItem>(*historyItem));
                     }
                     else
                     {
@@ -326,9 +326,9 @@ namespace
             value = std::move(calcManagerSnapshot);
         }
 
-        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CalculationManager::HISTORYITEM>& value)
+        static void RestoreJsonToSnapshot(Windows::Data::Json::JsonObject ^ jsonObject, std::optional<CalculationManager::HistoryItem>& value)
         {
-            CalculationManager::HISTORYITEM historyItem;
+            CalculationManager::HistoryItem historyItem;
             historyItem.historyItemVector.expression = std::wstring(jsonObject->GetNamedString(L"Expression")->Data());
             historyItem.historyItemVector.result = std::wstring(jsonObject->GetNamedString(L"Result")->Data());
             historyItem.historyItemVector.spTokens =
