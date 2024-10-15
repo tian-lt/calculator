@@ -80,9 +80,7 @@ namespace CalculationManager
     /// Used to set the expression display value on ViewModel
     /// </summary>
     /// <param name="expressionString">wstring representing expression to be displayed</param>
-    void CalculatorManager::SetExpressionDisplay(
-        _Inout_ shared_ptr<vector<pair<wstring, int>>> const& tokens,
-        _Inout_ shared_ptr<vector<shared_ptr<IExpressionCommand>>> const& commands)
+    void CalculatorManager::SetExpressionDisplay(const std::vector<HistoryToken>& tokens, const std::vector<std::unique_ptr<IExpressionCommand>> commands)
     {
         if (!m_inHistoryItemLoadMode)
         {

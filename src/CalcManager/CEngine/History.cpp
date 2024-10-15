@@ -475,12 +475,7 @@ std::shared_ptr<COpndCommand> CHistoryCollector::GetOperandCommandsFromString(st
     return operandCommand;
 }
 
-std::vector<std::shared_ptr<IExpressionCommand>> CHistoryCollector::GetCommands() const
+const std::vector<std::unique_ptr<IExpressionCommand>>* CHistoryCollector::GetCommands() const
 {
-    std::vector<std::shared_ptr<IExpressionCommand>> commands;
-    if (m_spCommands != nullptr)
-    {
-        commands = *m_spCommands;
-    }
-    return commands;
+    return &m_commands;
 }

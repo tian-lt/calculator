@@ -70,9 +70,7 @@ namespace CalculationManager
         // ICalcDisplay
         void SetPrimaryDisplay(_In_ const std::wstring& displayString, _In_ bool isError) override;
         void SetIsInError(bool isError) override;
-        void SetExpressionDisplay(
-            _Inout_ std::shared_ptr<std::vector<std::pair<std::wstring, int>>> const& tokens,
-            _Inout_ std::shared_ptr<std::vector<std::shared_ptr<IExpressionCommand>>> const& commands) override;
+        void SetExpressionDisplay(const std::vector<HistoryToken>& tokens, const std::vector<std::unique_ptr<IExpressionCommand>> commands) override;
         void SetMemorizedNumbers(_In_ const std::vector<std::wstring>& memorizedNumbers) override;
         void OnHistoryItemAdded(_In_ unsigned int addedItemIndex) override;
         void SetParenthesisNumber(_In_ unsigned int parenthesisCount) override;
@@ -106,7 +104,7 @@ namespace CalculationManager
         void UpdateMaxIntDigits();
         wchar_t DecimalSeparator();
 
-        std::vector<std::shared_ptr<HistoryItem>> const& GetHistoryItems() const;
+        const std::vector<HistoryItem>* GetHistoryItems() const;
         std::vector<std::shared_ptr<HistoryItem>> const& GetHistoryItems(_In_ CalculatorMode mode) const;
         void SetHistoryItems(_In_ std::vector<std::shared_ptr<HistoryItem>> const& historyItems);
         std::shared_ptr<HistoryItem> const& GetHistoryItem(_In_ unsigned int uIdx);

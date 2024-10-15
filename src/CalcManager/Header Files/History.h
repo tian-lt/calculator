@@ -41,7 +41,7 @@ public:
     void UpdateHistoryExpression(uint32_t radix, int32_t precision);
     void SetDecimalSymbol(wchar_t decimalSymbol);
     std::shared_ptr<COpndCommand> GetOperandCommandsFromString(std::wstring_view numStr, CalcEngine::Rational const& rat) const;
-    const std::vector<std::unique_ptr<IExpressionCommand>>& GetCommands() const;
+    const std::vector<std::unique_ptr<IExpressionCommand>>* GetCommands() const;
 
 private:
     std::shared_ptr<IHistoryDisplay> m_pHistoryDisplay;
