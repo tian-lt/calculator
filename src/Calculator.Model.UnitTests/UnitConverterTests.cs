@@ -1,3 +1,4 @@
+// Licensed under the MIT License.
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,10 +8,12 @@ namespace CalculatorApp.Model.UnitTests
     [TestClass]
     public class UnitConverterTests
     {
+        private class StringUnitConverter : UnitConverter<string, string> { }
+
         [TestMethod]
         public void RatioTransition()
         {
-            var converter = new UnitConverter<string>();
+            var converter = new StringUnitConverter();
             converter.ClaimRatio("a", "b", 2m);
             AssertEqual(6m, converter.Convert("a", "b", 3m));
             AssertEqual(1.5m, converter.Convert("b", "a", 3m));
@@ -29,7 +32,7 @@ namespace CalculatorApp.Model.UnitTests
         [TestMethod]
         public void RatioUnion()
         {
-            var converter = new UnitConverter<string>();
+            var converter = new StringUnitConverter();
             converter.ClaimRatio("a", "aa", 2m);
             converter.ClaimRatio("b", "bb", 3m);
             converter.ClaimRatio("a", "b", 2m);
@@ -50,7 +53,7 @@ namespace CalculatorApp.Model.UnitTests
         [TestMethod]
         public void TranslatedRatio()
         {
-            var converter = new UnitConverter<string>();
+            var converter = new StringUnitConverter();
             converter.ClaimRatio("fahrenheit", "celsius", 1.8m, 32m);
             converter.ClaimRatio("kelvin", "celsius", 1m, 273.15m);
             AssertEqual(99.5m, converter.Convert("fahrenheit", "celsius", 37.5m));
@@ -67,13 +70,30 @@ namespace CalculatorApp.Model.UnitTests
         [TestMethod]
         public void BadRelationship()
         {
-            var converter = new UnitConverter<string>();
+            var converter = new StringUnitConverter();
             Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "b", 0m); }));
             Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "b", 0m, 1m); }));
             Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "a", 1m); }));
             converter.ClaimRatio("a", "b", 1m);
             converter.ClaimRatio("c", "d", 1m);
             Assert.IsTrue(ExpectFailure(() => { converter.Convert("a", "d", 1m); }));
+        }
+
+        [TestMethod]
+        public void Classify()
+        {
+            var converter = new StringUnitConverter();
+            converter.ClaimRatio("a", "aa", 5m);
+            converter.ClaimRatio("b", "bb", 2m);
+            converter.Classify("aa", "A");
+            converter.Classify("bb", "B");
+            Assert.AreEqual("A", converter.Category("a"));
+            Assert.AreEqual("A", converter.Category("aa"));
+            Assert.AreEqual("B", converter.Category("b"));
+            Assert.AreEqual("B", converter.Category("bb"));
+            converter.ClaimRatio("a", "b", 1m);
+            Assert.AreEqual("A", converter.Category("b"));
+            Assert.AreEqual("A", converter.Category("bb"));
         }
 
         private static bool ExpectFailure(Action op)
@@ -92,7 +112,7 @@ namespace CalculatorApp.Model.UnitTests
 
         private static void AssertEqual(decimal expected, decimal actual)
         {
-            if (Math.Abs(expected - actual) > UnitConverter<string>.Precision)
+            if (Math.Abs(expected - actual) > StringUnitConverter.Precision)
             {
                 Assert.Fail($"expected = {expected}, actual = {actual}");
             }

@@ -1,12 +1,14 @@
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace CalculatorApp.Model
 {
-    public class UnitConverter<TName>
+    public class UnitConverter<TName, TCategory>
     {
         private Dictionary<TName, Node> _nodes = new Dictionary<TName, Node>();
+        private Dictionary<TName, TCategory> _categories = new Dictionary<TName, TCategory>();
 
         public const decimal Precision = 1e-10m;
 
@@ -15,6 +17,31 @@ namespace CalculatorApp.Model
 
         public void ClaimRatio(TName to, TName from, decimal k, decimal b) =>
             ClaimRatio(to, from, new UnitTransform { m11 = k, m12 = 0, m21 = b, m22 = 1 });
+
+        public decimal Convert(TName to, TName from, decimal value)
+        {
+            var res = Convert(to, from, new UnitPoint { x = value, w = 1 });
+            return res.x / res.w;
+        }
+
+        public void Classify(TName name, TCategory category)
+        {
+            var root = Find(name);
+            if (_categories.ContainsKey(root.Name))
+            {
+                _categories[root.Name] = category;
+            }
+            else
+            {
+                _categories.Add(root.Name, category);
+            }
+        }
+
+        public TCategory Category(TName name)
+        {
+            var root = Find(name);
+            return _categories[root.Name];
+        }
 
         private void ClaimRatio(TName to, TName from, UnitTransform ratio)
         {
@@ -44,17 +71,7 @@ namespace CalculatorApp.Model
                 rootFrom.Ratio = UnitMath.Mul(
                     UnitMath.Mul(UnitMath.Inv(_nodes[from].Ratio), ratio),
                     _nodes[to].Ratio);
-
-                //rootFrom.Ratio = MulDiagMat(
-                //    MulDiagMat(InvDiagMat(_nodes[from].Ratio), ratio),
-                //    _nodes[to].Ratio);
             }
-        }
-
-        public decimal Convert(TName to, TName from, decimal value)
-        {
-            var res = Convert(to, from, new UnitPoint { x = value, w = 1 });
-            return res.x / res.w;
         }
 
         private UnitPoint Convert(TName to, TName from, UnitPoint value)
@@ -67,9 +84,8 @@ namespace CalculatorApp.Model
             }
             var ratio = UnitMath.Mul(_nodes[from].Ratio, UnitMath.Inv(_nodes[to].Ratio));
             return UnitMath.Mul(value, ratio);
-            //var ratio = MulDiagMat(_nodes[from].Ratio, InvDiagMat(_nodes[to].Ratio));
-            //return ReduceHomogeneousPoint(MulDiagMat(HomogeneousPoint(value), ratio));
         }
+
 
         private class Node
         {
@@ -88,7 +104,6 @@ namespace CalculatorApp.Model
                 if (!Equals(parent.Name, root.Name))
                 {
                     curr.Ratio = UnitMath.Mul(curr.Ratio, parent.Ratio);
-                    //curr.Ratio = MulDiagMat(curr.Ratio, parent.Ratio);
                 }
                 curr.Parent = root.Name;
                 return root;
