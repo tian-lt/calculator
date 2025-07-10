@@ -31,6 +31,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcViewModelCopyForUT", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.ManagedViewModels", "Calculator.ManagedViewModels\Calculator.ManagedViewModels.csproj", "{2179CFDE-CDED-4DF0-8C24-A0EF6B425771}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Model", "Calculator.Model\Calculator.Model.csproj", "{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -225,6 +227,22 @@ Global
 		{2179CFDE-CDED-4DF0-8C24-A0EF6B425771}.Release|x64.Build.0 = Release|x64
 		{2179CFDE-CDED-4DF0-8C24-A0EF6B425771}.Release|x86.ActiveCfg = Release|x86
 		{2179CFDE-CDED-4DF0-8C24-A0EF6B425771}.Release|x86.Build.0 = Release|x86
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|ARM.ActiveCfg = Debug|ARM
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|ARM.Build.0 = Debug|ARM
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|ARM64.Build.0 = Debug|ARM64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|x64.ActiveCfg = Debug|x64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|x64.Build.0 = Debug|x64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|x86.ActiveCfg = Debug|x86
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Debug|x86.Build.0 = Debug|x86
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|ARM.ActiveCfg = Release|ARM
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|ARM.Build.0 = Release|ARM
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|ARM64.ActiveCfg = Release|ARM64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|ARM64.Build.0 = Release|ARM64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|x64.ActiveCfg = Release|x64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|x64.Build.0 = Release|x64
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|x86.ActiveCfg = Release|x86
+		{6B11CC53-34E1-49B1-9817-6D79DD09A1FE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,7 +20,7 @@ using CalculatorApp.ViewModel.Snapshot;
 
 namespace CalculatorApp.ManagedViewModels
 {
-    public class ApplicationViewModel : INotifyPropertyChanged
+    public class ApplicationViewModel : Observable<ApplicationViewModel>, INotifyPropertyChanged
     {
         private StandardCalculatorViewModel _calcVm;
         private DateCalculatorViewModel _dateVm;
@@ -35,8 +35,6 @@ namespace CalculatorApp.ManagedViewModels
 
         public const string WidthLocalSettingsKey = "calculatorAlwaysOnTopLastWidth";
         public const string HeightLocalSettingsKey = "calculatorAlwaysOnTopLastHeight";
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ViewMode Mode
         {
@@ -374,11 +372,6 @@ namespace CalculatorApp.ManagedViewModels
             {
                 return false;
             }
-        }
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
