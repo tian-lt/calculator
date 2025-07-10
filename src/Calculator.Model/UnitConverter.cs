@@ -43,6 +43,26 @@ namespace CalculatorApp.Model
             return _categories[root.Name];
         }
 
+        public void PurgeCategory(TCategory category)
+        {
+            var namesToRemove = new List<TName>();
+            foreach (var node in _nodes)
+            {
+                if (Equals(Category(node.Value.Name), category))
+                {
+                    namesToRemove.Add(node.Value.Name);
+                }
+            }
+            foreach (var name in namesToRemove)
+            {
+                _nodes.Remove(name);
+                if(_categories.ContainsKey(name))
+                {
+                    _categories.Remove(name);
+                }
+            }
+        }
+
         private void ClaimRatio(TName from, TName to, UnitTransform ratio)
         {
             if (Equals(to, from))

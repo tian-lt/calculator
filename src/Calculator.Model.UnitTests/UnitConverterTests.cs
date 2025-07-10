@@ -71,12 +71,12 @@ namespace CalculatorApp.Model.UnitTests
         public void BadRelationship()
         {
             var converter = new StringUnitConverter();
-            Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "b", 0m); }));
-            Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "b", 0m, 1m); }));
-            Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "a", 1m); }));
+            Assert.IsTrue(ExpectFailure(() => converter.ClaimRatio("a", "b", 0m)));
+            Assert.IsTrue(ExpectFailure(() => converter.ClaimRatio("a", "b", 0m, 1m)));
+            Assert.IsTrue(ExpectFailure(() => converter.ClaimRatio("a", "a", 1m)));
             converter.ClaimRatio("a", "b", 1m);
             converter.ClaimRatio("c", "d", 1m);
-            Assert.IsTrue(ExpectFailure(() => { converter.Convert("a", "d", 1m); }));
+            Assert.IsTrue(ExpectFailure(() => converter.Convert("a", "d", 1m)));
         }
 
         [TestMethod]
@@ -91,9 +91,29 @@ namespace CalculatorApp.Model.UnitTests
             Assert.AreEqual("A", converter.Category("aa"));
             Assert.AreEqual("B", converter.Category("b"));
             Assert.AreEqual("B", converter.Category("bb"));
-            converter.ClaimRatio("a", "b", 1m);
+            converter.ClaimRatio("b", "a", 1m);
             Assert.AreEqual("A", converter.Category("b"));
             Assert.AreEqual("A", converter.Category("bb"));
+        }
+
+        [TestMethod]
+        public void PurgeCategory()
+        {
+            var converter = new StringUnitConverter();
+            converter.ClaimRatio("aa", "a", 5m);
+            converter.ClaimRatio("bb", "b", 2m);
+            converter.Classify("aa", "A");
+            converter.Classify("bb", "B");
+
+            converter.PurgeCategory("A");
+            Assert.AreEqual("B", converter.Category("b"));
+            Assert.AreEqual("B", converter.Category("bb"));
+            ExpectFailure(() => converter.Convert("a", "aa", 2m));
+            ExpectFailure(() => converter.Convert("aa", "a", 2m));
+
+            converter.PurgeCategory("B");
+            ExpectFailure(() => converter.Convert("b", "bb", 2m));
+            ExpectFailure(() => converter.Convert("bb", "b", 2m));
         }
 
         private static bool ExpectFailure(Action op)
