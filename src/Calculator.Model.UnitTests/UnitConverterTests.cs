@@ -12,18 +12,18 @@ namespace CalculatorApp.Model.UnitTests
         {
             var converter = new UnitConverter<string>();
             converter.ClaimRatio("a", "b", 2m);
-            Assert.IsTrue(ConsiderEqual(6m, converter.Convert("a", "b", 3m)));
-            Assert.IsTrue(ConsiderEqual(1.5m, converter.Convert("b", "a", 3m)));
+            AssertEqual(6m, converter.Convert("a", "b", 3m));
+            AssertEqual(1.5m, converter.Convert("b", "a", 3m));
 
             converter.ClaimRatio("a", "c", 4m);
-            Assert.IsTrue(ConsiderEqual(40m, converter.Convert("a", "c", 10m)));
-            Assert.IsTrue(ConsiderEqual(10m, converter.Convert("c", "a", 40m)));
-            Assert.IsTrue(ConsiderEqual(2m, converter.Convert("b", "c", 1m)));
-            Assert.IsTrue(ConsiderEqual(3m, converter.Convert("c", "b", 6m)));
+            AssertEqual(40m, converter.Convert("a", "c", 10m));
+            AssertEqual(10m, converter.Convert("c", "a", 40m));
+            AssertEqual(2m, converter.Convert("b", "c", 1m));
+            AssertEqual(3m, converter.Convert("c", "b", 6m));
 
             converter.ClaimRatio("b", "d", 8m);
-            Assert.IsTrue(ConsiderEqual(24m, converter.Convert("b", "d", 3m)));
-            Assert.IsTrue(ConsiderEqual(4m, converter.Convert("d", "b", 32m)));
+            AssertEqual(24m, converter.Convert("b", "d", 3m));
+            AssertEqual(4m, converter.Convert("d", "b", 32m));
         }
 
         [TestMethod]
@@ -33,18 +33,35 @@ namespace CalculatorApp.Model.UnitTests
             converter.ClaimRatio("a", "aa", 2m);
             converter.ClaimRatio("b", "bb", 3m);
             converter.ClaimRatio("a", "b", 2m);
-            Assert.IsTrue(ConsiderEqual(2m, converter.Convert("a", "b", 1m)));
-            Assert.IsTrue(ConsiderEqual(6m, converter.Convert("a", "bb", 1m)));
-            Assert.IsTrue(ConsiderEqual(3m, converter.Convert("aa", "bb", 1m)));
-            Assert.IsTrue(ConsiderEqual(1m, converter.Convert("bb", "aa", 3m)));
-            Assert.IsTrue(ConsiderEqual(2m, converter.Convert("bb", "a", 12m)));
-            Assert.IsTrue(ConsiderEqual(2m, converter.Convert("bb", "aa", 6m)));
+            AssertEqual(2m, converter.Convert("a", "b", 1m));
+            AssertEqual(6m, converter.Convert("a", "bb", 1m));
+            AssertEqual(3m, converter.Convert("aa", "bb", 1m));
+            AssertEqual(1m, converter.Convert("bb", "aa", 3m));
+            AssertEqual(2m, converter.Convert("bb", "a", 12m));
+            AssertEqual(2m, converter.Convert("bb", "aa", 6m));
 
             converter.ClaimRatio("c", "cc1", 10m);
             converter.ClaimRatio("c", "cc2", 20m);
             converter.ClaimRatio("b", "c", 5);
-            Assert.IsTrue(ConsiderEqual(50m, converter.Convert("aa", "cc1", 1m)));
-            Assert.IsTrue(ConsiderEqual(1m, converter.Convert("cc2", "aa", 100m)));
+            AssertEqual(50m, converter.Convert("aa", "cc1", 1m));
+            AssertEqual(1m, converter.Convert("cc2", "aa", 100m));
+        }
+
+        [TestMethod]
+        public void TranslatedRatio()
+        {
+            var converter = new UnitConverter<string>();
+            converter.ClaimRatio("fahrenheit", "celsius", 1.8m, 32m);
+            converter.ClaimRatio("kelvin", "celsius", 1m, 273.15m);
+            AssertEqual(99.5m, converter.Convert("fahrenheit", "celsius", 37.5m));
+            AssertEqual(32m, converter.Convert("fahrenheit", "celsius", 0m));
+            AssertEqual(50m, converter.Convert("celsius", "fahrenheit", 122m));
+            AssertEqual(-15m, converter.Convert("celsius", "fahrenheit", 5m));
+            AssertEqual(273.15m, converter.Convert("kelvin", "celsius", 0m));
+            AssertEqual(310.65m, converter.Convert("kelvin", "celsius", 37.5m));
+            AssertEqual(-173.15m, converter.Convert("celsius", "kelvin", 100m));
+            AssertEqual(-279.67m, converter.Convert("fahrenheit", "kelvin", 100m));
+            AssertEqual(268.15m, converter.Convert("kelvin", "fahrenheit", 23m));
         }
 
         [TestMethod]
@@ -52,7 +69,11 @@ namespace CalculatorApp.Model.UnitTests
         {
             var converter = new UnitConverter<string>();
             Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "b", 0m); }));
+            Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "b", 0m, 1m); }));
             Assert.IsTrue(ExpectFailure(() => { converter.ClaimRatio("a", "a", 1m); }));
+            converter.ClaimRatio("a", "b", 1m);
+            converter.ClaimRatio("c", "d", 1m);
+            Assert.IsTrue(ExpectFailure(() => { converter.Convert("a", "d", 1m); }));
         }
 
         private static bool ExpectFailure(Action op)
@@ -69,9 +90,12 @@ namespace CalculatorApp.Model.UnitTests
             return res;
         }
 
-        private static bool ConsiderEqual(decimal a, decimal b)
+        private static void AssertEqual(decimal expected, decimal actual)
         {
-            return Math.Abs(a - b) < UnitConverter<string>.Precision;
+            if (Math.Abs(expected - actual) > UnitConverter<string>.Precision)
+            {
+                Assert.Fail($"expected = {expected}, actual = {actual}");
+            }
         }
     }
 }

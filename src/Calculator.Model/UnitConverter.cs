@@ -10,25 +10,26 @@ namespace CalculatorApp.Model
 
         public const decimal Precision = 1e-10m;
 
-        public static decimal[] Scalar(decimal value) => new decimal[] { value, 1 };
-        public static decimal[] Line(decimal k, decimal b) => new decimal[] { k, b };
+        public void ClaimRatio(TName to, TName from, decimal scalarRatio) =>
+            ClaimRatio(to, from, new UnitTransform { m11 = scalarRatio, m12 = 0, m21 = 0, m22 = 1 });
 
-        // we homogeneous transformations to reduce translation into linear transformations
-        // parameter ratio is an array of diagonal elements of the transformation matrix
-        public void ClaimRatio(TName to, TName from, decimal[] ratio)
+        public void ClaimRatio(TName to, TName from, decimal k, decimal b) =>
+            ClaimRatio(to, from, new UnitTransform { m11 = k, m12 = 0, m21 = b, m22 = 1 });
+
+        private void ClaimRatio(TName to, TName from, UnitTransform ratio)
         {
             if (Equals(to, from))
             {
                 throw new ArgumentException("to and from can't be the same name");
             }
-            if (IsZeroCoeffMat(ratio))
+            if (Math.Abs(ratio.m11) < Precision)
             {
                 throw new ArgumentException("ratio can't be zero");
             }
 
             if (!_nodes.ContainsKey(to))
             {
-                _nodes.Add(to, new Node { Name = to, Parent = to, Ratio = IdentityMat(ratio.Length) });
+                _nodes.Add(to, new Node { Name = to, Parent = to, Ratio = UnitMath.IdentityMat() });
             }
             if (!_nodes.ContainsKey(from))
             {
@@ -40,17 +41,23 @@ namespace CalculatorApp.Model
             if (rootTo != rootFrom)
             {
                 rootFrom.Parent = rootTo.Name;
-                rootFrom.Ratio = MulDiagMat(
-                    MulDiagMat(InvDiagMat(_nodes[from].Ratio), ratio),
+                rootFrom.Ratio = UnitMath.Mul(
+                    UnitMath.Mul(UnitMath.Inv(_nodes[from].Ratio), ratio),
                     _nodes[to].Ratio);
+
+                //rootFrom.Ratio = MulDiagMat(
+                //    MulDiagMat(InvDiagMat(_nodes[from].Ratio), ratio),
+                //    _nodes[to].Ratio);
             }
         }
 
-        public void ClaimRatio(TName to, TName from, decimal ratio) => ClaimRatio(to, from, Scalar(ratio));
+        public decimal Convert(TName to, TName from, decimal value)
+        {
+            var res = Convert(to, from, new UnitPoint { x = value, w = 1 });
+            return res.x / res.w;
+        }
 
-        // parameter `value` is an array consisting of the first (N-1) elements of
-        // the homogeneous vector of rank N, and it's a row-major vector.
-        public decimal[] Convert(TName to, TName from, decimal[] value)
+        private UnitPoint Convert(TName to, TName from, UnitPoint value)
         {
             var rootTo = Find(to);
             var rootFrom = Find(from);
@@ -58,20 +65,17 @@ namespace CalculatorApp.Model
             {
                 throw new ArgumentException($"can't find the relationship between {to} and {from}");
             }
-            var ration = MulDiagMat(_nodes[from].Ratio, InvDiagMat(_nodes[to].Ratio));
-            return ReduceHomogeneousPoint(MulDiagMat(HomogeneousPoint(value), ration));
-        }
-
-        public decimal Convert(TName to, TName from, decimal value)
-        {
-            return Convert(to, from, new decimal[] { value })[0];
+            var ratio = UnitMath.Mul(_nodes[from].Ratio, UnitMath.Inv(_nodes[to].Ratio));
+            return UnitMath.Mul(value, ratio);
+            //var ratio = MulDiagMat(_nodes[from].Ratio, InvDiagMat(_nodes[to].Ratio));
+            //return ReduceHomogeneousPoint(MulDiagMat(HomogeneousPoint(value), ratio));
         }
 
         private class Node
         {
             public TName Name { get; set; }
             public TName Parent { get; set; }
-            public decimal[] Ratio { get; set; }
+            public UnitTransform Ratio { get; set; }
         }
 
         private Node Find(TName name)
@@ -83,76 +87,66 @@ namespace CalculatorApp.Model
                 var root = Find(curr.Parent);
                 if (!Equals(parent.Name, root.Name))
                 {
-                    curr.Ratio = MulDiagMat(curr.Ratio, parent.Ratio);
+                    curr.Ratio = UnitMath.Mul(curr.Ratio, parent.Ratio);
+                    //curr.Ratio = MulDiagMat(curr.Ratio, parent.Ratio);
                 }
                 curr.Parent = root.Name;
                 return root;
             }
             return curr;
         }
+    }
 
-        private decimal[] MulDiagMat(decimal[] matA, decimal[] matB)
+    internal struct UnitPoint
+    {
+        public decimal x, w;
+    }
+
+    internal struct UnitTransform
+    {
+        public decimal m11, m12;
+        public decimal m21, m22;
+    }
+
+    internal static class UnitMath
+    {
+        public static UnitTransform IdentityMat() => new UnitTransform
         {
-            Debug.Assert(matA.Length == matB.Length);
-            var result = new decimal[matA.Length];
-            for (int i = 0; i < matA.Length; ++i)
+            m11 = 1,
+            m12 = 0,
+            m21 = 0,
+            m22 = 1
+        };
+
+        public static UnitPoint Mul(UnitPoint point, UnitTransform mat)
+        {
+            return new UnitPoint
             {
-                result[i] = matA[i] * matB[i];
-            }
-            return result;
+                x = point.x * mat.m11 + point.w * mat.m21,
+                w = point.x * mat.m12 + point.w * mat.m22
+            };
         }
 
-        private decimal[] InvDiagMat(decimal[] mat)
+        public static UnitTransform Mul(UnitTransform matA, UnitTransform matB)
         {
-            var result = new decimal[mat.Length];
-            for (int i = 0; i < mat.Length; ++i)
-            {
-                result[i] = 1 / mat[i];
-            }
-            return result;
+            var prod = new UnitTransform();
+            prod.m11 = matA.m11 * matB.m11 + matA.m12 * matB.m21;
+            prod.m12 = matA.m11 * matB.m12 + matA.m12 * matB.m22;
+            prod.m21 = matA.m21 * matB.m11 + matA.m22 * matB.m21;
+            prod.m22 = matA.m21 * matB.m12 + matA.m22 * matB.m22;
+            return prod;
         }
 
-        private decimal[] IdentityMat(int size)
+        public static UnitTransform Inv(UnitTransform mat)
         {
-            var result = new decimal[size];
-            for (int i = 0; i < size; ++i)
+            var rdet = 1 / (mat.m11 * mat.m22 - mat.m12 * mat.m22);
+            return new UnitTransform
             {
-                result[i] = 1;
-            }
-            return result;
-        }
-
-        private bool IsZeroCoeffMat(decimal[] mat)
-        {
-            for (int i = 0; i < mat.Length - 1; ++i)
-            {
-                if (Math.Abs(mat[i]) > Precision)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private decimal[] HomogeneousPoint(decimal[] point)
-        {
-            var result = new decimal[point.Length + 1];
-            for (int i = 0; i < point.Length; ++i)
-            {
-                result[i] = point[i];
-            }
-            result[point.Length] = 1;
-            return result;
-        }
-
-        private decimal[] ReduceHomogeneousPoint(decimal[] hgPoint)
-        {
-            var result = new decimal[hgPoint.Length - 1];
-            for (int i = 0; i < result.Length; ++i)
-            {
-                result[i] = hgPoint[i] / hgPoint[hgPoint.Length - 1];
-            }
-            return result;
+                m11 = rdet * mat.m22,
+                m12 = -rdet * mat.m12,
+                m21 = -rdet * mat.m21,
+                m22 = rdet * mat.m11
+            };
         }
     }
 }
