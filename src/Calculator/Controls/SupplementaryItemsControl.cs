@@ -30,7 +30,7 @@ namespace CalculatorApp
             {
                 base.PrepareContainerForItemOverride(element, item);
 
-                if (item is SupplementaryResult supplementaryResult)
+                if (item is SupplementaryResultViewModel supplementaryResult)
                 {
                     AutomationProperties.SetName(element, supplementaryResult.GetLocalizedAutomationName());
                 }

@@ -254,7 +254,7 @@ namespace CalculatorApp.ManagedViewModels
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Mebibytes, nameof(UnitKind.Data_Mebibytes)),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gigabit, nameof(UnitKind.Data_Gigabit)),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gibibits, nameof(UnitKind.Data_Gibibits)),
-                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gigabyte, nameof(UnitKind.Data_Gigabyte), true, false),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gigabyte, nameof(UnitKind.Data_Gigabyte), true),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gibibytes, nameof(UnitKind.Data_Gibibytes)),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Terabit, nameof(UnitKind.Data_Terabit)),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Tebibits, nameof(UnitKind.Data_Tebibits)),
@@ -279,6 +279,23 @@ namespace CalculatorApp.ManagedViewModels
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_FloppyDisk, nameof(UnitKind.Data_FloppyDisk), false, false, true),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_CD, nameof(UnitKind.Data_CD), false, false, true),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_DVD, nameof(UnitKind.Data_DVD), false, false, true),
+            });
+            units.Add(ViewMode.Energy, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_ElectronVolt, nameof(UnitKind.Energy_ElectronVolt)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Joule, nameof(UnitKind.Energy_Joule), true),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Kilojoule, nameof(UnitKind.Energy_Kilojoule)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind., nameof(UnitKind.)),
             });
 
             return units;

@@ -1345,7 +1345,7 @@
     <value>°F</value>
     <comment>An abbreviation for a "degrees Fahrenheit"</comment>
   </data>
-  <data name="UnitAbbreviation_Electron-Volt" xml:space="preserve">
+  <data name="UnitAbbreviation_ElectronVolt" xml:space="preserve">
     <value>eV</value>
     <comment>An abbreviation for a measurement unit of energy</comment>
   </data>
@@ -1713,7 +1713,7 @@
     <value>ఫారెన్‌హీట్</value>
     <comment>An option in the unit converter to select degrees Fahrenheit</comment>
   </data>
-  <data name="UnitName_Electron-Volt" xml:space="preserve">
+  <data name="UnitName_ElectronVolt" xml:space="preserve">
     <value>ఎలక్ట్రాన్ వోల్ట్స్</value>
     <comment>A measurement unit for energy. (Please choose the most appropriate plural form to fit any number between 0 and 999,999,999,999,999)</comment>
   </data>
