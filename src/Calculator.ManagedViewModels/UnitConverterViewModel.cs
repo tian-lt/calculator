@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
+using Windows.Globalization;
+using Windows.UI.Xaml;
+
 using CalculatorApp.Model;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
-using Windows.UI.Xaml;
 
 namespace CalculatorApp.ManagedViewModels
 {
@@ -16,7 +18,7 @@ namespace CalculatorApp.ManagedViewModels
     {
         private readonly ViewMode _id;
         private readonly string _name;
-        private bool _supportsNegative;
+        private readonly bool _supportsNegative;
 
         public UnitCategoryViewModel(ViewMode id, string name, bool supportsNegative)
         {
@@ -32,7 +34,32 @@ namespace CalculatorApp.ManagedViewModels
 
     public class UnitViewModel
     {
+        private readonly UnitKind _id;
+        private readonly string _name;
+        private readonly string _abbr;
+        private readonly string _accessibleName;
+        private readonly bool _isSource;
+        private readonly bool _isTarget;
+        private readonly bool _isWhimsical;
 
+        public UnitViewModel(
+             string categoryName, UnitKind id, string kindName, bool isSource = false, bool isTarget = false, bool isWhimsical = false)
+        {
+            var res = AppResourceProvider.GetInstance();
+            var unitName = kindName.Substring(categoryName.Length);
+            _id = id;
+            _name = res.GetResourceString($"UnitName{unitName}");
+            _abbr = res.GetResourceString($"UnitAbbreviation{unitName}");
+            _accessibleName = _name;
+            _isSource = isSource;
+            _isTarget = isTarget;
+            _isWhimsical = isWhimsical;
+        }
+
+        public UnitKind Id => _id;
+        public string Name => _name;
+        public string Abbreviation => _abbr;
+        public string AccessibleName => _accessibleName;
     }
 
     public class SupplementaryResultViewModel
@@ -41,8 +68,10 @@ namespace CalculatorApp.ManagedViewModels
 
     public class UnitConverterViewModel : Observable<UnitConverterViewModel>, INotifyPropertyChanged
     {
-        private UnitConverter<string, ViewMode> _converter = new UnitConverter<string, ViewMode>();
-        private List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
+        private readonly Dictionary<ViewMode, List<UnitViewModel>> _units = CreateUnits();
+        private readonly UnitConverter<string, ViewMode> _converter = new UnitConverter<string, ViewMode>();
+        private readonly List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
+        private UnitCategoryViewModel _currentCategory;
         private string _valueFrom = "0";
         private string _valueTo = "0";
         private string _value1;
@@ -87,7 +116,22 @@ namespace CalculatorApp.ManagedViewModels
             }
         }
 
-        public UnitCategoryViewModel CurrentCategory { get; set; }
+        public UnitCategoryViewModel CurrentCategory
+        {
+            get => _currentCategory;
+            set
+            {
+                if (_currentCategory != value)
+                {
+                    _currentCategory = value;
+                    if (_currentCategory != null)
+                    {
+                        IsCurrencyCurrentCategory = _currentCategory.Id == ViewMode.Currency;
+                    }
+                    RaisePropertyChanged(nameof(Mode));
+                }
+            }
+        }
 
         public string CurrencySymbol1 { get; set; }
         public string CurrencySymbol2 { get; set; }
@@ -104,7 +148,7 @@ namespace CalculatorApp.ManagedViewModels
         public bool IsDropDownOpen { get; set; }
         public bool IsDropDownEnabled { get; set; }
         public bool IsCurrencyLoadingVisible { get; set; }
-        public bool IsCurrencyCurrentCategory { get; }
+        public bool IsCurrencyCurrentCategory { get; private set; }
         public string CurrencyRatioEquality { get; set; }
         public string CurrencyRatioEqualityAutomationName { get; set; }
         public string CurrencyTimestamp { get; set; }
@@ -121,6 +165,7 @@ namespace CalculatorApp.ManagedViewModels
             {
                 _catogries.Add(new UnitCategoryViewModel(cat.ViewMode, cat.Name, cat.SupportsNegative));
             }
+
         }
 
         public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -164,6 +209,79 @@ namespace CalculatorApp.ManagedViewModels
             var errMsg = AppResourceProvider.GetInstance().GetCEngineString(SIDS_DOMAIN);
             Value1 = errMsg;
             Value2 = errMsg;
+        }
+
+        private static Dictionary<ViewMode, List<UnitViewModel>> CreateUnits()
+        {
+            var units = new Dictionary<ViewMode, List<UnitViewModel>>();
+            var regionCode = new GeographicRegion().CodeTwoLetter;
+            bool useUSCustomaryAndFahrenheit = regionCode == "US" || regionCode == "FM" || regionCode == "MH" || regionCode == "PW";
+            bool useUSCustomary = useUSCustomaryAndFahrenheit || regionCode == "LR";
+            bool useSI = !useUSCustomary;
+
+            units.Add(ViewMode.Area, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareMillimeter, nameof(UnitKind.Area_SquareMillimeter)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareCentimeter, nameof(UnitKind.Area_SquareCentimeter)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareMeter, nameof(UnitKind.Area_SquareMeter), useUSCustomary, useSI),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Hectare, nameof(UnitKind.Area_Hectare)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareKilometer, nameof(UnitKind.Area_SquareKilometer)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareInch, nameof(UnitKind.Area_SquareInch)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareFoot, nameof(UnitKind.Area_SquareFoot), useSI, useUSCustomary),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareYard, nameof(UnitKind.Area_SquareYard)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Acre, nameof(UnitKind.Area_Acre)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareMile, nameof(UnitKind.Area_SquareMile)),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Hand, nameof(UnitKind.Area_Hand), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Paper, nameof(UnitKind.Area_Paper), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SoccerField, nameof(UnitKind.Area_SoccerField), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Castle, nameof(UnitKind.Area_Castle), false, false, true),
+            });
+            if (regionCode == "JP" || regionCode == "TW" || regionCode == "KP" || regionCode == "KR")
+            {
+                units[ViewMode.Area].Add(new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Pyeong, nameof(UnitKind.Area_Pyeong)));
+            }
+
+            units.Add(ViewMode.Data, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Bit, nameof(UnitKind.Data_Bit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Nibble, nameof(UnitKind.Data_Nibble)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Byte, nameof(UnitKind.Data_Byte)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Kilobit, nameof(UnitKind.Data_Kilobit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Kibibits, nameof(UnitKind.Data_Kibibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Kilobyte, nameof(UnitKind.Data_Kilobyte)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Kibibytes, nameof(UnitKind.Data_Kibibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Megabit, nameof(UnitKind.Data_Megabit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Mebibits, nameof(UnitKind.Data_Mebibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Megabyte, nameof(UnitKind.Data_Megabyte), false, true),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Mebibytes, nameof(UnitKind.Data_Mebibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gigabit, nameof(UnitKind.Data_Gigabit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gibibits, nameof(UnitKind.Data_Gibibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gigabyte, nameof(UnitKind.Data_Gigabyte), true, false),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Gibibytes, nameof(UnitKind.Data_Gibibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Terabit, nameof(UnitKind.Data_Terabit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Tebibits, nameof(UnitKind.Data_Tebibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Terabyte, nameof(UnitKind.Data_Terabyte)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Tebibytes, nameof(UnitKind.Data_Tebibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Petabit, nameof(UnitKind.Data_Petabit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Pebibits, nameof(UnitKind.Data_Pebibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Petabyte, nameof(UnitKind.Data_Petabyte)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Pebibytes, nameof(UnitKind.Data_Pebibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Exabits, nameof(UnitKind.Data_Exabits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Exbibits, nameof(UnitKind.Data_Exbibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Exabytes, nameof(UnitKind.Data_Exabytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Exbibytes, nameof(UnitKind.Data_Exbibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Zetabits, nameof(UnitKind.Data_Zetabits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Zebibits, nameof(UnitKind.Data_Zebibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Zetabytes, nameof(UnitKind.Data_Zetabytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Zebibytes, nameof(UnitKind.Data_Zebibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Yottabit, nameof(UnitKind.Data_Yottabit)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Yobibits, nameof(UnitKind.Data_Yobibits)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Yottabyte, nameof(UnitKind.Data_Yottabyte)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_Yobibytes, nameof(UnitKind.Data_Yobibytes)),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_FloppyDisk, nameof(UnitKind.Data_FloppyDisk), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_CD, nameof(UnitKind.Data_CD), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_DVD, nameof(UnitKind.Data_DVD), false, false, true),
+            });
+
+            return units;
         }
     }
 }

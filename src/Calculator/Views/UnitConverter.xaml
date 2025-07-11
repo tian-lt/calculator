@@ -13,7 +13,7 @@
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:triggers="using:CalculatorApp.Views.StateTriggers"
              xmlns:utils="using:CalculatorApp.Utils"
-             xmlns:vm="using:CalculatorApp.ViewModel"
+             xmlns:vm="using:CalculatorApp.ManagedViewModels"
              d:DesignHeight="658"
              d:DesignWidth="830"
              DataContextChanged="OnDataContextChanged"
@@ -29,7 +29,7 @@
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
         <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
 
-        <DataTemplate x:Key="UnitTemplate" x:DataType="vm:Unit">
+        <DataTemplate x:Key="UnitTemplate" x:DataType="vm:UnitViewModel">
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                        AutomationProperties.Name="{x:Bind AccessibleName}"
                        Text="{x:Bind Name}"
