@@ -16,28 +16,8 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace CalculatorApp
 {
-    internal class Activatable : ViewModel.IActivatable
-    {
-        public Activatable(Func<bool> getter, Action<bool> setter)
-        {
-            m_getter = getter;
-            m_setter = setter;
-        }
-
-        public bool IsActive
-        {
-            get => m_getter();
-            set => m_setter(value);
-        }
-
-        private readonly Func<bool> m_getter;
-        private readonly Action<bool> m_setter;
-    }
-
     public sealed partial class UnitConverter : UserControl
     {
         public UnitConverter()
@@ -70,7 +50,7 @@ namespace CalculatorApp
             PasteMenuItem.Text = resLoader.GetResourceString("pasteMenuItem");
         }
 
-        public Windows.UI.Xaml.HorizontalAlignment FlowDirectionHorizontalAlignment { get; } = default;
+        public HorizontalAlignment FlowDirectionHorizontalAlignment { get; } = default;
 
         public void AnimateConverter()
         {
@@ -82,7 +62,7 @@ namespace CalculatorApp
 
         public UnitConverterViewModel Model => (UnitConverterViewModel)DataContext;
 
-        public Windows.UI.Xaml.FlowDirection LayoutDirection { get; } = default;
+        public FlowDirection LayoutDirection { get; } = default;
 
         public void SetDefaultFocus()
         {
@@ -97,7 +77,7 @@ namespace CalculatorApp
             }
         }
 
-        private void OnValueKeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void OnValueKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Space)
             {
@@ -132,7 +112,7 @@ namespace CalculatorApp
 
         private void OnCopyMenuItemClicked(object sender, RoutedEventArgs e)
         {
-            var calcResult = ((CalculationResult)m_resultsFlyout.Target);
+            var calcResult = (CalculationResult)m_resultsFlyout.Target;
             CopyPasteManager.CopyToClipboard(calcResult.GetRawDisplayValue());
         }
 
@@ -148,15 +128,15 @@ namespace CalculatorApp
 
         private void OnValueSelected(object sender)
         {
-            var value = ((CalculationResult)sender);
+            var value = (CalculationResult)sender;
             // update the font size since the font is changed to bold
             value.UpdateTextState();
-            ((UnitConverterViewModel)this.DataContext).OnValueActivated(new Activatable(() => value.IsActive, flag => value.IsActive = flag));
+            value.IsActive = true;
         }
 
         private void UpdateDropDownState(object sender, object e)
         {
-            ((UnitConverterViewModel)this.DataContext).IsDropDownOpen = (Units1.IsDropDownOpen) || (Units2.IsDropDownOpen);
+            ((UnitConverterViewModel)DataContext).IsDropDownOpen = (Units1.IsDropDownOpen) || (Units2.IsDropDownOpen);
             KeyboardShortcutManager.UpdateDropDownState((Units1.IsDropDownOpen) || (Units2.IsDropDownOpen));
         }
 
@@ -182,17 +162,17 @@ namespace CalculatorApp
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string propertyName = e.PropertyName;
-            if (propertyName == UnitConverterViewModel.NetworkBehaviorPropertyName || propertyName == UnitConverterViewModel.CurrencyDataLoadFailedPropertyName)
+            if (propertyName == nameof(UnitConverterViewModel.NetworkBehavior) || propertyName == nameof(UnitConverterViewModel.CurrencyDataLoadFailed))
             {
                 OnNetworkBehaviorChanged();
             }
-            else if (propertyName == UnitConverterViewModel.CurrencyDataIsWeekOldPropertyName)
+            else if (propertyName == nameof(UnitConverterViewModel.CurrencyDataIsWeekOld))
             {
                 SetCurrencyTimestampFontWeight();
             }
             else if (
-                propertyName == UnitConverterViewModel.IsCurrencyLoadingVisiblePropertyName
-                || propertyName == UnitConverterViewModel.IsCurrencyCurrentCategoryPropertyName)
+                propertyName == nameof(UnitConverterViewModel.IsCurrencyLoadingVisible)
+                || propertyName == nameof(UnitConverterViewModel.IsCurrencyCurrentCategory))
             {
                 OnIsDisplayVisibleChanged();
             }
@@ -373,27 +353,27 @@ namespace CalculatorApp
             CurrencyLoadingProgressRing.IsActive = false;
         }
 
-        private void SupplementaryResultsPanelInGrid_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        private void SupplementaryResultsPanelInGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // We add 0.01 to be sure to not create an infinite loop with SizeChanged events cascading due to float approximation
             RowDltrUnits.MinHeight = Math.Max(48.0, e.NewSize.Height + 0.01);
         }
 
-        private void OnVisualStateChanged(object sender, Windows.UI.Xaml.VisualStateChangedEventArgs e)
+        private void OnVisualStateChanged(object sender, VisualStateChangedEventArgs e)
         {
             var mode = NavCategoryStates.Deserialize(Model.CurrentCategory.GetModelCategoryId());
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, false);
         }
 
         private static readonly Lazy<UISettings> uiSettings = new Lazy<UISettings>(true);
-        private readonly Windows.UI.Xaml.Controls.MenuFlyout m_resultsFlyout = default;
+        private readonly MenuFlyout m_resultsFlyout = default;
 
         private readonly string m_chargesMayApplyText;
         private readonly string m_failedToRefreshText;
 
         private bool m_meteredConnectionOverride;
 
-        private Windows.UI.Xaml.DispatcherTimer m_delayTimer;
+        private DispatcherTimer m_delayTimer;
     }
 }
 

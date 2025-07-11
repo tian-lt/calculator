@@ -1,21 +1,21 @@
-﻿using CalculatorApp.ViewModel;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using CalculatorApp.Controls;
+using CalculatorApp.ManagedViewModels;
 
 namespace CalculatorApp
 {
-    public sealed class DelighterUnitToStyleConverter : Windows.UI.Xaml.Data.IValueConverter
+    public sealed class DelighterUnitToStyleConverter : IValueConverter
     {
         public DelighterUnitToStyleConverter()
         {
-            m_delighters = new Windows.UI.Xaml.ResourceDictionary
+            m_delighters = new ResourceDictionary
             {
                 Source = new Uri(@"ms-appx:///Views/DelighterUnitStyles.xaml")
             };
@@ -41,21 +41,18 @@ namespace CalculatorApp
             return null;
         }
 
-        private readonly Windows.UI.Xaml.ResourceDictionary m_delighters;
+        private readonly ResourceDictionary m_delighters;
     }
 
-    public sealed class SupplementaryResultDataTemplateSelector : Windows.UI.Xaml.Controls.DataTemplateSelector
+    public sealed class SupplementaryResultDataTemplateSelector : DataTemplateSelector
     {
-        public SupplementaryResultDataTemplateSelector()
-        { }
+        public DataTemplate RegularTemplate { get; set; }
 
-        public Windows.UI.Xaml.DataTemplate RegularTemplate { get; set; }
-
-        public Windows.UI.Xaml.DataTemplate DelighterTemplate { get; set; }
+        public DataTemplate DelighterTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            SupplementaryResult result = (SupplementaryResult)item;
+            SupplementaryResultViewModel result = (SupplementaryResultViewModel)item;
             if (result.IsWhimsical())
             {
                 return DelighterTemplate;
@@ -67,7 +64,7 @@ namespace CalculatorApp
         }
     }
 
-    public sealed class SupplementaryResultNoOverflowStackPanel : CalculatorApp.Controls.HorizontalNoOverflowStackPanel
+    public sealed class SupplementaryResultNoOverflowStackPanel : HorizontalNoOverflowStackPanel
     {
         protected override bool ShouldPrioritizeLastItem()
         {
@@ -81,11 +78,10 @@ namespace CalculatorApp
                 return false;
             }
 
-            return lastChild.DataContext is SupplementaryResult suppResult && suppResult.IsWhimsical();
+            return lastChild.DataContext is SupplementaryResultViewModel suppResult && suppResult.IsWhimsical();
         }
     }
 
-    [Windows.Foundation.Metadata.WebHostHidden]
     public sealed partial class SupplementaryResults : UserControl
     {
         public SupplementaryResults()
@@ -93,14 +89,13 @@ namespace CalculatorApp
             InitializeComponent();
         }
 
-        public IEnumerable<ViewModel.SupplementaryResult> Results
+        public IEnumerable<SupplementaryResultViewModel> Results
         {
-            get => (IEnumerable<ViewModel.SupplementaryResult>)GetValue(ResultsProperty);
+            get => (IEnumerable<SupplementaryResultViewModel>)GetValue(ResultsProperty);
             set => SetValue(ResultsProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for Results.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ResultsProperty =
-            DependencyProperty.Register(nameof(Results), typeof(IEnumerable<ViewModel.SupplementaryResult>), typeof(SupplementaryResult), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Results), typeof(IEnumerable<SupplementaryResultViewModel>), typeof(SupplementaryResults), new PropertyMetadata(null));
     }
 }
