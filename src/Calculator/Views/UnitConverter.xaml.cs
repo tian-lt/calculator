@@ -1,6 +1,6 @@
 using CalculatorApp.Common;
 using CalculatorApp.Controls;
-using CalculatorApp.ViewModel;
+using CalculatorApp.ManagedViewModels;
 using CalculatorApp.ViewModel.Common;
 
 using System;
@@ -80,7 +80,7 @@ namespace CalculatorApp
             }
         }
 
-        public CalculatorApp.ViewModel.UnitConverterViewModel Model => (CalculatorApp.ViewModel.UnitConverterViewModel)this.DataContext;
+        public UnitConverterViewModel Model => (UnitConverterViewModel)DataContext;
 
         public Windows.UI.Xaml.FlowDirection LayoutDirection { get; } = default;
 

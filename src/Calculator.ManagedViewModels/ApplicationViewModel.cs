@@ -343,7 +343,7 @@ namespace CalculatorApp.ManagedViewModels
         {
             if (NavCategory.IsConverterViewMode(_mode))
             {
-                _unitVm.OnPasteCommand(param);
+                _ = _unitVm.OnPasteCommand(param);
             }
             else if (NavCategory.IsCalculatorViewMode(_mode))
             {

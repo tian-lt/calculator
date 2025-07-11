@@ -30,7 +30,6 @@
     <ClCompile Include="..\CalcViewModel\MemoryItemViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\pch.cpp" />
     <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
-    <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
     <ClCompile Include="..\CalcViewModel\Common\Utils.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -103,7 +102,6 @@
     <ClInclude Include="..\CalcViewModel\pch.h" />
     <ClInclude Include="..\CalcViewModel\StandardCalculatorViewModel.h" />
     <ClInclude Include="..\CalcViewModel\targetver.h" />
-    <ClInclude Include="..\CalcViewModel\UnitConverterViewModel.h" />
     <ClInclude Include="..\CalcViewModel\Common\Utils.h">
       <Filter>Common</Filter>
     </ClInclude>

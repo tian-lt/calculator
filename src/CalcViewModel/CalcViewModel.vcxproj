@@ -355,7 +355,6 @@
     <ClInclude Include="Snapshots.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="UnitConverterViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common\AppResourceProvider.cpp" />
@@ -396,7 +395,6 @@
     </ClCompile>
     <ClCompile Include="Snapshots.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
-    <ClCompile Include="UnitConverterViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalcManager\CalcManager.vcxproj">

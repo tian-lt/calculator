@@ -341,7 +341,6 @@
     <ClInclude Include="..\CalcViewModel\Snapshots.h" />
     <ClInclude Include="..\CalcViewModel\StandardCalculatorViewModel.h" />
     <ClInclude Include="..\CalcViewModel\targetver.h" />
-    <ClInclude Include="..\CalcViewModel\UnitConverterViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CalcViewModel\Common\AppResourceProvider.cpp" />
@@ -381,7 +380,6 @@
     </ClCompile>
     <ClCompile Include="..\CalcViewModel\Snapshots.cpp" />
     <ClCompile Include="..\CalcViewModel\StandardCalculatorViewModel.cpp" />
-    <ClCompile Include="..\CalcViewModel\UnitConverterViewModel.cpp" />
     <ClCompile Include="DataLoaders\CurrencyHttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>

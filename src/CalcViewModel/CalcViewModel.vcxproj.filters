@@ -87,7 +87,6 @@
     <ClCompile Include="HistoryViewModel.cpp" />
     <ClCompile Include="MemoryItemViewModel.cpp" />
     <ClCompile Include="StandardCalculatorViewModel.cpp" />
-    <ClCompile Include="UnitConverterViewModel.cpp" />
     <ClCompile Include="Snapshots.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +194,6 @@
     <ClInclude Include="MemoryItemViewModel.h" />
     <ClInclude Include="StandardCalculatorViewModel.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="UnitConverterViewModel.h" />
     <ClInclude Include="Snapshots.h" />
   </ItemGroup>
   <ItemGroup>
