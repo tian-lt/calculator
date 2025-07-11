@@ -7,8 +7,8 @@
     <ProjectGuid>{FFDBEDC5-43AE-4738-88D4-5F44C3A5C701}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Calculator.Model.UnitTests</RootNamespace>
-    <AssemblyName>Calculator.Model.UnitTests</AssemblyName>
+    <RootNamespace>Calculator.Models.UnitTests</RootNamespace>
+    <AssemblyName>Calculator.Models.UnitTests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.22000.0</TargetPlatformVersion>
@@ -158,9 +158,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj">
+    <ProjectReference Include="..\Calculator.Models\Calculator.Models.csproj">
       <Project>{6b11cc53-34e1-49b1-9817-6d79dd09a1fe}</Project>
-      <Name>Calculator.Model</Name>
+      <Name>Calculator.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
