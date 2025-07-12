@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using CalculatorApp.Model;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
+using System.Windows.Input;
 
 namespace CalculatorApp.ManagedViewModels
 {
@@ -60,15 +61,34 @@ namespace CalculatorApp.ManagedViewModels
         public string Name => _name;
         public string Abbreviation => _abbr;
         public string AccessibleName => _accessibleName;
+        public bool IsWhimsical => _isWhimsical;
     }
 
     public class SupplementaryResultViewModel
     {
+        private readonly UnitViewModel _unit;
+        private readonly string _value;
+
+        public SupplementaryResultViewModel(UnitViewModel unit, string value)
+        {
+            _unit = unit;
+            _value = value;
+        }
+
+        public UnitViewModel Unit => _unit;
+        public string Value => _value;
+        public bool IsWhimsical => _unit.IsWhimsical;
+
+        public string GetLocalizedAutomationName()
+        {
+            var fmt = AppResourceProvider.GetInstance().GetResourceString("SupplementaryUnit_AutomationName");
+            return LocalizationStringUtil.GetLocalizedString(fmt, _value, _unit.Name);
+        }
     }
 
     public class UnitConverterViewModel : Observable<UnitConverterViewModel>, INotifyPropertyChanged
     {
-        private readonly Dictionary<ViewMode, List<UnitViewModel>> _units = CreateUnits();
+        private readonly Dictionary<ViewMode, List<UnitViewModel>> _allUnits = CreateUnits();
         private readonly UnitConverter<string, ViewMode> _converter = new UnitConverter<string, ViewMode>();
         private readonly List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
         private UnitCategoryViewModel _currentCategory;
@@ -76,10 +96,15 @@ namespace CalculatorApp.ManagedViewModels
         private string _valueTo = "0";
         private string _value1;
         private string _value2;
+        private UnitViewModel _unit1;
+        private UnitViewModel _unit2;
+        private IList<UnitViewModel> _currentUnits;
 
         public IList<UnitCategoryViewModel> Categories => _catogries;
 
-        public IList<SupplementaryResultViewModel> SupplementaryResults { get; set; }
+        public IList<SupplementaryResultViewModel> SupplementaryResults { get; set; } = new List<SupplementaryResultViewModel>();
+
+        public IList<UnitViewModel> Units => _currentUnits;
 
         public Visibility SupplementaryVisibility => SupplementaryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -116,6 +141,31 @@ namespace CalculatorApp.ManagedViewModels
             }
         }
 
+        public UnitViewModel Unit1
+        {
+            get => _unit1;
+            set
+            {
+                if (_unit1 != value)
+                {
+                    _unit1 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        public UnitViewModel Unit2
+        {
+            get => _unit2;
+            set
+            {
+                if (_unit2 != value)
+                {
+                    _unit2 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public UnitCategoryViewModel CurrentCategory
         {
             get => _currentCategory;
@@ -139,10 +189,13 @@ namespace CalculatorApp.ManagedViewModels
         public bool Value1Active { get; set; }
         public bool Value2Active { get; set; }
 
-        public string Value1AutomationName { get; set; }
-        public string Value2AutomationName { get; set; }
-        public string Unit1AutomationName { get; set; }
-        public string Unit2AutomationName { get; set; }
+        public string Value1AutomationName { get; set; } = string.Empty;
+        public string Value2AutomationName { get; set; } = string.Empty;
+
+        public string Unit1AutomationName { get; set; } = string.Empty;
+
+        public string Unit2AutomationName { get; set; } = string.Empty;
+
         public NarratorAnnouncement Announcement { get; set; }
         public bool IsDecimalEnabled { get; set; }
         public bool IsDropDownOpen { get; set; }
@@ -150,12 +203,26 @@ namespace CalculatorApp.ManagedViewModels
         public bool IsCurrencyLoadingVisible { get; set; }
         public bool IsCurrencyCurrentCategory { get; private set; }
         public string CurrencyRatioEquality { get; set; }
-        public string CurrencyRatioEqualityAutomationName { get; set; }
+        public string CurrencyRatioEqualityAutomationName { get; set; } = string.Empty;
         public string CurrencyTimestamp { get; set; }
         public NetworkAccessBehavior NetworkBehavior { get; set; }
         public bool CurrencyDataLoadFailed { get; set; }
         public bool CurrencyDataIsWeekOld { get; set; }
 
+
+        //COMMAND_FOR_METHOD(CategoryChanged, UnitConverterViewModel::OnCategoryChanged);
+        //COMMAND_FOR_METHOD(UnitChanged, UnitConverterViewModel::OnUnitChanged);
+        //COMMAND_FOR_METHOD(SwitchActive, UnitConverterViewModel::OnSwitchActive);
+        //COMMAND_FOR_METHOD(ButtonPressed, UnitConverterViewModel::OnButtonPressed);
+        //COMMAND_FOR_METHOD(CopyCommand, UnitConverterViewModel::OnCopyCommand);
+        //COMMAND_FOR_METHOD(PasteCommand, UnitConverterViewModel::OnPasteCommand);
+
+        public ICommand CategoryChanged => new RelayCommand(param => { });
+        public ICommand UnitChanged => new RelayCommand(param => { });
+        public ICommand SwitchActive => new RelayCommand(param => { });
+        public ICommand ButtonPressed => new RelayCommand(param => { });
+        public ICommand CopyCommand => new RelayCommand(param => { });
+        public ICommand PasteCommand => new RelayCommand(param => { });
 
         public UnitConverterViewModel()
         {
@@ -165,7 +232,9 @@ namespace CalculatorApp.ManagedViewModels
             {
                 _catogries.Add(new UnitCategoryViewModel(cat.ViewMode, cat.Name, cat.SupportsNegative));
             }
-
+            _currentUnits = _allUnits[ViewMode.Area];
+            _unit1 = _currentUnits[0];
+            _unit2 = _currentUnits[1];
         }
 
         public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)

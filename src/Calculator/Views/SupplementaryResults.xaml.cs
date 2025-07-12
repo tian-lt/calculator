@@ -23,14 +23,14 @@ namespace CalculatorApp
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            Unit unit = (Unit)value;
-            Debug.Assert(unit.IsModelUnitWhimsical());
-            if (!unit.IsModelUnitWhimsical())
+            var unit = (UnitViewModel)value;
+            Debug.Assert(unit.IsWhimsical);
+            if (!unit.IsWhimsical)
             {
                 return null;
             }
 
-            string key = $"Unit_{unit.ModelUnitID()}";
+            string key = $"Unit_{unit.Id}";
             return (Style)m_delighters[key];
         }
 
@@ -53,7 +53,7 @@ namespace CalculatorApp
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
             SupplementaryResultViewModel result = (SupplementaryResultViewModel)item;
-            if (result.IsWhimsical())
+            if (result.IsWhimsical)
             {
                 return DelighterTemplate;
             }
@@ -78,7 +78,7 @@ namespace CalculatorApp
                 return false;
             }
 
-            return lastChild.DataContext is SupplementaryResultViewModel suppResult && suppResult.IsWhimsical();
+            return lastChild.DataContext is SupplementaryResultViewModel suppResult && suppResult.IsWhimsical;
         }
     }
 

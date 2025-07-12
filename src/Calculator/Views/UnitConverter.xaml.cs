@@ -155,7 +155,7 @@ namespace CalculatorApp
                     m_meteredConnectionOverride = true;
                 }
 
-                Model.RefreshCurrencyRatios();
+                //Model.RefreshCurrencyRatios();
             }
         }
 
@@ -361,7 +361,7 @@ namespace CalculatorApp
 
         private void OnVisualStateChanged(object sender, VisualStateChangedEventArgs e)
         {
-            var mode = NavCategoryStates.Deserialize(Model.CurrentCategory.GetModelCategoryId());
+            var mode = NavCategoryStates.Deserialize((int)Model.CurrentCategory.Id);
             TraceLogger.GetInstance().LogVisualStateChanged(mode, e.NewState.Name, false);
         }
 
