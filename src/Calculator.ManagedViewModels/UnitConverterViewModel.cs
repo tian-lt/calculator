@@ -215,9 +215,20 @@ namespace CalculatorApp.ManagedViewModels
         {
             var units = new Dictionary<ViewMode, List<UnitViewModel>>();
             var regionCode = new GeographicRegion().CodeTwoLetter;
+
+            // US + Federated States of Micronesia, Marshall Islands, Palau
             bool useUSCustomaryAndFahrenheit = regionCode == "US" || regionCode == "FM" || regionCode == "MH" || regionCode == "PW";
+
+            // useUSCustomaryAndFahrenheit + Liberia
+            // Source: https://en.wikipedia.org/wiki/Metrication
             bool useUSCustomary = useUSCustomaryAndFahrenheit || regionCode == "LR";
+
+            // Use 'Système International' (International System of Units - Metrics)
             bool useSI = !useUSCustomary;
+
+            // useUSCustomaryAndFahrenheit + the Bahamas, the Cayman Islands and Liberia
+            // Source: http://en.wikipedia.org/wiki/Fahrenheit
+            bool useFahrenheit = useUSCustomaryAndFahrenheit || regionCode == "BS" || regionCode == "KY" || regionCode == "LR";
 
             units.Add(ViewMode.Area, new List<UnitViewModel> {
                 new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareMillimeter, nameof(UnitKind.Area_SquareMillimeter)),
@@ -237,6 +248,8 @@ namespace CalculatorApp.ManagedViewModels
             });
             if (regionCode == "JP" || regionCode == "TW" || regionCode == "KP" || regionCode == "KR")
             {
+                // Use 坪(Tsubo), or Pyeong in Korean, a Japanese unit of floorspace.
+                // https://en.wikipedia.org/wiki/Japanese_units_of_measurement#Area
                 units[ViewMode.Area].Add(new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_Pyeong, nameof(UnitKind.Area_Pyeong)));
             }
 
@@ -280,6 +293,7 @@ namespace CalculatorApp.ManagedViewModels
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_CD, nameof(UnitKind.Data_CD), false, false, true),
                 new UnitViewModel(nameof(ViewMode.Data), UnitKind.Data_DVD, nameof(UnitKind.Data_DVD), false, false, true),
             });
+
             units.Add(ViewMode.Energy, new List<UnitViewModel> {
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_ElectronVolt, nameof(UnitKind.Energy_ElectronVolt)),
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Joule, nameof(UnitKind.Energy_Joule), true),
@@ -293,6 +307,115 @@ namespace CalculatorApp.ManagedViewModels
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_SliceOfCake, nameof(UnitKind.Energy_SliceOfCake), false, false, true),
             });
 
+            units.Add(ViewMode.Length, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Angstrom, nameof(UnitKind.Length_Angstrom)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Nanometer, nameof(UnitKind.Length_Nanometer)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Micron, nameof(UnitKind.Length_Micron)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Millimeter, nameof(UnitKind.Length_Millimeter)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Centimeter, nameof(UnitKind.Length_Centimeter), useUSCustomary, useSI),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Meter, nameof(UnitKind.Length_Meter)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Kilometer, nameof(UnitKind.Length_Kilometer)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Inch, nameof(UnitKind.Length_Inch), useSI, useUSCustomary),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Foot, nameof(UnitKind.Length_Foot)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Yard, nameof(UnitKind.Length_Yard)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Mile, nameof(UnitKind.Length_Mile)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_NauticalMile, nameof(UnitKind.Length_NauticalMile)),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Paperclip, nameof(UnitKind.Length_Paperclip), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_Hand, nameof(UnitKind.Length_Hand), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Length), UnitKind.Length_JumboJet, nameof(UnitKind.Length_JumboJet), false, false, true),
+            });
+
+            units.Add(ViewMode.Temperature, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Temperature), UnitKind.Temperature_DegreesCelsius, nameof(UnitKind.Temperature_DegreesCelsius), useFahrenheit, !useFahrenheit),
+                new UnitViewModel(nameof(ViewMode.Temperature), UnitKind.Temperature_DegreesFahrenheit, nameof(UnitKind.Temperature_DegreesFahrenheit), !useFahrenheit, useFahrenheit),
+                new UnitViewModel(nameof(ViewMode.Temperature), UnitKind.Temperature_Kelvin, nameof(UnitKind.Temperature_Kelvin)),
+            });
+
+            units.Add(ViewMode.Time, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Microsecond, nameof(UnitKind.Time_Microsecond)),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Millisecond, nameof(UnitKind.Time_Millisecond)),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Second, nameof(UnitKind.Time_Second)),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Minute, nameof(UnitKind.Time_Minute), false, true),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Hour, nameof(UnitKind.Time_Hour), true),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Day, nameof(UnitKind.Time_Day)),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Week, nameof(UnitKind.Time_Week)),
+                new UnitViewModel(nameof(ViewMode.Time), UnitKind.Time_Year, nameof(UnitKind.Time_Year)),
+            });
+
+            units.Add(ViewMode.Speed, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_CentimetersPerSecond, nameof(UnitKind.Speed_CentimetersPerSecond)),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_MetersPerSecond, nameof(UnitKind.Speed_MetersPerSecond)),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_KilometersPerHour, nameof(UnitKind.Speed_KilometersPerHour), useUSCustomary, useSI),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_FeetPerSecond, nameof(UnitKind.Speed_FeetPerSecond)),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_MilesPerHour, nameof(UnitKind.Speed_MilesPerHour), useSI, useUSCustomary),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_Knot, nameof(UnitKind.Speed_Knot)),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_Mach, nameof(UnitKind.Speed_Mach)),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_Turtle, nameof(UnitKind.Speed_Turtle), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_Horse, nameof(UnitKind.Speed_Horse), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Speed), UnitKind.Speed_Jet, nameof(UnitKind.Speed_Jet), false, false, true),
+            });
+
+            units.Add(ViewMode.Volume, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_Milliliter, nameof(UnitKind.Volume_Milliliter), useUSCustomary, useSI),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CubicCentimeter, nameof(UnitKind.Volume_CubicCentimeter)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_Liter, nameof(UnitKind.Volume_Liter)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CubicMeter, nameof(UnitKind.Volume_CubicMeter)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_TeaspoonUS, nameof(UnitKind.Volume_TeaspoonUS), useSI, useUSCustomary && regionCode != "GB"),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_TablespoonUS, nameof(UnitKind.Volume_TablespoonUS)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_FluidOunceUS, nameof(UnitKind.Volume_FluidOunceUS)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CupUS, nameof(UnitKind.Volume_CupUS)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_PintUS, nameof(UnitKind.Volume_PintUS)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_QuartUS, nameof(UnitKind.Volume_QuartUS)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_GallonUS, nameof(UnitKind.Volume_GallonUS)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CubicInch, nameof(UnitKind.Volume_CubicInch)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CubicFoot, nameof(UnitKind.Volume_CubicFoot)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CubicYard, nameof(UnitKind.Volume_CubicYard)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_TeaspoonUK, nameof(UnitKind.Volume_TeaspoonUK), false, useUSCustomary && regionCode == "GB"),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_TablespoonUK, nameof(UnitKind.Volume_TablespoonUK)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_FluidOunceUK, nameof(UnitKind.Volume_FluidOunceUK)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_PintUK, nameof(UnitKind.Volume_PintUK)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_QuartUK, nameof(UnitKind.Volume_QuartUK)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_GallonUK, nameof(UnitKind.Volume_GallonUK)),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_CoffeeCup, nameof(UnitKind.Volume_CoffeeCup), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_Bathtub, nameof(UnitKind.Volume_Bathtub), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Volume), UnitKind.Volume_SwimmingPool, nameof(UnitKind.Volume_SwimmingPool), false, false, true),
+            });
+
+            units.Add(ViewMode.Weight, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Carat, nameof(UnitKind.Weight_Carat)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Milligram, nameof(UnitKind.Weight_Milligram)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Centigram, nameof(UnitKind.Weight_Centigram)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Decigram, nameof(UnitKind.Weight_Decigram)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Gram, nameof(UnitKind.Weight_Gram)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Decagram, nameof(UnitKind.Weight_Decagram)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Hectogram, nameof(UnitKind.Weight_Hectogram)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Kilogram, nameof(UnitKind.Weight_Kilogram), useUSCustomary, useSI),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Tonne, nameof(UnitKind.Weight_Tonne)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Ounce, nameof(UnitKind.Weight_Ounce)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Pound, nameof(UnitKind.Weight_Pound), useSI, useUSCustomary),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Stone, nameof(UnitKind.Weight_Stone)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_ShortTon, nameof(UnitKind.Weight_ShortTon)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_LongTon, nameof(UnitKind.Weight_LongTon)),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Snowflake, nameof(UnitKind.Weight_Snowflake), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_SoccerBall, nameof(UnitKind.Weight_SoccerBall), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Elephant, nameof(UnitKind.Weight_Elephant), false, false, true),
+                new UnitViewModel(nameof(ViewMode.Weight), UnitKind.Weight_Whale, nameof(UnitKind.Weight_Whale), false, false, true),
+            });
+
+            units.Add(ViewMode.Pressure, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Pressure), UnitKind.Pressure_Atmosphere, nameof(UnitKind.Pressure_Atmosphere), true),
+                new UnitViewModel(nameof(ViewMode.Pressure), UnitKind.Pressure_Bar, nameof(UnitKind.Pressure_Bar), false, true),
+                new UnitViewModel(nameof(ViewMode.Pressure), UnitKind.Pressure_KiloPascal, nameof(UnitKind.Pressure_KiloPascal)),
+                new UnitViewModel(nameof(ViewMode.Pressure), UnitKind.Pressure_MillimeterOfMercury, nameof(UnitKind.Pressure_MillimeterOfMercury)),
+                new UnitViewModel(nameof(ViewMode.Pressure), UnitKind.Pressure_Pascal, nameof(UnitKind.Pressure_Pascal)),
+                new UnitViewModel(nameof(ViewMode.Pressure), UnitKind.Pressure_PSI, nameof(UnitKind.Pressure_PSI)),
+            });
+
+            units.Add(ViewMode.Angle, new List<UnitViewModel> {
+                new UnitViewModel(nameof(ViewMode.Angle), UnitKind.Angle_Degree, nameof(UnitKind.Angle_Degree), true),
+                new UnitViewModel(nameof(ViewMode.Angle), UnitKind.Angle_Radian, nameof(UnitKind.Angle_Radian), false, true),
+                new UnitViewModel(nameof(ViewMode.Angle), UnitKind.Angle_Gradian, nameof(UnitKind.Angle_Gradian)),
+            });
             return units;
         }
     }
