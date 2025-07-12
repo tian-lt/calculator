@@ -12,86 +12,17 @@ using CalculatorApp.Model;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
 using System.Windows.Input;
+using System.Linq;
 
 namespace CalculatorApp.ManagedViewModels
 {
-    public class UnitCategoryViewModel
-    {
-        private readonly ViewMode _id;
-        private readonly string _name;
-        private readonly bool _supportsNegative;
-
-        public UnitCategoryViewModel(ViewMode id, string name, bool supportsNegative)
-        {
-            _id = id;
-            _name = name;
-            _supportsNegative = supportsNegative;
-        }
-
-        public ViewMode Id => _id;
-        public string Name => _name;
-        public Visibility NegateVisibility => _supportsNegative ? Visibility.Visible : Visibility.Collapsed;
-    }
-
-    public class UnitViewModel
-    {
-        private readonly UnitKind _id;
-        private readonly string _name;
-        private readonly string _abbr;
-        private readonly string _accessibleName;
-        private readonly bool _isSource;
-        private readonly bool _isTarget;
-        private readonly bool _isWhimsical;
-
-        public UnitViewModel(
-             string categoryName, UnitKind id, string kindName, bool isSource = false, bool isTarget = false, bool isWhimsical = false)
-        {
-            var res = AppResourceProvider.GetInstance();
-            var unitName = kindName.Substring(categoryName.Length);
-            _id = id;
-            _name = res.GetResourceString($"UnitName{unitName}");
-            _abbr = res.GetResourceString($"UnitAbbreviation{unitName}");
-            _accessibleName = _name;
-            _isSource = isSource;
-            _isTarget = isTarget;
-            _isWhimsical = isWhimsical;
-        }
-
-        public UnitKind Id => _id;
-        public string Name => _name;
-        public string Abbreviation => _abbr;
-        public string AccessibleName => _accessibleName;
-        public bool IsWhimsical => _isWhimsical;
-    }
-
-    public class SupplementaryResultViewModel
-    {
-        private readonly UnitViewModel _unit;
-        private readonly string _value;
-
-        public SupplementaryResultViewModel(UnitViewModel unit, string value)
-        {
-            _unit = unit;
-            _value = value;
-        }
-
-        public UnitViewModel Unit => _unit;
-        public string Value => _value;
-        public bool IsWhimsical => _unit.IsWhimsical;
-
-        public string GetLocalizedAutomationName()
-        {
-            var fmt = AppResourceProvider.GetInstance().GetResourceString("SupplementaryUnit_AutomationName");
-            return LocalizationStringUtil.GetLocalizedString(fmt, _value, _unit.Name);
-        }
-    }
-
     public class UnitConverterViewModel : Observable<UnitConverterViewModel>, INotifyPropertyChanged
     {
         private readonly Dictionary<ViewMode, List<UnitViewModel>> _allUnits = CreateUnits();
         private readonly UnitConverter<string, ViewMode> _converter = new UnitConverter<string, ViewMode>();
         private readonly List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
         private UnitCategoryViewModel _currentCategory;
+        private ViewMode _mode;
         private string _valueFrom = "0";
         private string _valueTo = "0";
         private string _value1;
@@ -99,12 +30,26 @@ namespace CalculatorApp.ManagedViewModels
         private UnitViewModel _unit1;
         private UnitViewModel _unit2;
         private IList<UnitViewModel> _currentUnits;
+        private bool _isCategoryChanging = false;
+        private bool _isCurrencyLoaded = false;
+        private bool _isDropDownEnabled = false;
 
         public IList<UnitCategoryViewModel> Categories => _catogries;
 
         public IList<SupplementaryResultViewModel> SupplementaryResults { get; set; } = new List<SupplementaryResultViewModel>();
 
-        public IList<UnitViewModel> Units => _currentUnits;
+        public IList<UnitViewModel> Units
+        {
+            get => _currentUnits;
+            private set
+            {
+                if (_currentUnits != value)
+                {
+                    _currentUnits = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public Visibility SupplementaryVisibility => SupplementaryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -113,7 +58,7 @@ namespace CalculatorApp.ManagedViewModels
             Visibility.Collapsed :
             Visibility.Visible;
 
-        public ViewMode Mode { get; set; }
+        public ViewMode Mode => _mode;
 
         public string Value1
         {
@@ -174,11 +119,7 @@ namespace CalculatorApp.ManagedViewModels
                 if (_currentCategory != value)
                 {
                     _currentCategory = value;
-                    if (_currentCategory != null)
-                    {
-                        IsCurrencyCurrentCategory = _currentCategory.Id == ViewMode.Currency;
-                    }
-                    RaisePropertyChanged(nameof(Mode));
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -199,7 +140,19 @@ namespace CalculatorApp.ManagedViewModels
         public NarratorAnnouncement Announcement { get; set; }
         public bool IsDecimalEnabled { get; set; }
         public bool IsDropDownOpen { get; set; }
-        public bool IsDropDownEnabled { get; set; }
+        public bool IsDropDownEnabled
+        {
+            get => _isDropDownEnabled;
+            set
+            {
+                if (_isDropDownEnabled != value)
+                {
+                    _isDropDownEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public bool IsCurrencyLoadingVisible { get; set; }
         public bool IsCurrencyCurrentCategory { get; private set; }
         public string CurrencyRatioEquality { get; set; }
@@ -209,16 +162,8 @@ namespace CalculatorApp.ManagedViewModels
         public bool CurrencyDataLoadFailed { get; set; }
         public bool CurrencyDataIsWeekOld { get; set; }
 
-
-        //COMMAND_FOR_METHOD(CategoryChanged, UnitConverterViewModel::OnCategoryChanged);
-        //COMMAND_FOR_METHOD(UnitChanged, UnitConverterViewModel::OnUnitChanged);
-        //COMMAND_FOR_METHOD(SwitchActive, UnitConverterViewModel::OnSwitchActive);
-        //COMMAND_FOR_METHOD(ButtonPressed, UnitConverterViewModel::OnButtonPressed);
-        //COMMAND_FOR_METHOD(CopyCommand, UnitConverterViewModel::OnCopyCommand);
-        //COMMAND_FOR_METHOD(PasteCommand, UnitConverterViewModel::OnPasteCommand);
-
-        public ICommand CategoryChanged => new RelayCommand(param => { });
-        public ICommand UnitChanged => new RelayCommand(param => { });
+        public ICommand CategoryChanged => new RelayCommand(param => OnCategoryChanged());
+        public ICommand UnitChanged => new RelayCommand(param => OnUnitChanged());
         public ICommand SwitchActive => new RelayCommand(param => { });
         public ICommand ButtonPressed => new RelayCommand(param => { });
         public ICommand CopyCommand => new RelayCommand(param => { });
@@ -237,10 +182,6 @@ namespace CalculatorApp.ManagedViewModels
             _unit2 = _currentUnits[1];
         }
 
-        public void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
-        {
-        }
-
         public async Task OnPasteCommand(object param)
         {
             if (!CopyPasteManager.HasStringToPaste())
@@ -248,8 +189,8 @@ namespace CalculatorApp.ManagedViewModels
                 return;
             }
             var text = await CopyPasteManager.GetStringToPaste(
-                Mode,
-                NavCategoryStates.GetGroupType(Mode),
+                _mode,
+                NavCategoryStates.GetGroupType(_mode),
                 NumberBase.Unknown,
                 BitLength.BitLengthUnknown);
             OnPaste(text);
@@ -269,7 +210,7 @@ namespace CalculatorApp.ManagedViewModels
                 return;
             }
 
-            TraceLogger.GetInstance().LogInputPasted(Mode);
+            TraceLogger.GetInstance().LogInputPasted(_mode);
         }
 
         private void DisplayError()
@@ -278,6 +219,49 @@ namespace CalculatorApp.ManagedViewModels
             var errMsg = AppResourceProvider.GetInstance().GetCEngineString(SIDS_DOMAIN);
             Value1 = errMsg;
             Value2 = errMsg;
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(CurrentCategory):
+                    _isCategoryChanging = true;
+                    CategoryChanged.Execute(null);
+                    _isCategoryChanging = false;
+                    break;
+                case nameof(Unit1):
+                case nameof(Unit2):
+                    if (!_isCategoryChanging)
+                    {
+                        OnUnitChanged();
+                    }
+                    break;
+            }
+        }
+
+        private void OnCategoryChanged()
+        {
+            _mode = _currentCategory.Id;
+            IsCurrencyCurrentCategory = _currentCategory.Id == ViewMode.Currency;
+            IsCurrencyLoadingVisible = IsCurrencyCurrentCategory && !_isCurrencyLoaded;
+            ResolveSelectedUnits();
+            _currentUnits = _allUnits[_mode];
+            IsDropDownEnabled = _currentUnits.Count > 0;
+            OnUnitChanged();
+        }
+
+        private void OnUnitChanged()
+        {
+            RaisePropertyChanged(nameof(Units));
+            RaisePropertyChanged(nameof(Unit1));
+            RaisePropertyChanged(nameof(Unit2));
+        }
+
+        private void ResolveSelectedUnits()
+        {
+            _unit1 = _currentUnits.First(x => x.IsSource);
+            _unit2 = _currentUnits.First(x => x.IsTarget);
         }
 
         private static Dictionary<ViewMode, List<UnitViewModel>> CreateUnits()
@@ -299,6 +283,7 @@ namespace CalculatorApp.ManagedViewModels
             // Source: http://en.wikipedia.org/wiki/Fahrenheit
             bool useFahrenheit = useUSCustomaryAndFahrenheit || regionCode == "BS" || regionCode == "KY" || regionCode == "LR";
 
+            units.Add(ViewMode.Currency, new List<UnitViewModel>());
             units.Add(ViewMode.Area, new List<UnitViewModel> {
                 new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareMillimeter, nameof(UnitKind.Area_SquareMillimeter)),
                 new UnitViewModel(nameof(ViewMode.Area), UnitKind.Area_SquareCentimeter, nameof(UnitKind.Area_SquareCentimeter)),

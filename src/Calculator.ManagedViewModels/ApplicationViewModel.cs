@@ -298,7 +298,6 @@ namespace CalculatorApp.ManagedViewModels
                 {
                     _unitVm = new UnitConverterViewModel();
                 }
-                _unitVm.Mode = _mode;
             }
 
             var resProvider = AppResourceProvider.GetInstance();
