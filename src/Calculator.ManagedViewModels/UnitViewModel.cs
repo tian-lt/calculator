@@ -15,6 +15,14 @@ namespace CalculatorApp.ManagedViewModels
         private readonly bool _isTarget;
         private readonly bool _isWhimsical;
 
+        public UnitKind Id => _id;
+        public string Name => _name;
+        public bool IsSource => _isSource;
+        public bool IsTarget => _isTarget;
+        public string Abbreviation => _abbr;
+        public string AccessibleName => _accessibleName;
+        public bool IsWhimsical => _isWhimsical;
+
         public UnitViewModel(
              string categoryName, UnitKind id, string kindName, bool isSource = false, bool isTarget = false, bool isWhimsical = false)
         {
@@ -28,13 +36,5 @@ namespace CalculatorApp.ManagedViewModels
             _isTarget = isTarget;
             _isWhimsical = isWhimsical;
         }
-
-        public UnitKind Id => _id;
-        public string Name => _name;
-        public bool IsSource => _isSource;
-        public bool IsTarget => _isTarget;
-        public string Abbreviation => _abbr;
-        public string AccessibleName => _accessibleName;
-        public bool IsWhimsical => _isWhimsical;
     }
 }

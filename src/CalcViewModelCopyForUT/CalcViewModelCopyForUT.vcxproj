@@ -300,7 +300,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\CalcViewModel\Common\AlwaysSelectedCollectionView.h" />
     <ClInclude Include="..\CalcViewModel\Common\AppResourceProvider.h" />
     <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorAnnouncement.h" />
     <ClInclude Include="..\CalcViewModel\Common\Automation\NarratorNotifier.h" />

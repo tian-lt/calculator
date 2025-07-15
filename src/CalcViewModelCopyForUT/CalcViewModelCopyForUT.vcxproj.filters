@@ -187,9 +187,6 @@
       <Filter>GraphingCalculator</Filter>
     </ClInclude>
     <ClInclude Include="..\CalcViewModel\Common\RadixType.h" />
-    <ClInclude Include="..\CalcViewModel\Common\AlwaysSelectedCollectionView.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\CalcViewModel\Snapshots.h" />
   </ItemGroup>
   <ItemGroup>

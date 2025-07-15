@@ -2,17 +2,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
+using Windows.Foundation.Collections;
 using Windows.Globalization;
 using Windows.UI.Xaml;
 
 using CalculatorApp.Model;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
-using System.Windows.Input;
-using System.Linq;
+using System.Collections.Specialized;
 
 namespace CalculatorApp.ManagedViewModels
 {
@@ -22,6 +25,7 @@ namespace CalculatorApp.ManagedViewModels
         private readonly UnitConverter<string, ViewMode> _converter = new UnitConverter<string, ViewMode>();
         private readonly List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
         private UnitCategoryViewModel _currentCategory;
+        private IList<UnitViewModel> _currentUnits;
         private ViewMode _mode;
         private string _valueFrom = "0";
         private string _valueTo = "0";
@@ -29,14 +33,11 @@ namespace CalculatorApp.ManagedViewModels
         private string _value2;
         private UnitViewModel _unit1;
         private UnitViewModel _unit2;
-        private IList<UnitViewModel> _currentUnits;
         private bool _isCategoryChanging = false;
         private bool _isCurrencyLoaded = false;
         private bool _isDropDownEnabled = false;
 
         public IList<UnitCategoryViewModel> Categories => _catogries;
-
-        public IList<SupplementaryResultViewModel> SupplementaryResults { get; set; } = new List<SupplementaryResultViewModel>();
 
         public IList<UnitViewModel> Units
         {
@@ -47,9 +48,12 @@ namespace CalculatorApp.ManagedViewModels
                 {
                     _currentUnits = value;
                     RaisePropertyChanged();
+                    IsDropDownEnabled = _currentUnits.Count > 0;
                 }
             }
         }
+
+        public IList<SupplementaryResultViewModel> SupplementaryResults { get; set; } = new List<SupplementaryResultViewModel>();
 
         public Visibility SupplementaryVisibility => SupplementaryResults.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
@@ -177,9 +181,6 @@ namespace CalculatorApp.ManagedViewModels
             {
                 _catogries.Add(new UnitCategoryViewModel(cat.ViewMode, cat.Name, cat.SupportsNegative));
             }
-            _currentUnits = _allUnits[ViewMode.Area];
-            _unit1 = _currentUnits[0];
-            _unit2 = _currentUnits[1];
         }
 
         public async Task OnPasteCommand(object param)
@@ -245,23 +246,24 @@ namespace CalculatorApp.ManagedViewModels
             _mode = _currentCategory.Id;
             IsCurrencyCurrentCategory = _currentCategory.Id == ViewMode.Currency;
             IsCurrencyLoadingVisible = IsCurrencyCurrentCategory && !_isCurrencyLoaded;
+            ResolveCurrentUnits();
             ResolveSelectedUnits();
-            _currentUnits = _allUnits[_mode];
-            IsDropDownEnabled = _currentUnits.Count > 0;
             OnUnitChanged();
         }
 
         private void OnUnitChanged()
         {
-            RaisePropertyChanged(nameof(Units));
-            RaisePropertyChanged(nameof(Unit1));
-            RaisePropertyChanged(nameof(Unit2));
+        }
+
+        private void ResolveCurrentUnits()
+        {
+            Units = _allUnits[_mode].Where(x => !x.IsWhimsical).ToList();
         }
 
         private void ResolveSelectedUnits()
         {
-            _unit1 = _currentUnits.First(x => x.IsSource);
-            _unit2 = _currentUnits.First(x => x.IsTarget);
+            Unit1 = Units.First(x => x.IsSource);
+            Unit2 = Units.First(x => x.IsTarget);
         }
 
         private static Dictionary<ViewMode, List<UnitViewModel>> CreateUnits()

@@ -23,8 +23,6 @@
 
     <UserControl.Resources>
         <common:VisibilityNegationConverter x:Name="VisibilityNegationConverter"/>
-        <common:AlwaysSelectedCollectionViewConverter x:Name="AlwaysSelectedConverter"/>
-        <common:ValidSelectedItemConverter x:Name="ValidSelectedItemConverter"/>
         <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter"/>
         <converters:BooleanToVisibilityNegationConverter x:Name="BooleanToVisibilityNegationConverter"/>
         <automation:NarratorNotifier x:Name="NarratorNotifier" Announcement="{x:Bind Model.Announcement, Mode=OneWay}"/>
@@ -33,16 +31,6 @@
             <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
                        AutomationProperties.Name="{x:Bind AccessibleName}"
                        Text="{x:Bind Name}"
-                       TextWrapping="NoWrap"/>
-        </DataTemplate>
-
-        <!-- Native bindings can't be use with this template, it will launch an exception when ComboxBox.SelectedItem == null -->
-        <!-- if you switch between modes when no currencies are available for example) -->
-        <DataTemplate x:Key="SelectedUnitTemplate">
-            <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
-                       FontWeight="Normal"
-                       AutomationProperties.Name="{Binding AccessibleName, Mode=OneTime, FallbackValue=''}"
-                       Text="{Binding Name, Mode=OneTime, FallbackValue=''}"
                        TextWrapping="NoWrap"/>
         </DataTemplate>
 
@@ -143,7 +131,7 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{TemplateBinding SelectedItem}"
-                                                  ContentTemplate="{StaticResource SelectedUnitTemplate}"
+                                                  ContentTemplate="{StaticResource UnitTemplate}"
                                                   FlowDirection="{TemplateBinding FlowDirection}"/>
                                 <TextBlock x:Name="DropDownGlyph"
                                            Grid.Column="1"
@@ -573,10 +561,10 @@
                   FlowDirection="{x:Bind LayoutDirection}"
                   IsEnabledChanged="Units1_IsEnabledChanged"
                   ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
-                  SelectedItem="{Binding Unit1, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+                  ItemsSource="{x:Bind Model.Units, Mode=OneWay}"
+                  SelectedItem="{x:Bind Model.Unit1, Mode=TwoWay}"
                   TabIndex="2"
-                  IsEnabled="{Binding IsDropDownEnabled}"/>
+                  IsEnabled="{x:Bind Model.IsDropDownEnabled, Mode=OneWay}"/>
 
         <Grid x:Name="Value2Container"
               Grid.Row="3"
@@ -622,10 +610,10 @@
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
                   ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{Binding Units, Converter={StaticResource AlwaysSelectedConverter}}"
-                  SelectedItem="{Binding Unit2, Mode=TwoWay, Converter={StaticResource ValidSelectedItemConverter}}"
+                  ItemsSource="{x:Bind Model.Units}"
+                  SelectedItem="{x:Bind Model.Unit2, Mode=TwoWay}"
                   TabIndex="4"
-                  IsEnabled="{Binding IsDropDownEnabled}"/>
+                  IsEnabled="{x:Bind Model.IsDropDownEnabled, Mode=OneWay}"/>
 
         <StackPanel x:Name="SupplementaryResultsPanelInGrid"
                     Grid.Row="5"
