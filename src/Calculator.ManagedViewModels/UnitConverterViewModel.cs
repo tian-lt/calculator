@@ -2,40 +2,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-using Windows.Foundation.Collections;
 using Windows.Globalization;
 using Windows.UI.Xaml;
 
 using CalculatorApp.Model;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
-using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace CalculatorApp.ManagedViewModels
 {
     public class UnitConverterViewModel : Observable<UnitConverterViewModel>, INotifyPropertyChanged
     {
+        private readonly UnitConverterModel _model = new UnitConverterModel();
         private readonly Dictionary<ViewMode, List<UnitViewModel>> _allUnits = CreateUnits();
-        private readonly UnitConverter<string, ViewMode> _converter = new UnitConverter<string, ViewMode>();
         private readonly List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
         private UnitCategoryViewModel _currentCategory;
         private IList<UnitViewModel> _currentUnits;
         private ViewMode _mode;
-        private string _valueFrom = "0";
-        private string _valueTo = "0";
-        private string _value1;
-        private string _value2;
+        private string _value1 = "0";
+        private string _value2 = "0";
         private UnitViewModel _unit1;
         private UnitViewModel _unit2;
         private bool _isCategoryChanging = false;
         private bool _isCurrencyLoaded = false;
         private bool _isDropDownEnabled = false;
+        private bool _isValue1Active = true;
+        private bool _isDecimalEnabled = true;
+        private bool _isError = false;
 
         public IList<UnitCategoryViewModel> Categories => _catogries;
 
@@ -131,10 +130,36 @@ namespace CalculatorApp.ManagedViewModels
         public string CurrencySymbol1 { get; set; }
         public string CurrencySymbol2 { get; set; }
 
-        public bool Value1Active { get; set; }
-        public bool Value2Active { get; set; }
+        public bool Value1Active
+        {
+            get => _isValue1Active;
+            set
+            {
+                if (_isValue1Active != value)
+                {
+                    _isValue1Active = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(Value2Active));
+                }
+            }
+        }
+
+        public bool Value2Active
+        {
+            get => !_isValue1Active;
+            set
+            {
+                if (_isValue1Active == value)
+                {
+                    _isValue1Active = !value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(Value1Active));
+                }
+            }
+        }
 
         public string Value1AutomationName { get; set; } = string.Empty;
+
         public string Value2AutomationName { get; set; } = string.Empty;
 
         public string Unit1AutomationName { get; set; } = string.Empty;
@@ -142,7 +167,20 @@ namespace CalculatorApp.ManagedViewModels
         public string Unit2AutomationName { get; set; } = string.Empty;
 
         public NarratorAnnouncement Announcement { get; set; }
-        public bool IsDecimalEnabled { get; set; }
+
+        public bool IsDecimalEnabled
+        {
+            get => _isDecimalEnabled;
+            set
+            {
+                if (_isDecimalEnabled != value)
+                {
+                    _isDecimalEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public bool IsDropDownOpen { get; set; }
         public bool IsDropDownEnabled
         {
@@ -166,12 +204,11 @@ namespace CalculatorApp.ManagedViewModels
         public bool CurrencyDataLoadFailed { get; set; }
         public bool CurrencyDataIsWeekOld { get; set; }
 
-        public ICommand CategoryChanged => new RelayCommand(param => OnCategoryChanged());
-        public ICommand UnitChanged => new RelayCommand(param => OnUnitChanged());
-        public ICommand SwitchActive => new RelayCommand(param => { });
-        public ICommand ButtonPressed => new RelayCommand(param => { });
-        public ICommand CopyCommand => new RelayCommand(param => { });
-        public ICommand PasteCommand => new RelayCommand(param => { });
+        public ICommand ButtonPressed =>
+            new RelayCommand(param => OnButtonCommand(CalculatorButtonPressedEventArgs.GetOperationFromCommandParameter(param)));
+
+        public ICommand CopyCommand => new RelayCommand(_ => OnCopyCommand());
+        public ICommand PasteCommand => new RelayCommand(param => _ = OnPasteCommand(param));
 
         public UnitConverterViewModel()
         {
@@ -197,9 +234,9 @@ namespace CalculatorApp.ManagedViewModels
             OnPaste(text);
         }
 
-        public void OnCopyCommand(object param)
+        public void OnCopyCommand()
         {
-            CopyPasteManager.CopyToClipboard(_valueFrom);
+            CopyPasteManager.CopyToClipboard(_isValue1Active ? _value1 : _value2);
         }
 
         public void OnPaste(string text)
@@ -220,6 +257,26 @@ namespace CalculatorApp.ManagedViewModels
             var errMsg = AppResourceProvider.GetInstance().GetCEngineString(SIDS_DOMAIN);
             Value1 = errMsg;
             Value2 = errMsg;
+            _isError = true;
+        }
+
+        private void OnButtonCommand(NumbersAndOperatorsEnum op)
+        {
+            if (_isError)
+            {
+                _isError = false;
+                OnButtonCommand(NumbersAndOperatorsEnum.Clear);
+            }
+
+            if (_isValue1Active)
+            {
+                Value1 = ProccessInputCommand(Value1, op);
+            }
+            else
+            {
+                Value2 = ProccessInputCommand(Value2, op);
+            }
+            ConvertUnit();
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -228,7 +285,7 @@ namespace CalculatorApp.ManagedViewModels
             {
                 case nameof(CurrentCategory):
                     _isCategoryChanging = true;
-                    CategoryChanged.Execute(null);
+                    OnCategoryChanged();
                     _isCategoryChanging = false;
                     break;
                 case nameof(Unit1):
@@ -246,8 +303,9 @@ namespace CalculatorApp.ManagedViewModels
             _mode = _currentCategory.Id;
             IsCurrencyCurrentCategory = _currentCategory.Id == ViewMode.Currency;
             IsCurrencyLoadingVisible = IsCurrencyCurrentCategory && !_isCurrencyLoaded;
-            ResolveCurrentUnits();
-            ResolveSelectedUnits();
+            Units = _allUnits[_mode].Where(x => !x.IsWhimsical).ToList();
+            Unit1 = _currentUnits.First(x => x.IsSource);
+            Unit2 = _currentUnits.First(x => x.IsTarget);
             OnUnitChanged();
         }
 
@@ -255,15 +313,63 @@ namespace CalculatorApp.ManagedViewModels
         {
         }
 
-        private void ResolveCurrentUnits()
+        private void ConvertUnit()
         {
-            Units = _allUnits[_mode].Where(x => !x.IsWhimsical).ToList();
+            Debug.Assert(_isError == false);
+            if (_isValue1Active)
+            {
+                Value2 = _model.Convert(_unit1.Id, _unit2.Id, decimal.Parse(_value1)).ToString();
+            }
+            else
+            {
+                Value1 = _model.Convert(_unit2.Id, _unit1.Id, decimal.Parse(_value2)).ToString();
+            }
         }
 
-        private void ResolveSelectedUnits()
+        private static string ProccessInputCommand(string value, NumbersAndOperatorsEnum op)
         {
-            Unit1 = Units.First(x => x.IsSource);
-            Unit2 = Units.First(x => x.IsTarget);
+            const int MAX_DIGITS = 15;
+            bool hasDecimal = value.Contains('.');
+            switch (op)
+            {
+                case NumbersAndOperatorsEnum.Zero:
+                case NumbersAndOperatorsEnum.One:
+                case NumbersAndOperatorsEnum.Two:
+                case NumbersAndOperatorsEnum.Three:
+                case NumbersAndOperatorsEnum.Four:
+                case NumbersAndOperatorsEnum.Five:
+                case NumbersAndOperatorsEnum.Six:
+                case NumbersAndOperatorsEnum.Seven:
+                case NumbersAndOperatorsEnum.Eight:
+                case NumbersAndOperatorsEnum.Nine:
+                    if (value == "0" || value == "-0")
+                    {
+                        value = string.Empty;
+                    }
+                    if (value.Count(x => '0' <= x && x <= '9') < MAX_DIGITS)
+                    {
+                        value += $"{(int)op - (int)NumbersAndOperatorsEnum.Zero}";
+                    }
+                    break;
+                case NumbersAndOperatorsEnum.Clear:
+                    value = string.Empty;
+                    break;
+                case NumbersAndOperatorsEnum.Decimal:
+                    if (!hasDecimal)
+                    {
+                        value += ".";
+                    }
+                    break;
+                case NumbersAndOperatorsEnum.Backspace:
+                    if (value.Length > 0)
+                    {
+                        value = value.Remove(value.Length - 1);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return string.IsNullOrEmpty(value) ? "0" : value;
         }
 
         private static Dictionary<ViewMode, List<UnitViewModel>> CreateUnits()
@@ -358,6 +464,7 @@ namespace CalculatorApp.ManagedViewModels
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Kilocalorie, nameof(UnitKind.Energy_Kilocalorie), false, true),
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_FootPound, nameof(UnitKind.Energy_FootPound)),
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_BritishThermalUnit, nameof(UnitKind.Energy_BritishThermalUnit)),
+                new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Kilowatthour, nameof(UnitKind.Energy_Kilowatthour)),
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Battery, nameof(UnitKind.Energy_Battery), false, false, true),
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_Banana, nameof(UnitKind.Energy_Banana), false, false, true),
                 new UnitViewModel(nameof(ViewMode.Energy), UnitKind.Energy_SliceOfCake, nameof(UnitKind.Energy_SliceOfCake), false, false, true),

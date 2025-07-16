@@ -326,7 +326,7 @@ namespace CalculatorApp.ManagedViewModels
         {
             if (NavCategory.IsConverterViewMode(_mode))
             {
-                _unitVm.OnCopyCommand(param);
+                _unitVm.OnCopyCommand();
             }
             else if (NavCategory.IsDateCalculatorViewMode(_mode))
             {

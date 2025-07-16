@@ -10,17 +10,17 @@ namespace CalculatorApp.Model
         private Dictionary<TName, Node> _nodes = new Dictionary<TName, Node>();
         private Dictionary<TName, TCategory> _categories = new Dictionary<TName, TCategory>();
 
-        public const decimal Precision = 1e-10m;
+        public const decimal Precision = 1e-23m;
 
-        public void ClaimRatio(TName from, TName to, decimal scalarRatio) =>
-            ClaimRatio(from, to, new UnitTransform { m11 = scalarRatio, m12 = 0, m21 = 0, m22 = 1 });
+        public void ClaimRatio(TName to, TName from, decimal scalarRatio) =>
+            ClaimRatio(to, from, new UnitTransform { m11 = scalarRatio, m12 = 0, m21 = 0, m22 = 1 });
 
-        public void ClaimRatio(TName from, TName to, decimal k, decimal b) =>
-            ClaimRatio(from, to, new UnitTransform { m11 = k, m12 = 0, m21 = b, m22 = 1 });
+        public void ClaimRatio(TName to, TName from, decimal k, decimal b) =>
+            ClaimRatio(to, from, new UnitTransform { m11 = k, m12 = 0, m21 = b, m22 = 1 });
 
-        public decimal Convert(TName from, TName to, decimal value)
+        public decimal Convert(TName to, TName from, decimal value)
         {
-            var res = Convert(from, to, new UnitPoint { x = value, w = 1 });
+            var res = Convert(to, from, new UnitPoint { x = value, w = 1 });
             return res.x / res.w;
         }
 
@@ -56,14 +56,14 @@ namespace CalculatorApp.Model
             foreach (var name in namesToRemove)
             {
                 _nodes.Remove(name);
-                if(_categories.ContainsKey(name))
+                if (_categories.ContainsKey(name))
                 {
                     _categories.Remove(name);
                 }
             }
         }
 
-        private void ClaimRatio(TName from, TName to, UnitTransform ratio)
+        private void ClaimRatio(TName to, TName from, UnitTransform ratio)
         {
             if (Equals(to, from))
             {
@@ -94,7 +94,7 @@ namespace CalculatorApp.Model
             }
         }
 
-        private UnitPoint Convert(TName from, TName to, UnitPoint value)
+        private UnitPoint Convert(TName to, TName from, UnitPoint value)
         {
             var rootTo = Find(to);
             var rootFrom = Find(from);

@@ -8,7 +8,7 @@ namespace CalculatorApp.Model
     {
         private readonly UnitConverter<UnitKind, ViewMode> _converter = new UnitConverter<UnitKind, ViewMode>();
 
-        public void Initialize()
+        public UnitConverterModel()
         {
             _converter.ClaimRatio(UnitKind.Area_SquareMeter, UnitKind.Area_Acre, 4046.8564224m);
             _converter.ClaimRatio(UnitKind.Area_SquareMeter, UnitKind.Area_SquareFoot, 0.09290304m);
@@ -180,6 +180,6 @@ namespace CalculatorApp.Model
         }
 
         public decimal Convert(UnitKind from, UnitKind to, decimal value) =>
-            _converter.Convert(from, to, value);
+            _converter.Convert(to, from, value);
     }
 }

@@ -33,6 +33,13 @@
                        Text="{x:Bind Name}"
                        TextWrapping="NoWrap"/>
         </DataTemplate>
+        <DataTemplate x:Key="SelectedUnitTemplate" x:DataType="vm:UnitViewModel">
+            <TextBlock Style="{ThemeResource BodyTextBlockStyle}"
+                       FontWeight="Normal"
+                       AutomationProperties.Name="{x:Bind AccessibleName, Mode=OneTime, FallbackValue=''}"
+                       Text="{x:Bind Name, Mode=OneTime, FallbackValue=''}"
+                       TextWrapping="NoWrap"/>
+        </DataTemplate>
 
         <Style x:Key="ComboStyle" TargetType="ComboBox">
             <Setter Property="Margin" Value="12,0,0,0"/>
@@ -131,7 +138,7 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   AutomationProperties.AccessibilityView="Raw"
                                                   Content="{TemplateBinding SelectedItem}"
-                                                  ContentTemplate="{StaticResource UnitTemplate}"
+                                                  ContentTemplate="{StaticResource SelectedUnitTemplate}"
                                                   FlowDirection="{TemplateBinding FlowDirection}"/>
                                 <TextBlock x:Name="DropDownGlyph"
                                            Grid.Column="1"
@@ -543,7 +550,7 @@
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value1, Mode=OneWay}"
                                         FlowDirection="{x:Bind LayoutDirection}"
-                                        IsActive="{Binding Value1Active, Mode=TwoWay}"
+                                        IsActive="{x:Bind Model.Value1Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         Selected="OnValueSelected"
                                         TabIndex="1"/>
@@ -593,7 +600,7 @@
                                         ContextRequested="OnContextRequested"
                                         DisplayValue="{x:Bind Model.Value2, Mode=OneWay}"
                                         FlowDirection="{x:Bind LayoutDirection}"
-                                        IsActive="{Binding Value2Active, Mode=TwoWay}"
+                                        IsActive="{x:Bind Model.Value2Active, Mode=TwoWay}"
                                         KeyDown="OnValueKeyDown"
                                         Selected="OnValueSelected"
                                         TabIndex="3"/>
@@ -610,7 +617,7 @@
                   DropDownOpened="UpdateDropDownState"
                   FlowDirection="{x:Bind LayoutDirection}"
                   ItemTemplate="{StaticResource UnitTemplate}"
-                  ItemsSource="{x:Bind Model.Units}"
+                  ItemsSource="{x:Bind Model.Units, Mode=OneWay}"
                   SelectedItem="{x:Bind Model.Unit2, Mode=TwoWay}"
                   TabIndex="4"
                   IsEnabled="{x:Bind Model.IsDropDownEnabled, Mode=OneWay}"/>
