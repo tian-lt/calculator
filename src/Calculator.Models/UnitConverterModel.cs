@@ -175,8 +175,9 @@ namespace CalculatorApp.Model
             _converter.ClaimRatio(UnitKind.Pressure_Atmosphere, UnitKind.Pressure_PSI, 0.068045961016531m);
             _converter.Classify(UnitKind.Pressure_Atmosphere, ViewMode.Pressure);
 
-            _converter.ClaimRatio(UnitKind.Temperature_DegreesCelsius, UnitKind.Temperature_DegreesFahrenheit, 1.8m, 32m);
-            _converter.ClaimRatio(UnitKind.Temperature_DegreesCelsius, UnitKind.Temperature_Kelvin, 1m, 273.15m);
+            _converter.ClaimRatio(UnitKind.Temperature_DegreesFahrenheit, UnitKind.Temperature_DegreesCelsius, 1.8m, 32m);
+            _converter.ClaimRatio(UnitKind.Temperature_Kelvin, UnitKind.Temperature_DegreesCelsius, 1m, 273.15m);
+            _converter.Classify(UnitKind.Temperature_DegreesCelsius, ViewMode.Temperature);
         }
 
         public decimal Convert(UnitKind from, UnitKind to, decimal value) =>

@@ -3,17 +3,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Windows.Globalization;
+using Windows.Globalization.NumberFormatting;
 using Windows.UI.Xaml;
 
 using CalculatorApp.Model;
 using CalculatorApp.ViewModel.Common;
 using CalculatorApp.ViewModel.Common.Automation;
-using System.Diagnostics;
 
 namespace CalculatorApp.ManagedViewModels
 {
@@ -22,11 +23,11 @@ namespace CalculatorApp.ManagedViewModels
         private readonly UnitConverterModel _model = new UnitConverterModel();
         private readonly Dictionary<ViewMode, List<UnitViewModel>> _allUnits = CreateUnits();
         private readonly List<UnitCategoryViewModel> _catogries = new List<UnitCategoryViewModel>();
+        private readonly UnitValueViewModel _value1 = new UnitValueViewModel();
+        private readonly UnitValueViewModel _value2 = new UnitValueViewModel();
         private UnitCategoryViewModel _currentCategory;
         private IList<UnitViewModel> _currentUnits;
         private ViewMode _mode;
-        private string _value1 = "0";
-        private string _value2 = "0";
         private UnitViewModel _unit1;
         private UnitViewModel _unit2;
         private bool _isCategoryChanging = false;
@@ -34,7 +35,7 @@ namespace CalculatorApp.ManagedViewModels
         private bool _isDropDownEnabled = false;
         private bool _isValue1Active = true;
         private bool _isDecimalEnabled = true;
-        private bool _isError = false;
+        private bool _toClear = false;
 
         public IList<UnitCategoryViewModel> Categories => _catogries;
 
@@ -63,30 +64,14 @@ namespace CalculatorApp.ManagedViewModels
 
         public ViewMode Mode => _mode;
 
-        public string Value1
+        public UnitValueViewModel Value1
         {
             get => _value1;
-            set
-            {
-                if (_value1 != value)
-                {
-                    _value1 = value;
-                    RaisePropertyChanged();
-                }
-            }
         }
 
-        public string Value2
+        public UnitValueViewModel Value2
         {
             get => _value2;
-            set
-            {
-                if (_value2 != value)
-                {
-                    _value2 = value;
-                    RaisePropertyChanged();
-                }
-            }
         }
 
         public UnitViewModel Unit1
@@ -138,6 +123,7 @@ namespace CalculatorApp.ManagedViewModels
                 if (_isValue1Active != value)
                 {
                     _isValue1Active = value;
+                    _toClear = true;
                     RaisePropertyChanged();
                     RaisePropertyChanged(nameof(Value2Active));
                 }
@@ -152,6 +138,7 @@ namespace CalculatorApp.ManagedViewModels
                 if (_isValue1Active == value)
                 {
                     _isValue1Active = !value;
+                    _toClear = true;
                     RaisePropertyChanged();
                     RaisePropertyChanged(nameof(Value1Active));
                 }
@@ -236,7 +223,7 @@ namespace CalculatorApp.ManagedViewModels
 
         public void OnCopyCommand()
         {
-            CopyPasteManager.CopyToClipboard(_isValue1Active ? _value1 : _value2);
+            CopyPasteManager.CopyToClipboard(_isValue1Active ? _value1.DisplayValue : _value2.DisplayValue);
         }
 
         public void OnPaste(string text)
@@ -253,28 +240,26 @@ namespace CalculatorApp.ManagedViewModels
 
         private void DisplayError()
         {
-            const string SIDS_DOMAIN = "100"; //SIDS_DOMAIN is for "invalid input"
-            var errMsg = AppResourceProvider.GetInstance().GetCEngineString(SIDS_DOMAIN);
-            Value1 = errMsg;
-            Value2 = errMsg;
-            _isError = true;
+            _value1.MarkErrored();
+            _value2.MarkErrored();
+            _toClear = true;
         }
 
         private void OnButtonCommand(NumbersAndOperatorsEnum op)
         {
-            if (_isError)
+            if (_toClear)
             {
-                _isError = false;
+                _toClear = false;
                 OnButtonCommand(NumbersAndOperatorsEnum.Clear);
             }
 
             if (_isValue1Active)
             {
-                Value1 = ProccessInputCommand(Value1, op);
+                _value1.ProccessInputCommand(op);
             }
             else
             {
-                Value2 = ProccessInputCommand(Value2, op);
+                _value2.ProccessInputCommand(op);
             }
             ConvertUnit();
         }
@@ -306,70 +291,27 @@ namespace CalculatorApp.ManagedViewModels
             Units = _allUnits[_mode].Where(x => !x.IsWhimsical).ToList();
             Unit1 = _currentUnits.First(x => x.IsSource);
             Unit2 = _currentUnits.First(x => x.IsTarget);
+            _value1.Reset();
+            _value2.Reset();
             OnUnitChanged();
         }
 
         private void OnUnitChanged()
         {
+            ConvertUnit();
         }
 
         private void ConvertUnit()
         {
-            Debug.Assert(_isError == false);
+            Debug.Assert(_toClear == false);
             if (_isValue1Active)
             {
-                Value2 = _model.Convert(_unit1.Id, _unit2.Id, decimal.Parse(_value1)).ToString();
+                Value2.Assign(_model.Convert(_unit1.Id, _unit2.Id, _value1.Value));
             }
             else
             {
-                Value1 = _model.Convert(_unit2.Id, _unit1.Id, decimal.Parse(_value2)).ToString();
+                Value1.Assign(_model.Convert(_unit2.Id, _unit1.Id, _value2.Value));
             }
-        }
-
-        private static string ProccessInputCommand(string value, NumbersAndOperatorsEnum op)
-        {
-            const int MAX_DIGITS = 15;
-            bool hasDecimal = value.Contains('.');
-            switch (op)
-            {
-                case NumbersAndOperatorsEnum.Zero:
-                case NumbersAndOperatorsEnum.One:
-                case NumbersAndOperatorsEnum.Two:
-                case NumbersAndOperatorsEnum.Three:
-                case NumbersAndOperatorsEnum.Four:
-                case NumbersAndOperatorsEnum.Five:
-                case NumbersAndOperatorsEnum.Six:
-                case NumbersAndOperatorsEnum.Seven:
-                case NumbersAndOperatorsEnum.Eight:
-                case NumbersAndOperatorsEnum.Nine:
-                    if (value == "0" || value == "-0")
-                    {
-                        value = string.Empty;
-                    }
-                    if (value.Count(x => '0' <= x && x <= '9') < MAX_DIGITS)
-                    {
-                        value += $"{(int)op - (int)NumbersAndOperatorsEnum.Zero}";
-                    }
-                    break;
-                case NumbersAndOperatorsEnum.Clear:
-                    value = string.Empty;
-                    break;
-                case NumbersAndOperatorsEnum.Decimal:
-                    if (!hasDecimal)
-                    {
-                        value += ".";
-                    }
-                    break;
-                case NumbersAndOperatorsEnum.Backspace:
-                    if (value.Length > 0)
-                    {
-                        value = value.Remove(value.Length - 1);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return string.IsNullOrEmpty(value) ? "0" : value;
         }
 
         private static Dictionary<ViewMode, List<UnitViewModel>> CreateUnits()
@@ -580,6 +522,148 @@ namespace CalculatorApp.ManagedViewModels
                 new UnitViewModel(nameof(ViewMode.Angle), UnitKind.Angle_Gradian, nameof(UnitKind.Angle_Gradian)),
             });
             return units;
+        }
+    }
+
+    public class UnitValueViewModel : Observable<UnitValueViewModel>, INotifyPropertyChanged
+    {
+        private enum State
+        {
+            Value, Error
+        }
+
+        private const int MAX_DIGITS = 15;
+        private const char INTERNAL_DECIMAL_SEPARATOR = '.';
+        private const string SIDS_DOMAIN = "100"; //SIDS_DOMAIN is for "invalid input"
+        private readonly string _errMsg = AppResourceProvider.GetInstance().GetCEngineString(SIDS_DOMAIN);
+        private readonly char _decimalSeparator = LocalizationSettings.GetInstance().GetDecimalSeparator();
+        private readonly DecimalFormatter _decimalFormatter = LocalizationService.GetInstance().GetRegionalSettingsAwareDecimalFormatter();
+        private State _state = State.Value;
+        private string _value = "0";
+
+        public string DisplayValue
+        {
+            get
+            {
+                switch (_state)
+                {
+                    case State.Value:
+                        return FormatValue(_value);
+                    case State.Error:
+                        return _errMsg;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        public decimal Value => decimal.Parse(_value);
+
+        public UnitValueViewModel()
+        {
+            _decimalFormatter.FractionDigits = 0;
+            _decimalFormatter.IsGrouped = true;
+        }
+
+        public void MarkErrored()
+        {
+            _state = State.Error;
+            RaisePropertyChanged(nameof(DisplayValue));
+        }
+
+        public void Reset()
+        {
+            _state = State.Value;
+            _value = "0";
+            RaisePropertyChanged(nameof(DisplayValue));
+        }
+
+        public void Assign(decimal value)
+        {
+            _value = value.ToString();
+            RaisePropertyChanged(nameof(DisplayValue));
+        }
+
+        public void ProccessInputCommand(NumbersAndOperatorsEnum op)
+        {
+            bool hasDecimal = _value.Contains('.');
+            switch (op)
+            {
+                case NumbersAndOperatorsEnum.Zero:
+                case NumbersAndOperatorsEnum.One:
+                case NumbersAndOperatorsEnum.Two:
+                case NumbersAndOperatorsEnum.Three:
+                case NumbersAndOperatorsEnum.Four:
+                case NumbersAndOperatorsEnum.Five:
+                case NumbersAndOperatorsEnum.Six:
+                case NumbersAndOperatorsEnum.Seven:
+                case NumbersAndOperatorsEnum.Eight:
+                case NumbersAndOperatorsEnum.Nine:
+                    if (_value == "0")
+                    {
+                        _value = string.Empty;
+                    }
+                    else if (_value == "-0")
+                    {
+                        _value = "-";
+                    }
+                    if (_value.Count(x => '0' <= x && x <= '9') < MAX_DIGITS)
+                    {
+                        _value += $"{(int)op - (int)NumbersAndOperatorsEnum.Zero}";
+                    }
+                    break;
+                case NumbersAndOperatorsEnum.Clear:
+                    _value = string.Empty;
+                    break;
+                case NumbersAndOperatorsEnum.Decimal:
+                    if (!hasDecimal)
+                    {
+                        _value += INTERNAL_DECIMAL_SEPARATOR;
+                    }
+                    break;
+                case NumbersAndOperatorsEnum.Backspace:
+                    if (_value.Length > 0)
+                    {
+                        _value = _value.Remove(_value.Length - 1);
+                        if (_value == "-")
+                        {
+                            _value = "-0";
+                        }
+                    }
+                    break;
+                case NumbersAndOperatorsEnum.Negate:
+                    if (_value.StartsWith("-"))
+                    {
+                        _value = _value.Substring(1);
+                    }
+                    else
+                    {
+                        _value = $"-{_value}";
+                    }
+                    break;
+                default:
+                    break;
+            }
+            _value = string.IsNullOrEmpty(_value) ? "0" : _value;
+            RaisePropertyChanged(nameof(DisplayValue));
+        }
+
+        private string FormatValue(string value)
+        {
+            if (value == "-")
+            {
+                value = "0";
+            }
+            var res = _decimalFormatter.Format(double.Parse(value));
+            if (value.EndsWith(INTERNAL_DECIMAL_SEPARATOR))
+            {
+                res += _decimalSeparator;
+            }
+            if (value.StartsWith('-') && !res.StartsWith('-'))
+            {
+                res = $"-{res}";
+            }
+            return res;
         }
     }
 }
